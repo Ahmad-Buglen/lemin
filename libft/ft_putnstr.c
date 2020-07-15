@@ -1,21 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_ismaxlong.c                                     :+:      :+:    :+:   */
+/*   ft_putnstr.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dphyliss <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: dphyliss <dphyliss@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/04/27 18:09:45 by dphyliss          #+#    #+#             */
-/*   Updated: 2019/04/27 18:17:43 by dphyliss         ###   ########.fr       */
+/*   Created: 2020/06/23 18:16:41 by dphyliss          #+#    #+#             */
+/*   Updated: 2020/06/23 18:47:26 by dphyliss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-long	ft_ismaxlong(long n)
+void	ft_putnstr(char const *const str, const size_t length)
 {
-	if (n == 9223372036854775807)
-		return (1);
-	else
-		return (0);
+	if (str)
+		write(1, str, length);
 }

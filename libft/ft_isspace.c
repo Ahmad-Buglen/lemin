@@ -1,21 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_ismaxlong.c                                     :+:      :+:    :+:   */
+/*   ft_isspace.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dphyliss <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: dphyliss <dphyliss@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/04/27 18:09:45 by dphyliss          #+#    #+#             */
-/*   Updated: 2019/04/27 18:17:43 by dphyliss         ###   ########.fr       */
+/*   Created: 2020/07/01 19:12:33 by dphyliss          #+#    #+#             */
+/*   Updated: 2020/07/15 16:27:47 by dphyliss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-long	ft_ismaxlong(long n)
+int		ft_is_space(const int c)
 {
-	if (n == 9223372036854775807)
+	if (' ' == c || '\n' == c || '\t' == c ||
+		'\f' == c || '\r' == c || '\v' == c)
 		return (1);
-	else
-		return (0);
+	return (0);
 }

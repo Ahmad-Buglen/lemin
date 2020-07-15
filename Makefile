@@ -12,56 +12,38 @@
 
 .PHONY: all clean fclean re
 
-# SRC = push_swap.c
+SRC_DIR = source/
 
-OBJ = $(SRC:.c=.o)
+LEM_IN = lem-in
 
-# OBJ1 = main.o
+SRC_LEM_IN = $(addprefix $(SRC_DIR), lemin.c)
 
-CHECKER = checker
-
-SORT = push_swap
-
-#NAME = libftprintf.a
-
-#MAIN = main
+OBJ_LEM_IN = $(SRC_LEM_IN:.c=.o)
 
 LIB = libft/libft.a
 
-HEADER = include/push_swap.h
+CC = gcc
 
-GENERATOR = generator
+CFLAGS = -Wall -Werror -Wextra  -g
 
-all: $(LIB) $(CHECKER) $(SORT) $(GENERATOR)
+HEADER = include/lemin.h
 
-$(LIB):  libft/libft.h
-	make -C libft
+all: $(LIB) $(LEM_IN)
 
-$(CHECKER): source/checker.c source/code_base.c $(HEADER) $(LIB)
-	gcc source/checker.c source/code_base.c $(LIB) -o checker
+$(LIB):
+	make -C libft/
 
-$(SORT): source/push_swap.c source/code_base.c $(HEADER) $(LIB)
-	gcc source/push_swap.c source/code_base.c $(LIB) -o push_swap
-	gcc -g source/push_swap.c source/code_base.c $(LIB) -o ps
+$(LEM_IN): $(OBJ_LEM_IN) $(LIB)
+	$(CC) $^ $(LIB) -o $@
 
-$(GENERATOR): source/generator.c $(HEADER) $(LIB)
-	gcc ./source/generator.c $(LIB) -o generator
+$(OBJ_LEM_IN): $(HEADER)
 
-#$(NAME): $(OBJ) $(LIB)
-#	ar rc $(NAME) $(OBJ) libft/*.o
-#	make -C ./pft
-#libft/*.o
-#$(MAIN): $(NAME) $(OBJ1)
-#	gcc -g sources/main.c sources/ft_printf.c -o ft_printf  libftprintf.a
-#	gcc sources/main.c -o $(MAIN)  $(NAME)
-#	./pft/test f
-#-Wall -Wextra -Werror
-%.o: source/%.c $(HEADER)
-	gcc -c $<
 clean:
 	make clean -C libft
-	rm -rf *.o
+	rm -rf source/*.o
+
 fclean: clean
-	make fclean -C libft
-	rm -rf $(CHECKER) $(SORT) ps
+	rm -rf $(LEM_IN) 
+#$(LIB)
+
 re: fclean all

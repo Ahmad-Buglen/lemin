@@ -1,21 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_ismaxlong.c                                     :+:      :+:    :+:   */
+/*   ft_pow.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dphyliss <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: dphyliss <dphyliss@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/04/27 18:09:45 by dphyliss          #+#    #+#             */
-/*   Updated: 2019/04/27 18:17:43 by dphyliss         ###   ########.fr       */
+/*   Created: 2020/06/23 18:17:27 by dphyliss          #+#    #+#             */
+/*   Updated: 2020/06/23 18:52:15 by dphyliss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-long	ft_ismaxlong(long n)
+unsigned long long	ft_pow(unsigned long long number, int grade)
 {
-	if (n == 9223372036854775807)
-		return (1);
-	else
-		return (0);
+	unsigned long long	rezult;
+
+	rezult = 1;
+	while (grade)
+	{
+		if (grade & 1)
+			rezult *= number;
+		number *= number;
+		grade >>= 1;
+	}
+	return (rezult);
 }

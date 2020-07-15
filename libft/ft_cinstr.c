@@ -1,21 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_ismaxlong.c                                     :+:      :+:    :+:   */
+/*   ft_cinstr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dphyliss <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: dphyliss <dphyliss@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/04/27 18:09:45 by dphyliss          #+#    #+#             */
-/*   Updated: 2019/04/27 18:17:43 by dphyliss         ###   ########.fr       */
+/*   Created: 2020/06/23 18:16:03 by dphyliss          #+#    #+#             */
+/*   Updated: 2020/06/23 18:46:04 by dphyliss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-long	ft_ismaxlong(long n)
+int		ft_cinstr(char const *const storage, char const *const desire)
 {
-	if (n == 9223372036854775807)
-		return (1);
-	else
-		return (0);
+	int	i;
+	int	j;
+
+	i = 0;
+	while (storage[i])
+	{
+		j = 0;
+		while (desire[j])
+		{
+			if (storage[i] == desire[j])
+				return (1);
+			++j;
+		}
+		++i;
+	}
+	return (0);
 }

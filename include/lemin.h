@@ -10,27 +10,25 @@
 # define BUFF 1000000
 
 
+typedef struct  s_coordinates
+{
+	int         x;
+	int         y;
+}               t_coordinates;
+
 
 typedef struct		s_node
 {
 	char			*name;
-	int				coor_x;
-	int				coor_y;
+	t_coordinates	coordinates;
 	int				busy;
 	int				pass;
 	struct s_node	*next;
 	int				con_size;
-	struct s_node	*connections[];
+	struct s_node	**connections;
 }					t_node;
 
 
-// typedef struct  s_box
-// {
-// 	int         number;
-// 	int         index;
-// 	int			bool;
-// 	int			weight;
-// }               t_box;
 
 // typedef struct  s_ps
 // {
