@@ -6,7 +6,7 @@
 /*   By: dphyliss <dphyliss@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/15 14:28:21 by dphyliss          #+#    #+#             */
-/*   Updated: 2020/07/15 18:36:24 by dphyliss         ###   ########.fr       */
+/*   Updated: 2020/07/18 19:18:26 by dphyliss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 #include <stdio.h>
 
-void node_add(t_node **nodes, char *name, t_coordinates coordinates)
+void node_add(t_node **nodes, char *name, t_coordinates coordinates, int type)
 {
 	t_node *temp;
 	t_node *buff;
@@ -36,6 +36,7 @@ void node_add(t_node **nodes, char *name, t_coordinates coordinates)
 		buff->next = temp;		
 	}
 	temp->next = NULL;
+	temp->type = type;
 }
 
 t_node *node_find(t_node **nodes, char *name)
@@ -43,7 +44,7 @@ t_node *node_find(t_node **nodes, char *name)
 	t_node *temp;
 
 	temp = *nodes;
-	while (NULL != temp->next)
+	while (NULL != temp)
 	{
 		if (0 == ft_strcmp(name, temp->name))
 			return (temp);
@@ -55,6 +56,7 @@ t_node *node_find(t_node **nodes, char *name)
 void connect_add(t_node *node1, t_node *node2)
 {
 	t_node **temp;
+	int i;
 
 	if (0 == node1->con_size)
 	{
@@ -65,9 +67,12 @@ void connect_add(t_node *node1, t_node *node2)
 	}
 	else
 	{
-		if (!(temp = (t_node **)ft_memalloc(sizeof(t_node *) * node1->con_size + 1)))
+		if (!(temp = (t_node **)ft_memalloc(sizeof(t_node *) * (node1->con_size + 2))))
 			ft_exit_fail("Error 5");
-		ft_memcpy(temp, node1->connections, sizeof(node1->connections));
+		// ft_memcpy(temp, node1->connections, sizeof(node1->connections));
+		i = -1;
+		while (++i < node1->con_size)
+			temp[i] = node1->connections[i];
 		temp[node1->con_size] = node2;
 		++node1->con_size;
 		free(node1->connections);
@@ -93,7 +98,7 @@ void connect_node(t_node **nodes, char *name1, char *name2)
 	connect_add(node2, node1);
 }
 
-void print_connections(t_node **connections)
+void print_connections(t_node **connections, int con_size)
 {
 	t_node **temp;
 	int i;
@@ -101,7 +106,7 @@ void print_connections(t_node **connections)
 	temp = connections;
 	i = 0;
 	printf("{");
-	while (temp[i])
+	while (i < con_size)
 	{
 		printf("%s ", temp[i]->name);
 		++i;
@@ -112,13 +117,24 @@ void print_connections(t_node **connections)
 void print_nodes(t_node **nodes)
 {
 	t_node *temp;
+			int i;
 
 	temp = *nodes;
 	while (NULL != temp)
 	{
 		printf("%s (%d, %d) ", temp->name, temp->coordinates.x, temp->coordinates.y);
 		if (0 != temp->con_size)
-			print_connections(temp->connections);
+		{
+			i = 0;
+			printf("{");
+			while (i < temp->con_size)
+			{
+				printf("%s ", temp->connections[i]->name);
+				++i;
+			}
+			printf("}");
+			// print_connections(temp->connections, temp->con_size);
+		}
 		printf("\n");
 		temp = temp->next;
 	}
@@ -126,116 +142,112 @@ void print_nodes(t_node **nodes)
 
 void init(t_node **nodes)
 {
-	node_add(nodes, "A0", (t_coordinates){1, 1});
-	node_add(nodes, "A1", (t_coordinates){1, 1});
-	node_add(nodes, "A2", (t_coordinates){1, 1});
-	node_add(nodes, "A3", (t_coordinates){1, 1});
-	node_add(nodes, "A4", (t_coordinates){1, 1});
-	node_add(nodes, "A5", (t_coordinates){1, 1});
-	node_add(nodes, "A6", (t_coordinates){1, 1});
-	node_add(nodes, "A7", (t_coordinates){1, 1});
-	node_add(nodes, "A8", (t_coordinates){1, 1});
-	node_add(nodes, "A9", (t_coordinates){1, 1});
+	node_add(nodes, "A0", (t_coordinates){1, 1}, STANDART);
+	node_add(nodes, "A1", (t_coordinates){1, 1}, START);
+	node_add(nodes, "A2", (t_coordinates){1, 1}, STANDART);
+	node_add(nodes, "A3", (t_coordinates){1, 1}, STANDART);
+	node_add(nodes, "A4", (t_coordinates){1, 1}, STANDART);
+	node_add(nodes, "A5", (t_coordinates){1, 1}, STANDART);
+	node_add(nodes, "A6", (t_coordinates){1, 1}, STANDART);
+	node_add(nodes, "A7", (t_coordinates){1, 1}, STANDART);
+	node_add(nodes, "A8", (t_coordinates){1, 1}, STANDART);
+	node_add(nodes, "A9", (t_coordinates){1, 1}, STANDART);
 
-	node_add(nodes, "B0", (t_coordinates){1, 1});
-	node_add(nodes, "B1", (t_coordinates){1, 1});
-	node_add(nodes, "B2", (t_coordinates){1, 1});
-	node_add(nodes, "B3", (t_coordinates){1, 1});
-	node_add(nodes, "B4", (t_coordinates){1, 1});
-	node_add(nodes, "B5", (t_coordinates){1, 1});
-	node_add(nodes, "B6", (t_coordinates){1, 1});
-	node_add(nodes, "B7", (t_coordinates){1, 1});
-	node_add(nodes, "B8", (t_coordinates){1, 1});
-	node_add(nodes, "B9", (t_coordinates){1, 1});
+	node_add(nodes, "B0", (t_coordinates){1, 1}, STANDART);
+	node_add(nodes, "B1", (t_coordinates){1, 1}, STANDART);
+	node_add(nodes, "B2", (t_coordinates){1, 1}, STANDART);
+	node_add(nodes, "B3", (t_coordinates){1, 1}, STANDART);
+	node_add(nodes, "B4", (t_coordinates){1, 1}, STANDART);
+	node_add(nodes, "B5", (t_coordinates){1, 1}, STANDART);
+	node_add(nodes, "B6", (t_coordinates){1, 1}, STANDART);
+	node_add(nodes, "B7", (t_coordinates){1, 1}, STANDART);
+	node_add(nodes, "B8", (t_coordinates){1, 1}, STANDART);
+	node_add(nodes, "B9", (t_coordinates){1, 1}, STANDART);
 
-	node_add(nodes, "C0", (t_coordinates){1, 1});
-	node_add(nodes, "C1", (t_coordinates){1, 1});
-	node_add(nodes, "C2", (t_coordinates){1, 1});
-	node_add(nodes, "C3", (t_coordinates){1, 1});
-	node_add(nodes, "C4", (t_coordinates){1, 1});
-	node_add(nodes, "C5", (t_coordinates){1, 1});
-	node_add(nodes, "C6", (t_coordinates){1, 1});
-	node_add(nodes, "C7", (t_coordinates){1, 1});
-	node_add(nodes, "C8", (t_coordinates){1, 1});
-	node_add(nodes, "C9", (t_coordinates){1, 1});
+	node_add(nodes, "C0", (t_coordinates){1, 1}, STANDART);
+	node_add(nodes, "C1", (t_coordinates){1, 1}, STANDART);
+	node_add(nodes, "C2", (t_coordinates){1, 1}, STANDART);
+	node_add(nodes, "C3", (t_coordinates){1, 1}, STANDART);
+	node_add(nodes, "C4", (t_coordinates){1, 1}, STANDART);
+	node_add(nodes, "C5", (t_coordinates){1, 1}, STANDART);
+	node_add(nodes, "C6", (t_coordinates){1, 1}, STANDART);
+	node_add(nodes, "C7", (t_coordinates){1, 1}, STANDART);
+	node_add(nodes, "C8", (t_coordinates){1, 1}, STANDART);
+	node_add(nodes, "C9", (t_coordinates){1, 1}, STANDART);
 
-	node_add(nodes, "D0", (t_coordinates){1, 1});
-	node_add(nodes, "D1", (t_coordinates){1, 1});
-	node_add(nodes, "D2", (t_coordinates){1, 1});
-	node_add(nodes, "D3", (t_coordinates){1, 1});
-	node_add(nodes, "D4", (t_coordinates){1, 1});
-	node_add(nodes, "D5", (t_coordinates){1, 1});
-	node_add(nodes, "D6", (t_coordinates){1, 1});
-	node_add(nodes, "D7", (t_coordinates){1, 1});
-	node_add(nodes, "D8", (t_coordinates){1, 1});
-	node_add(nodes, "D9", (t_coordinates){1, 1});
+	node_add(nodes, "D0", (t_coordinates){1, 1}, STANDART);
+	node_add(nodes, "D1", (t_coordinates){1, 1}, STANDART);
+	node_add(nodes, "D2", (t_coordinates){1, 1}, STANDART);
+	node_add(nodes, "D3", (t_coordinates){1, 1}, STANDART);
+	node_add(nodes, "D4", (t_coordinates){1, 1}, STANDART);
+	node_add(nodes, "D5", (t_coordinates){1, 1}, STANDART);
+	node_add(nodes, "D6", (t_coordinates){1, 1}, STANDART);
+	node_add(nodes, "D7", (t_coordinates){1, 1}, STANDART);
+	node_add(nodes, "D8", (t_coordinates){1, 1}, STANDART);
+	node_add(nodes, "D9", (t_coordinates){1, 1}, STANDART);
 
-	node_add(nodes, "E0", (t_coordinates){1, 1});
-	node_add(nodes, "E1", (t_coordinates){1, 1});
-	node_add(nodes, "E2", (t_coordinates){1, 1});
-	node_add(nodes, "E3", (t_coordinates){1, 1});
-	node_add(nodes, "E4", (t_coordinates){1, 1});
-	node_add(nodes, "E5", (t_coordinates){1, 1});
-	node_add(nodes, "E6", (t_coordinates){1, 1});
-	node_add(nodes, "E7", (t_coordinates){1, 1});
-	node_add(nodes, "E8", (t_coordinates){1, 1});
-	node_add(nodes, "E9", (t_coordinates){1, 1});
+	node_add(nodes, "E0", (t_coordinates){1, 1}, STANDART);
+	node_add(nodes, "E1", (t_coordinates){1, 1}, STANDART);
+	node_add(nodes, "E2", (t_coordinates){1, 1}, STANDART);
+	node_add(nodes, "E3", (t_coordinates){1, 1}, STANDART);
+	node_add(nodes, "E4", (t_coordinates){1, 1}, STANDART);
+	node_add(nodes, "E5", (t_coordinates){1, 1}, STANDART);
+	node_add(nodes, "E6", (t_coordinates){1, 1}, STANDART);
+	node_add(nodes, "E7", (t_coordinates){1, 1}, STANDART);
+	node_add(nodes, "E8", (t_coordinates){1, 1}, STANDART);
+	node_add(nodes, "E9", (t_coordinates){1, 1}, STANDART);
 
-	node_add(nodes, "F0", (t_coordinates){1, 1});
-	node_add(nodes, "F1", (t_coordinates){1, 1});
-	node_add(nodes, "F2", (t_coordinates){1, 1});
-	node_add(nodes, "F3", (t_coordinates){1, 1});
-	node_add(nodes, "F4", (t_coordinates){1, 1});
-	node_add(nodes, "F5", (t_coordinates){1, 1});
-	node_add(nodes, "F6", (t_coordinates){1, 1});
-	node_add(nodes, "F7", (t_coordinates){1, 1});
-	node_add(nodes, "F8", (t_coordinates){1, 1});
-	node_add(nodes, "F9", (t_coordinates){1, 1});
+	node_add(nodes, "F0", (t_coordinates){1, 1}, STANDART);
+	node_add(nodes, "F1", (t_coordinates){1, 1}, STANDART);
+	node_add(nodes, "F2", (t_coordinates){1, 1}, STANDART);
+	node_add(nodes, "F3", (t_coordinates){1, 1}, STANDART);
+	node_add(nodes, "F4", (t_coordinates){1, 1}, END);
+	node_add(nodes, "F5", (t_coordinates){1, 1}, STANDART);
+	node_add(nodes, "F6", (t_coordinates){1, 1}, STANDART);
+	node_add(nodes, "F7", (t_coordinates){1, 1}, STANDART);
+	node_add(nodes, "F8", (t_coordinates){1, 1}, STANDART);
+	node_add(nodes, "F9", (t_coordinates){1, 1}, STANDART);
 
+	node_add(nodes, "G0", (t_coordinates){1, 1}, STANDART);
+	node_add(nodes, "G1", (t_coordinates){1, 1}, STANDART);
+	node_add(nodes, "G2", (t_coordinates){1, 1}, STANDART);
+	node_add(nodes, "G3", (t_coordinates){1, 1}, STANDART);
+	node_add(nodes, "G4", (t_coordinates){1, 1}, STANDART);
+	node_add(nodes, "G5", (t_coordinates){1, 1}, STANDART);
+	node_add(nodes, "G6", (t_coordinates){1, 1}, STANDART);
+	node_add(nodes, "G7", (t_coordinates){1, 1}, STANDART);
+	node_add(nodes, "G8", (t_coordinates){1, 1}, STANDART);
+	node_add(nodes, "G9", (t_coordinates){1, 1}, STANDART);
 
-	node_add(nodes, "G0", (t_coordinates){1, 1});
-	node_add(nodes, "G1", (t_coordinates){1, 1});
-	node_add(nodes, "G2", (t_coordinates){1, 1});
-	node_add(nodes, "G3", (t_coordinates){1, 1});
-	node_add(nodes, "G4", (t_coordinates){1, 1});
-	node_add(nodes, "G5", (t_coordinates){1, 1});
-	node_add(nodes, "G6", (t_coordinates){1, 1});
-	node_add(nodes, "G7", (t_coordinates){1, 1});
-	node_add(nodes, "G8", (t_coordinates){1, 1});
-	node_add(nodes, "G9", (t_coordinates){1, 1});
+	node_add(nodes, "H0", (t_coordinates){1, 1}, STANDART);
+	node_add(nodes, "H1", (t_coordinates){1, 1}, STANDART);
+	node_add(nodes, "H2", (t_coordinates){1, 1}, STANDART);
+	node_add(nodes, "H3", (t_coordinates){1, 1}, STANDART);
+	node_add(nodes, "H4", (t_coordinates){1, 1}, STANDART);
+	node_add(nodes, "H5", (t_coordinates){1, 1}, STANDART);
+	node_add(nodes, "H6", (t_coordinates){1, 1}, STANDART);
+	node_add(nodes, "H7", (t_coordinates){1, 1}, STANDART);
+	node_add(nodes, "H8", (t_coordinates){1, 1}, STANDART);
+	node_add(nodes, "H9", (t_coordinates){1, 1}, STANDART);
 
-	node_add(nodes, "H0", (t_coordinates){1, 1});
-	node_add(nodes, "H1", (t_coordinates){1, 1});
-	node_add(nodes, "H2", (t_coordinates){1, 1});
-	node_add(nodes, "H3", (t_coordinates){1, 1});
-	node_add(nodes, "H4", (t_coordinates){1, 1});
-	node_add(nodes, "H5", (t_coordinates){1, 1});
-	node_add(nodes, "H6", (t_coordinates){1, 1});
-	node_add(nodes, "H7", (t_coordinates){1, 1});
-	node_add(nodes, "H8", (t_coordinates){1, 1});
-	node_add(nodes, "H9", (t_coordinates){1, 1});
+	node_add(nodes, "I0", (t_coordinates){1, 1}, STANDART);
+	node_add(nodes, "I1", (t_coordinates){1, 1}, STANDART);
+	node_add(nodes, "I2", (t_coordinates){1, 1}, STANDART);
+	node_add(nodes, "I3", (t_coordinates){1, 1}, STANDART);
+	node_add(nodes, "I4", (t_coordinates){1, 1}, STANDART);
+	node_add(nodes, "I5", (t_coordinates){1, 1}, STANDART);
+	node_add(nodes, "I6", (t_coordinates){1, 1}, STANDART);
+	node_add(nodes, "I7", (t_coordinates){1, 1}, STANDART);
+	node_add(nodes, "I8", (t_coordinates){1, 1}, STANDART);
+	node_add(nodes, "I9", (t_coordinates){1, 1}, STANDART);
 
-	node_add(nodes, "I0", (t_coordinates){1, 1});
-	node_add(nodes, "I1", (t_coordinates){1, 1});
-	node_add(nodes, "I2", (t_coordinates){1, 1});
-	node_add(nodes, "I3", (t_coordinates){1, 1});
-	node_add(nodes, "I4", (t_coordinates){1, 1});
-	node_add(nodes, "I5", (t_coordinates){1, 1});
-	node_add(nodes, "I6", (t_coordinates){1, 1});
-	node_add(nodes, "I7", (t_coordinates){1, 1});
-	node_add(nodes, "I8", (t_coordinates){1, 1});
-	node_add(nodes, "I9", (t_coordinates){1, 1});
-
-	node_add(nodes, "J0", (t_coordinates){1, 1});
-	node_add(nodes, "J1", (t_coordinates){1, 1});
-	node_add(nodes, "J2", (t_coordinates){1, 1});
-	node_add(nodes, "J3", (t_coordinates){1, 1});
-	node_add(nodes, "J4", (t_coordinates){1, 1});
-	node_add(nodes, "J5", (t_coordinates){1, 1});
-	node_add(nodes, "J6", (t_coordinates){1, 1});
-
-
-	// print_nodes(nodes);
+	node_add(nodes, "J0", (t_coordinates){1, 1}, STANDART);
+	node_add(nodes, "J1", (t_coordinates){1, 1}, STANDART);
+	node_add(nodes, "J2", (t_coordinates){1, 1}, STANDART);
+	node_add(nodes, "J3", (t_coordinates){1, 1}, STANDART);
+	node_add(nodes, "J4", (t_coordinates){1, 1}, STANDART);
+	node_add(nodes, "J5", (t_coordinates){1, 1}, STANDART);
+	node_add(nodes, "J6", (t_coordinates){1, 1}, STANDART);
 
 	connect_node(nodes, "A1", "A2");
 	connect_node(nodes, "A2", "A3");
@@ -244,6 +256,7 @@ void init(t_node **nodes)
 	connect_node(nodes, "A0", "B1");
 	connect_node(nodes, "B1", "B3");
 	connect_node(nodes, "B3", "B6");
+	connect_node(nodes, "B6", "B9");
 	connect_node(nodes, "B9", "C2");
 	connect_node(nodes, "C2", "C3");
 	connect_node(nodes, "C3", "C1");
@@ -318,7 +331,7 @@ void init(t_node **nodes)
 	connect_node(nodes, "D6", "D7");
 
 	connect_node(nodes, "A1", "H0");
-		// connect_node(nodes, "H0", "J6");
+		connect_node(nodes, "H0", "J6");
 	connect_node(nodes, "H0", "H1");
 	connect_node(nodes, "H1", "H2");
 	connect_node(nodes, "H2", "H3");
@@ -344,8 +357,26 @@ void init(t_node **nodes)
 	connect_node(nodes, "J1", "J2");
 		connect_node(nodes, "J2", "G7");
 
+	connect_node(nodes, "J5", "J3");
+	connect_node(nodes, "J3", "F4");
 }
 
+
+void recur_route(t_node *nodes, t_route route, t_node *node)
+{
+	t_node *new_node;
+	int i;
+
+	node->pass = VISIT;
+	route.elem[route.size++] = node;
+	if (END == node->type)
+		record_route(route);
+	i = -1;
+	while (++i < node->con_size)
+		if (NO_VISIT == node->connections[i]->pass)
+			recur_route(nodes, route, node->connections[i]);	
+	return ;
+}
 
 int main()
 {
@@ -353,7 +384,9 @@ int main()
 
 	nodes = NULL;
 	init(&nodes);
+	
 	print_nodes(&nodes);
+	// printf("%.100f", 0.00000000000000000000002);
 
 	return (1);
 }
