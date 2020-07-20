@@ -6,7 +6,7 @@
 /*   By: dphyliss <dphyliss@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/15 14:28:21 by dphyliss          #+#    #+#             */
-/*   Updated: 2020/07/18 19:18:26 by dphyliss         ###   ########.fr       */
+/*   Updated: 2020/07/20 19:09:00 by dphyliss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -359,33 +359,70 @@ void init(t_node **nodes)
 
 	connect_node(nodes, "J5", "J3");
 	connect_node(nodes, "J3", "F4");
+	
 }
 
-
-void recur_route(t_node *nodes, t_route route, t_node *node)
+void print_route(t_route *route)
 {
-	t_node *new_node;
 	int i;
 
-	node->pass = VISIT;
+	i = -1;
+	while (++i < route->size)
+		printf("%s ", route->elem[i]->name);
+	printf("\n");
+}
+
+t_node *start_find(t_node **nodes, int start)
+{
+	t_node *temp;
+
+	temp = *nodes;
+	while (NULL != temp)
+	{
+		if (start == temp->type)
+			return (temp);
+		temp = temp->next;
+	}
+	return (NULL);
+}
+
+void recur_route(t_route route, t_node *node)
+{
+	int i;
+
+
+	
 	route.elem[route.size++] = node;
+	// printf("%s \n", node->name);
 	if (END == node->type)
-		record_route(route);
+	{
+		printf("finish");
+		print_route(&route);
+		return ;
+	}
+	else
+		node->pass = VISIT;
 	i = -1;
 	while (++i < node->con_size)
 		if (NO_VISIT == node->connections[i]->pass)
-			recur_route(nodes, route, node->connections[i]);	
+			recur_route(route, node->connections[i]);	
 	return ;
 }
 
 int main()
 {
 	t_node *nodes;
+	t_node *start;
+	t_route route;
 
 	nodes = NULL;
 	init(&nodes);
-	
+	start = start_find(&nodes, START);
+	ft_bzero(&route, sizeof(route));
+
 	print_nodes(&nodes);
+	recur_route(route, start);
+
 	// printf("%.100f", 0.00000000000000000000002);
 
 	return (1);
