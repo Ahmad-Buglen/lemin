@@ -6,7 +6,7 @@
 /*   By: dphyliss <dphyliss@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/15 14:28:21 by dphyliss          #+#    #+#             */
-/*   Updated: 2020/07/20 19:09:00 by dphyliss         ###   ########.fr       */
+/*   Updated: 2020/07/22 19:04:29 by dphyliss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,13 +27,17 @@ void node_add(t_node **nodes, char *name, t_coordinates coordinates, int type)
 	temp->coordinates.x = coordinates.x;
 	temp->coordinates.y = coordinates.y;
 	if (NULL == *nodes)
+	{
 		*nodes = temp;
+		temp->index = 0;
+	}
 	else
 	{
 		buff = *nodes;
 		while (NULL != buff->next)
 			buff = buff->next;
-		buff->next = temp;		
+		buff->next = temp;
+		temp->index = buff->index + 1;
 	}
 	temp->next = NULL;
 	temp->type = type;
@@ -122,7 +126,7 @@ void print_nodes(t_node **nodes)
 	temp = *nodes;
 	while (NULL != temp)
 	{
-		printf("%s (%d, %d) ", temp->name, temp->coordinates.x, temp->coordinates.y);
+		printf("%s [%d] (%d, %d) ", temp->name, temp->index, temp->coordinates.x, temp->coordinates.y);
 		if (0 != temp->con_size)
 		{
 			i = 0;
@@ -359,6 +363,8 @@ void init(t_node **nodes)
 
 	connect_node(nodes, "J5", "J3");
 	connect_node(nodes, "J3", "F4");
+
+	connect_node(nodes, "J2", "F4");
 	
 }
 
@@ -386,42 +392,197 @@ t_node *start_find(t_node **nodes, int start)
 	return (NULL);
 }
 
-void recur_route(t_route route, t_node *node)
+// t_map
+void map_free(t_map *map)
 {
+	t_map *temp;
+	t_map *buff;
+
+	temp = map;
+	while (NULL != temp)
+	{
+		buff = temp;
+		temp = temp->next;
+		free(buff);
+		buff = NULL;
+	}
+}
+/*
+int  map_pass(t_map *map, char *name)
+{
+	t_map *temp;
+
+	temp = map;
+	while (NULL != temp)
+	{
+		if (0 == ft_strcmp(name, temp->name))
+			return (temp->pass);
+		temp = temp->next;
+	}
+	ft_exit_fail("Error 8");
+	return (1);
+}
+
+t_map  *map_find(t_map *map, char *name)
+{
+	t_map *temp;
+
+	temp = map;
+	while (NULL != temp)
+	{
+		if (0 == ft_strcmp(name, temp->name))
+			return (temp);
+		temp = temp->next;
+	}
+	ft_exit_fail("Error 7");
+	return (NULL);
+}
+*/
+int *dublicate_map(t_node *nodes, int node_len)
+{
+	t_node	*temp;
+	int	*map;
 	int i;
 
+	if (NULL != nodes)
+	{
+		if (!(map = (int *)ft_memalloc(sizeof(int) * node_len)))
+			ft_exit_fail("Error 6");
+		temp = nodes;
+		i = 0;
+		while (NULL != temp)
+		{
+			map[temp->index] = temp->pass;
+			temp = temp->next;
+		}
+		return (map);
+	}
+	return (NULL);
+}
 
+int *dublicate_map2(int *map_src, int node_len)
+{
+	int		*map_dest;
+	int		 i;
+
+	if (0 != node_len)
+	{
+		if (!(map_dest = (int *)ft_memalloc(sizeof(int) * node_len)))
+			ft_exit_fail("Error 7");
+		i = -1;
+		while (++i < node_len)
+			map_dest[i] = map_src[i];
+		return (map_dest);
+	}
+	return (NULL);
+}
+
+// t_route *dublicate_route(t_route *route)
+// {
+// 	t_route	*temp;
+// 	int		i;
+
+// 	if (!(temp = (t_route *)ft_memalloc(sizeof(t_route))))
+// 			ft_exit_fail("Error 5");
+// 	ft_bzero(temp, sizeof(t_route));
+// 	temp->size = route->size;
+// 	i = -1;
+// 	while (++i < route->size)
+// 		temp->elem[i] = route->elem[i];
+// 	return (temp);
+// }
+int node_include(t_route *route, int index)
+{
+	// t_map *temp;
+	int i;
+
+	i = 0;
+	while (i < route->size)
+	{
+		if (index == route->elem[i]->index)
+			return (1);
+		++i;
+	}
+	return (0);
+}
+void recur_route(t_route route, t_node *node, int *map, int node_len)
+{
+	int i;
+	int sides;
 	
 	route.elem[route.size++] = node;
 	// printf("%s \n", node->name);
 	if (END == node->type)
 	{
-		printf("finish");
+		printf(" Sucсess! ");
 		print_route(&route);
+		free(map);
 		return ;
 	}
+	sides = 0;
+	i = 0;
+	while (i < node->con_size)
+	{
+		if (NO_VISIT == map[node->connections[i]->index])
+			++sides;
+		++i;
+	}
+
+	if (sides <= 1)
+	{
+		map[node->index] = VISIT;
+		i = -1;
+		while (++i < node->con_size)
+			if (NO_VISIT == map[node->connections[i]->index] && !node_include(&route, node->connections[i]->index))
+			{
+				recur_route(route, node->connections[i], map, node_len);
+				break ;
+			}
+	}
 	else
-		node->pass = VISIT;
-	i = -1;
-	while (++i < node->con_size)
-		if (NO_VISIT == node->connections[i]->pass)
-			recur_route(route, node->connections[i]);	
+	{
+		i = -1;
+		while (++i < node->con_size)
+			if (NO_VISIT == map[node->connections[i]->index] && !node_include(&route, node->connections[i]->index))
+				recur_route(route, node->connections[i], dublicate_map2(map, node_len), node_len);
+		map[node->index] = VISIT;
+	}
+	// printf(" Fail( ");
+	// print_route(&route);
+	free(map);
 	return ;
 }
+
+int node_length(t_node *nodes)
+{
+	t_node *temp;
+
+	temp = nodes;
+	while (NULL != temp->next)
+		temp = temp->next;
+	return (temp->index + 1);
+}
+
+	// init1(t_node *nodes);
 
 int main()
 {
 	t_node *nodes;
 	t_node *start;
 	t_route route;
+	int node_len;
 
 	nodes = NULL;
 	init(&nodes);
+	node_len = node_length(nodes);
+
 	start = start_find(&nodes, START);
-	ft_bzero(&route, sizeof(route));
+	// if (!(route = (t_route *)ft_memalloc(sizeof(t_route))))
+	// 		ft_exit_fail("Error 5");
+	ft_bzero(&route, sizeof(t_route));
 
 	print_nodes(&nodes);
-	recur_route(route, start);
+	recur_route(route, start, dublicate_map(nodes, node_len), node_len);
 
 	// printf("%.100f", 0.00000000000000000000002);
 

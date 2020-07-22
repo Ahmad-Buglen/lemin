@@ -31,14 +31,21 @@ typedef struct		s_node
 {
 	char			*name;
 	t_coordinates	coordinates;
+	int				index;
 	int				busy;
 	int				pass;
 	int				type;
 	int				con_size;
 	struct s_node	**connections;
-	struct t_route	*routes;
 	struct s_node	*next;
 }					t_node;
+
+typedef struct		s_map
+{
+	char			*name;
+	int				pass;
+	struct s_map	*next;
+}					t_map;
 
 
 
