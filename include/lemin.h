@@ -15,6 +15,9 @@
 # define NO_VISIT 0
 
 
+# define ROUTE_SIZE 100
+
+
 typedef struct  s_coordinates
 {
 	int         x;
@@ -24,7 +27,7 @@ typedef struct  s_coordinates
 typedef struct		s_route
 {
 	int				size;
-	struct s_node	*elem[100];
+	struct s_node	*elem[ROUTE_SIZE];
 }					t_route;
 
 typedef struct		s_node

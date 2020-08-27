@@ -6,7 +6,7 @@
 /*   By: dphyliss <dphyliss@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/15 14:28:21 by dphyliss          #+#    #+#             */
-/*   Updated: 2020/07/22 19:04:29 by dphyliss         ###   ########.fr       */
+/*   Updated: 2020/08/27 15:16:54 by dphyliss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,32 @@ void connect_add(t_node *node1, t_node *node2)
 	node1->connections[node1->con_size] = NULL;
 }
 
+void connect_del(t_node *node1, t_node *node2)
+{
+	// t_node *node1;
+	int i;
+
+	// node1 = node_find(nodes, name1);
+	i = -1;
+	while (++i < node1->con_size)
+		if (node1->connections[i] == node2)
+			break;
+	if (i == (node1->con_size - 1))
+		node1->connections[--(node1->con_size)] = NULL;
+	else
+	{
+		while (i < node1->con_size)
+		{
+			node1->connections[i] = node1->connections[i + 1];
+			i++;
+		}
+		--(node1->con_size);
+		/* code */
+	}
+
+	// node1->connections[node1->con_size] = NULL;
+}
+
 void connect_node(t_node **nodes, char *name1, char *name2)
 {
 	t_node *node1;
@@ -144,7 +170,7 @@ void print_nodes(t_node **nodes)
 	}
 }
 
-void init(t_node **nodes)
+void init_middle(t_node **nodes)
 {
 	node_add(nodes, "A0", (t_coordinates){1, 1}, STANDART);
 	node_add(nodes, "A1", (t_coordinates){1, 1}, START);
@@ -365,6 +391,32 @@ void init(t_node **nodes)
 	connect_node(nodes, "J3", "F4");
 
 	connect_node(nodes, "J2", "F4");
+
+	connect_node(nodes, "C4", "D0");
+	connect_node(nodes, "D0", "C6");
+	
+}
+
+void	init_min(t_node **nodes)
+{
+	node_add(nodes, "A", (t_coordinates){1, 1}, START);
+	node_add(nodes, "B", (t_coordinates){1, 1}, STANDART);
+	node_add(nodes, "C", (t_coordinates){1, 1}, STANDART);
+	node_add(nodes, "D", (t_coordinates){1, 1}, STANDART);
+	node_add(nodes, "E", (t_coordinates){1, 1}, STANDART);
+	node_add(nodes, "F", (t_coordinates){1, 1}, STANDART);
+	node_add(nodes, "G", (t_coordinates){1, 1}, STANDART);
+	node_add(nodes, "H", (t_coordinates){1, 1}, END);
+
+	connect_node(nodes, "A", "B");
+	connect_node(nodes, "B", "C");
+	connect_node(nodes, "C", "D");
+	connect_node(nodes, "D", "H");
+	connect_node(nodes, "A", "E");
+	connect_node(nodes, "E", "D");
+	connect_node(nodes, "E", "F");
+	connect_node(nodes, "F", "G");
+	connect_node(nodes, "G", "H");
 	
 }
 
@@ -376,6 +428,17 @@ void print_route(t_route *route)
 	while (++i < route->size)
 		printf("%s ", route->elem[i]->name);
 	printf("\n");
+}
+
+t_route *route_copy(t_route *route)
+{
+	t_route *copy;
+
+	if (!(copy = (t_route *)ft_memalloc(sizeof(t_route))))
+			ft_exit_fail("Error 10");
+		
+	ft_memcpy((void *) copy, (void *) route, sizeof(t_route));
+	return (copy);
 }
 
 t_node *start_find(t_node **nodes, int start)
@@ -505,18 +568,27 @@ int node_include(t_route *route, int index)
 	}
 	return (0);
 }
-void recur_route(t_route route, t_node *node, int *map, int node_len)
+void recur_route(t_route route, t_node *node, int *map, int node_len, t_route **best_route)
 {
 	int i;
 	int sides;
-	
+
 	route.elem[route.size++] = node;
 	// printf("%s \n", node->name);
 	if (END == node->type)
 	{
 		printf(" Sucсess! ");
+
 		print_route(&route);
-		free(map);
+
+		if (((*best_route)->size == 0) || (route.size < (*best_route)->size))
+		{
+
+		// write(1, "here!", 5);
+			// free(best_route);
+			*best_route = route_copy(&route);
+		}
+		// free(map);
 		return ;
 	}
 	sides = 0;
@@ -535,7 +607,7 @@ void recur_route(t_route route, t_node *node, int *map, int node_len)
 		while (++i < node->con_size)
 			if (NO_VISIT == map[node->connections[i]->index] && !node_include(&route, node->connections[i]->index))
 			{
-				recur_route(route, node->connections[i], map, node_len);
+				recur_route(route, node->connections[i], map, node_len, best_route);
 				break ;
 			}
 	}
@@ -544,12 +616,13 @@ void recur_route(t_route route, t_node *node, int *map, int node_len)
 		i = -1;
 		while (++i < node->con_size)
 			if (NO_VISIT == map[node->connections[i]->index] && !node_include(&route, node->connections[i]->index))
-				recur_route(route, node->connections[i], dublicate_map2(map, node_len), node_len);
+				recur_route(route, node->connections[i], dublicate_map2(map, node_len), node_len, best_route);
 		map[node->index] = VISIT;
 	}
 	// printf(" Fail( ");
 	// print_route(&route);
-	free(map);
+
+	// free(map);
 	return ;
 }
 
@@ -563,6 +636,49 @@ int node_length(t_node *nodes)
 	return (temp->index + 1);
 }
 
+int		connection_include(t_node *node1, t_node *node2)
+{
+	int i;
+
+	i = -1;
+	while (++i < node1->con_size)
+		if (node1->connections[i] == node2)
+			return (1);
+	return (0); 
+}
+
+void	connection_restore(t_node *node1, t_node *node2)
+{
+	node1->connections[(node1->con_size)++] = node2; 
+}
+
+void	route_recovery(t_node *nodes)
+{
+	t_node *temp;
+	int i;
+
+	temp = nodes;
+	while (NULL != temp)
+	{
+		i = -1;
+		while (++i < temp->con_size)
+			if (!connection_include(temp->connections[i], temp))
+				connection_restore(temp->connections[i], temp);
+		temp = temp->next;
+	}
+}
+
+void	route_inverse(t_route **best_route)
+{
+	int i;
+
+	i = -1;
+	while (++i < ((*best_route)->size - 1))
+	{
+		connect_del((*best_route)->elem[i], (*best_route)->elem[i + 1]);
+	}
+}
+
 	// init1(t_node *nodes);
 
 int main()
@@ -570,19 +686,52 @@ int main()
 	t_node *nodes;
 	t_node *start;
 	t_route route;
+	t_route *best_route;
 	int node_len;
 
 	nodes = NULL;
-	init(&nodes);
+	init_middle(&nodes);
 	node_len = node_length(nodes);
 
 	start = start_find(&nodes, START);
-	// if (!(route = (t_route *)ft_memalloc(sizeof(t_route))))
-	// 		ft_exit_fail("Error 5");
+	if (!(best_route = (t_route *)ft_memalloc(sizeof(t_route))))
+			ft_exit_fail("Error 9");
+
+	ft_bzero(best_route, sizeof(t_route));
 	ft_bzero(&route, sizeof(t_route));
 
+	while (1)
+	{
+		print_nodes(&nodes);
+		ft_bzero(best_route, sizeof(t_route));
+		recur_route(route, start, dublicate_map(nodes, node_len), node_len, &best_route);
+		if (0 == best_route->size)
+			break;
+		print_route(best_route);
+		route_inverse(&best_route);
+	}
+	
 	print_nodes(&nodes);
-	recur_route(route, start, dublicate_map(nodes, node_len), node_len);
+
+	route_recovery(nodes);
+	
+	while (1)
+	{
+		print_nodes(&nodes);
+		ft_bzero(best_route, sizeof(t_route));
+		recur_route(route, start, dublicate_map(nodes, node_len), node_len, &best_route);
+		if (0 == best_route->size)
+			break;
+		print_route(best_route);
+		route_inverse(&best_route);
+	}
+
+
+	print_nodes(&nodes);
+	route_recovery(nodes);
+
+	print_nodes(&nodes);
+	recur_route(route, start, dublicate_map(nodes, node_len), node_len, &best_route);
 
 	// printf("%.100f", 0.00000000000000000000002);
 
