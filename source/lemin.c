@@ -6,7 +6,7 @@
 /*   By: dphyliss <dphyliss@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/15 14:28:21 by dphyliss          #+#    #+#             */
-/*   Updated: 2020/08/27 15:16:54 by dphyliss         ###   ########.fr       */
+/*   Updated: 2020/08/29 15:53:52 by dphyliss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -438,6 +438,7 @@ t_route *route_copy(t_route *route)
 			ft_exit_fail("Error 10");
 		
 	ft_memcpy((void *) copy, (void *) route, sizeof(t_route));
+	// copy->size = route->size;
 	return (copy);
 }
 
@@ -568,7 +569,9 @@ int node_include(t_route *route, int index)
 	}
 	return (0);
 }
-void recur_route(t_route route, t_node *node, int *map, int node_len, t_route **best_route)
+
+
+void recur_route(t_route route, t_node *node, int *map, int node_len, t_route **best_route, int *counter, int status, t_route **routes)
 {
 	int i;
 	int sides;
@@ -577,10 +580,12 @@ void recur_route(t_route route, t_node *node, int *map, int node_len, t_route **
 	// printf("%s \n", node->name);
 	if (END == node->type)
 	{
-		printf(" Sucсess! ");
+		// printf(" Sucсess! ");
+		// print_route(&route);
+		if (END == status)
+			routes[(*counter)] = route_copy(&route);
 
-		print_route(&route);
-
+		++(*counter);
 		if (((*best_route)->size == 0) || (route.size < (*best_route)->size))
 		{
 
@@ -607,7 +612,7 @@ void recur_route(t_route route, t_node *node, int *map, int node_len, t_route **
 		while (++i < node->con_size)
 			if (NO_VISIT == map[node->connections[i]->index] && !node_include(&route, node->connections[i]->index))
 			{
-				recur_route(route, node->connections[i], map, node_len, best_route);
+				recur_route(route, node->connections[i], map, node_len, best_route, counter, status, routes);
 				break ;
 			}
 	}
@@ -616,7 +621,7 @@ void recur_route(t_route route, t_node *node, int *map, int node_len, t_route **
 		i = -1;
 		while (++i < node->con_size)
 			if (NO_VISIT == map[node->connections[i]->index] && !node_include(&route, node->connections[i]->index))
-				recur_route(route, node->connections[i], dublicate_map2(map, node_len), node_len, best_route);
+				recur_route(route, node->connections[i], dublicate_map2(map, node_len), node_len, best_route, counter, status, routes);
 		map[node->index] = VISIT;
 	}
 	// printf(" Fail( ");
@@ -687,7 +692,13 @@ int main()
 	t_node *start;
 	t_route route;
 	t_route *best_route;
+	t_route **routes;
+
 	int node_len;
+	int counter;
+	int temp;
+	int status;
+	int i;
 
 	nodes = NULL;
 	init_middle(&nodes);
@@ -699,39 +710,44 @@ int main()
 
 	ft_bzero(best_route, sizeof(t_route));
 	ft_bzero(&route, sizeof(t_route));
-
-	while (1)
+	temp = 0;
+	counter = -1;
+	status = STANDART;
+	routes = NULL;
+	while (counter != temp)
 	{
-		print_nodes(&nodes);
-		ft_bzero(best_route, sizeof(t_route));
-		recur_route(route, start, dublicate_map(nodes, node_len), node_len, &best_route);
-		if (0 == best_route->size)
-			break;
-		print_route(best_route);
-		route_inverse(&best_route);
+		counter = 0;
+		recur_route(route, start, dublicate_map(nodes, node_len), node_len, &best_route, &counter, status, routes);
+		temp = counter;
+		while (1)
+		{
+			// print_nodes(&nodes);
+			ft_bzero(best_route, sizeof(t_route));
+			recur_route(route, start, dublicate_map(nodes, node_len), node_len, &best_route, &counter, status, routes);
+
+			if (0 == best_route->size)
+				break;
+			// print_route(best_route);
+			route_inverse(&best_route);
+		}
+		// print_nodes(&nodes);
+		route_recovery(nodes);
+		counter = 0;
+		recur_route(route, start, dublicate_map(nodes, node_len), node_len, &best_route, &counter, status, routes);
 	}
+	if (!(routes = (t_route **)ft_memalloc(sizeof(t_route *) * (counter + 1))))
+			ft_exit_fail("Error 11");
 	
-	print_nodes(&nodes);
 
-	route_recovery(nodes);
-	
-	while (1)
-	{
-		print_nodes(&nodes);
-		ft_bzero(best_route, sizeof(t_route));
-		recur_route(route, start, dublicate_map(nodes, node_len), node_len, &best_route);
-		if (0 == best_route->size)
-			break;
-		print_route(best_route);
-		route_inverse(&best_route);
-	}
+	status = END;
+	printf("%d Finish! \n", counter);
+	recur_route(route, start, dublicate_map(nodes, node_len), node_len, &best_route, &counter, status, routes);
+	routes[counter] = NULL;
+	i = -1;
+	// while (NULL != routes[++i])
+		print_route(routes[0]);
+		print_route(routes[1]);
 
-
-	print_nodes(&nodes);
-	route_recovery(nodes);
-
-	print_nodes(&nodes);
-	recur_route(route, start, dublicate_map(nodes, node_len), node_len, &best_route);
 
 	// printf("%.100f", 0.00000000000000000000002);
 
