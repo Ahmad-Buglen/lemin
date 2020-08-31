@@ -6,7 +6,7 @@
 /*   By: dphyliss <dphyliss@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/15 14:28:21 by dphyliss          #+#    #+#             */
-/*   Updated: 2020/08/29 15:53:52 by dphyliss         ###   ########.fr       */
+/*   Updated: 2020/08/31 18:13:02 by dphyliss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -394,7 +394,15 @@ void init_middle(t_node **nodes)
 
 	connect_node(nodes, "C4", "D0");
 	connect_node(nodes, "D0", "C6");
-	
+
+
+	// node_add(nodes, "Z1", (t_coordinates){1, 1}, STANDART);
+	// node_add(nodes, "Z2", (t_coordinates){1, 1}, STANDART);
+	// node_add(nodes, "Z3", (t_coordinates){1, 1}, STANDART);
+	// connect_node(nodes, "C0", "Z1");
+	// connect_node(nodes, "Z1", "Z2");
+	// connect_node(nodes, "Z2", "Z3");
+	// connect_node(nodes, "Z3", "C8");
 }
 
 void	init_min(t_node **nodes)
@@ -684,6 +692,38 @@ void	route_inverse(t_route **best_route)
 	}
 }
 
+void duplicate_exclusion(t_route **routes)
+{
+	int i;
+	int j;
+	int n;
+
+	i = -1;
+	while (NULL != routes[++i])
+	{
+		j = i;
+		while (NULL != routes[++j])
+		{
+			n = 0;
+			while (++n < routes[j]->size - 1)
+				if (node_include(routes[i], routes[j]->elem[n]->index))
+				{
+					n = routes[i]->size >= routes[j]->size ? i : j;
+					free(routes[n]);
+					while (NULL != routes[n + 1])
+					{
+						routes[n] = routes[n + 1];
+						++n;
+					}
+					routes[n] = NULL;
+					if (i != 0)
+						--i;
+					--j;
+					break;
+				}
+		}
+	}
+}
 	// init1(t_node *nodes);
 
 int main()
@@ -741,14 +781,22 @@ int main()
 
 	status = END;
 	printf("%d Finish! \n", counter);
+	counter = 0;
 	recur_route(route, start, dublicate_map(nodes, node_len), node_len, &best_route, &counter, status, routes);
 	routes[counter] = NULL;
+		// print_route(routes[1]);
+		
+
 	i = -1;
-	// while (NULL != routes[++i])
-		print_route(routes[0]);
-		print_route(routes[1]);
+	while (NULL != routes[++i])
+		print_route(routes[i]);
+	if (counter > 2)
+		duplicate_exclusion(routes);
 
-
+	printf(" duplicate_exclusion! \n");
+	i = -1;
+	while (NULL != routes[++i])
+		print_route(routes[i]);
 	// printf("%.100f", 0.00000000000000000000002);
 
 	return (1);
