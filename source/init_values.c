@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_values.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dphyliss <dphyliss@student.42.fr>          +#+  +:+       +#+        */
+/*   By: Alkor <Alkor@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/17 11:20:56 by bsausage          #+#    #+#             */
-/*   Updated: 2020/09/02 18:48:19 by dphyliss         ###   ########.fr       */
+/*   Updated: 2020/09/03 10:49:21 by Alkor            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ t_lem_list		**init_array_of_rooms(t_lem_in *lemin)
 
 	n = 0;
 	if (!(tmp = (t_lem_list**)malloc(sizeof(t_lem_list*) * lemin->num_of_rooms)))
-		return (NULL);
+		close_program(lemin, "init array of rooms error");
 	while (n < lemin->num_of_rooms)
 		tmp[n++] = NULL;
 	return (tmp);

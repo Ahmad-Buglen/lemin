@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   links.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dphyliss <dphyliss@student.42.fr>          +#+  +:+       +#+        */
+/*   By: Alkor <Alkor@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/19 11:48:50 by bsausage          #+#    #+#             */
-/*   Updated: 2020/09/02 19:54:36 by dphyliss         ###   ########.fr       */
+/*   Updated: 2020/09/03 10:49:32 by Alkor            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ int		get_links(t_lem_in *lemin, t_node **nodes)
 	int		gnl;
 	
 	if (!parse_links_line(lemin, nodes))
-		return (0);
+		close_program(lemin, "link error");
 	while ((gnl = get_next_line(0, &lemin->line) > 0))
 	{
 		if (lemin->line[0] == '\0')
@@ -68,8 +68,11 @@ int		get_links(t_lem_in *lemin, t_node **nodes)
 		if (!parse_links_line(lemin, nodes))
 		{
 			ft_memdel((void**)&lemin->line);
-			return (0);
+			close_program(lemin, "link error");
 		}
 	}
-	return (gnl == 0 ? 1 : 0);
+	if (gnl < 0)
+		close_program(lemin, "link error");
+	//return (gnl == 0 ? 1 : 0);
+	return (1);
 }

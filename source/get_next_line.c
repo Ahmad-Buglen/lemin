@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bsausage <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: Alkor <Alkor@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/20 12:38:43 by bsausage          #+#    #+#             */
-/*   Updated: 2019/09/20 12:38:44 by bsausage         ###   ########.fr       */
+/*   Updated: 2020/09/03 09:51:29 by Alkor            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,10 +32,10 @@ static int		read_from_str(char **line, char **str)
 
 static char		*add_buff(int fd, char **str, int *ret)
 {
-	char	buf[BUFF_SIZE + 1];
+	char	buf[BUFFSIZE + 1];
 	char	*tmp;
 
-	*ret = read(fd, buf, BUFF_SIZE);
+	*ret = read(fd, buf, BUFFSIZE);
 	buf[*ret] = '\0';
 	tmp = ft_strdup(*str);
 	ft_memdel((void**)str);
@@ -58,7 +58,7 @@ int				get_next_line(const int fd, char **line)
 	static char		*str[FD_MAXSET];
 
 	ret = 1;
-	if (!line || fd < 0 || fd >= FD_MAXSET || BUFF_SIZE < 1 ||
+	if (!line || fd < 0 || fd >= FD_MAXSET || BUFFSIZE < 1 ||
 		read(fd, NULL, 0) < 0)
 		return (-1);
 	while (ret > 0)

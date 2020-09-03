@@ -3,17 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dphyliss <dphyliss@student.42.fr>          +#+  +:+       +#+        */
+/*   By: Alkor <Alkor@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/14 11:10:02 by bsausage          #+#    #+#             */
-/*   Updated: 2020/09/02 18:54:02 by dphyliss         ###   ########.fr       */
+/*   Updated: 2020/09/03 09:51:08 by Alkor            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef GET_NEXT_LINE_H
 # define GET_NEXT_LINE_H
 
-// # define BUFF_SIZE 128
+# define BUFFSIZE 128
 # define FD_MAXSET 4864
 
 # include <sys/types.h>

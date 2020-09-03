@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rooms.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dphyliss <dphyliss@student.42.fr>          +#+  +:+       +#+        */
+/*   By: Alkor <Alkor@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/19 11:45:58 by bsausage          #+#    #+#             */
-/*   Updated: 2020/09/02 19:51:44 by dphyliss         ###   ########.fr       */
+/*   Updated: 2020/09/03 10:57:30 by Alkor            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,10 +56,12 @@ void		get_room_name_coords(t_lem_in *lemin, t_node **nodes)
 
 	name = NULL;
 	check_room_name_coords_line(&name, &coords, lemin);
-	// if (!(room = room_push_back(&lemin->room_list, name, coords, lemin)))
-	// 	close_program(lemin, "malloc error");
-	room = NULL;
-	node_add(nodes,  name,  coords,  STANDART);
+	if (!(room = room_push_back(&lemin->room_list, name, coords, lemin)))
+		close_program(lemin, "malloc error");
+	
+	node_add(nodes,  name,  coords, lemin->position); //dphyliss' function
+									//последний аргумент идет из структуры bsausage,
+									//числовые значения соответвуют значениям dphyliss
 
 	list_push_front(&lemin->hash_map[calc_hash_index(name)], NULL, room);
 	if (lemin->position == START && !lemin->start_flag)

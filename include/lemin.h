@@ -8,9 +8,9 @@
 
 # define SIZE 1024
 # define BUFF 1000000
-# define START_A 1
-# define STANDART 2
-# define END_A 3
+# define START_A 0 //changed
+# define STANDART 1 //changed
+# define END_A 2 //changed
 # define VISIT 7
 # define NO_VISIT 0
 
@@ -75,8 +75,8 @@ typedef struct		s_map
 typedef enum
 {
 	START,
-	END,
-	MIDDLE
+	MIDDLE,
+	END
 }	t_position;
 
 typedef enum

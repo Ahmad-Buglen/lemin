@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lemin.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dphyliss <dphyliss@student.42.fr>          +#+  +:+       +#+        */
+/*   By: Alkor <Alkor@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/15 14:28:21 by dphyliss          #+#    #+#             */
-/*   Updated: 2020/09/02 20:12:34 by dphyliss         ###   ########.fr       */
+/*   Updated: 2020/09/03 10:53:35 by Alkor            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -759,18 +759,18 @@ int main(int argc, char **argv)
 {
 
 	t_node *nodes;
-	t_node *start;
+	// t_node *start;
 
-	t_node *end;
-	t_route route;
-	t_route *best_route;
-	t_route **routes;
+	// t_node *end;
+	// t_route route;
+	// t_route *best_route;
+	// t_route **routes;
 
-	int node_len;
-	int counter;
-	int temp;
-	int status;
-	int i;
+	// int node_len;
+	// int counter;
+	// int temp;
+	// int status;
+	// int i;
 
 	nodes = NULL;
 
@@ -783,21 +783,24 @@ int main(int argc, char **argv)
 	get_num_of_ants(&lemin);
 	get_rooms(&lemin, &nodes);
 	if (!lemin.start_flag || !lemin.end_flag)
-		close_program(&lemin, "no start or end room");		
+	 	close_program(&lemin, "no start or end room");		
 	if (!(lemin.adjacency_matrix = init_adjacency_matrix(lemin.num_of_rooms)))
-		close_program(&lemin, "init_adjacency_matrix error");
-	if (!(lemin.array_of_rooms = init_array_of_rooms(&lemin)))
-		close_program(&lemin, "init array of rooms error");
-	if (!get_links(&lemin, &nodes))
-		close_program(&lemin, "link error");
+	 	close_program(&lemin, "init_adjacency_matrix error");
+	lemin.array_of_rooms = init_array_of_rooms(&lemin);
+	get_links(&lemin, &nodes);
 	if (!lemin.array_of_rooms[lemin.start_index] || !lemin.array_of_rooms[lemin.end_index])
 		close_program(&lemin, "start or/and end room is/are without links");
 
+ 	// printf("num of ants = %d\n", lemin.num_of_ants);
+ 	// print_room_list(lemin.room_list);
+ 	// print_hash_map(lemin.hash_map);
+ 	// print_array_of_rooms(&lemin);
+ 	// print_adjacency_matrix(&lemin);
 
-// print_nodes(&nodes);
+ print_nodes(&nodes);
 
 
-	// init_middle(&nodes);
+/*	//init_middle(&nodes);
 	node_len = node_length(nodes);
 
 	// start = start_find(&nodes, START_A);
@@ -858,5 +861,7 @@ int main(int argc, char **argv)
 		print_route(routes[i]);
 	// printf("%.100f", 0.00000000000000000000002);
 
+
+	*/
 	return (1);
 }
