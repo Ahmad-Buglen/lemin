@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lemin.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: Alkor <Alkor@student.42.fr>                +#+  +:+       +#+        */
+/*   By: dphyliss <dphyliss@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/15 14:28:21 by dphyliss          #+#    #+#             */
-/*   Updated: 2020/09/03 10:53:35 by Alkor            ###   ########.fr       */
+/*   Updated: 2020/09/05 19:43:42 by dphyliss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -181,7 +181,7 @@ void print_nodes(t_node **nodes)
 	temp = *nodes;
 	while (NULL != temp)
 	{
-		printf("%s [%d] (%d, %d) ", temp->name, temp->index, temp->coordinates.x, temp->coordinates.y);
+		printf("%s [%d] (%d, %d) type - %d; con_size - %d ", temp->name, temp->index, temp->coordinates.x, temp->coordinates.y, temp->type, temp->con_size);
 		if (0 != temp->con_size)
 		{
 			i = 0;
@@ -571,8 +571,10 @@ int *dublicate_map2(int *map_src, int node_len)
 		if (!(map_dest = (int *)ft_memalloc(sizeof(int) * node_len)))
 			ft_exit_fail("Error 7");
 		i = -1;
-		while (++i < node_len)
-			map_dest[i] = map_src[i];
+
+		ft_memcpy((void *) map_dest, (void *) map_src, sizeof(int) * node_len);
+		// while (++i < node_len)
+		// 	map_dest[i] = map_src[i];
 		return (map_dest);
 	}
 	return (NULL);
@@ -612,7 +614,7 @@ void recur_route(t_route route, t_node *node, int *map, int node_len, t_route **
 {
 	int i;
 	int sides;
-
+// write(1, "test", 4);
 	route.elem[route.size++] = node;
 	// printf("%s \n", node->name);
 	if (END_A == node->type)
@@ -747,7 +749,8 @@ void duplicate_exclusion(t_route **routes)
 					routes[n] = NULL;
 					if (i != 0)
 						--i;
-					--j;
+					if (j != 1)	
+						--j;
 					break;
 				}
 		}
@@ -759,18 +762,18 @@ int main(int argc, char **argv)
 {
 
 	t_node *nodes;
-	// t_node *start;
+	t_node *start;
 
-	// t_node *end;
-	// t_route route;
-	// t_route *best_route;
-	// t_route **routes;
+	t_node *end;
+	t_route route;
+	t_route *best_route;
+	t_route **routes;
 
-	// int node_len;
-	// int counter;
-	// int temp;
-	// int status;
-	// int i;
+	int node_len;
+	int counter;
+	int temp;
+	int status;
+	int i;
 
 	nodes = NULL;
 
@@ -787,6 +790,7 @@ int main(int argc, char **argv)
 	if (!(lemin.adjacency_matrix = init_adjacency_matrix(lemin.num_of_rooms)))
 	 	close_program(&lemin, "init_adjacency_matrix error");
 	lemin.array_of_rooms = init_array_of_rooms(&lemin);
+	
 	get_links(&lemin, &nodes);
 	if (!lemin.array_of_rooms[lemin.start_index] || !lemin.array_of_rooms[lemin.end_index])
 		close_program(&lemin, "start or/and end room is/are without links");
@@ -800,13 +804,14 @@ int main(int argc, char **argv)
  print_nodes(&nodes);
 
 
-/*	//init_middle(&nodes);
+//init_middle(&nodes);
 	node_len = node_length(nodes);
 
-	// start = start_find(&nodes, START_A);
-	 start = node_find(&nodes, "Z_k1");
-	 end = node_find(&nodes, "Adu3");
-	 end->type = END_A;
+	start = start_find(&nodes, START_A);
+	//  start = node_find(&nodes, "Z_k1");
+	//  end = node_find(&nodes, "Adu3");
+	//  end->type = END_A;
+	//*	
 	if (!(best_route = (t_route *)ft_memalloc(sizeof(t_route))))
 			ft_exit_fail("Error 9");
 
@@ -816,6 +821,7 @@ int main(int argc, char **argv)
 	counter = -1;
 	status = STANDART;
 	routes = NULL;
+
 	while (counter != temp)
 	{
 		counter = 0;
@@ -832,11 +838,13 @@ int main(int argc, char **argv)
 			// print_route(best_route);
 			route_inverse(&best_route);
 		}
+
 		// print_nodes(&nodes);
 		route_recovery(nodes);
 		counter = 0;
 		recur_route(route, start, dublicate_map(nodes, node_len), node_len, &best_route, &counter, status, routes);
 	}
+
 	if (!(routes = (t_route **)ft_memalloc(sizeof(t_route *) * (counter + 1))))
 			ft_exit_fail("Error 11");
 	
@@ -852,16 +860,22 @@ int main(int argc, char **argv)
 	// i = -1;
 	// while (NULL != routes[++i])
 	// 	print_route(routes[i]);
+	
 	if (counter > 2)
-		duplicate_exclusion(routes);
-
+	{
 	// printf(" duplicate_exclusion! \n");
+		duplicate_exclusion(routes);
+	}
+// write(1, "here\n", 5);
 	i = -1;
 	while (NULL != routes[++i])
 		print_route(routes[i]);
+	printf("\n%d", i);
+
+//  print_nodes(&nodes);
 	// printf("%.100f", 0.00000000000000000000002);
 
 
-	*/
+	//*/
 	return (1);
 }

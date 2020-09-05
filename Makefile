@@ -53,7 +53,8 @@
 NAME = lem-in
 
 CC = gcc 
-FLAGS = -Wextra -Wall -Werror -g
+FLAGS = -g
+#-Wextra -Wall -Werror -g
 LIBRARIES = -lm -lft -L$(LIBFT_DIRECTORY)
 VIS_LIBRARIES = -lmlx -lm -L$(MINILIBX_DIRECTORY) -framework OpenGL -framework AppKit
 

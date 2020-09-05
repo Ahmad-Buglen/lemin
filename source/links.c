@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   links.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: Alkor <Alkor@student.42.fr>                +#+  +:+       +#+        */
+/*   By: dphyliss <dphyliss@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/19 11:48:50 by bsausage          #+#    #+#             */
-/*   Updated: 2020/09/03 10:49:32 by Alkor            ###   ########.fr       */
+/*   Updated: 2020/09/05 17:45:13 by dphyliss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,9 +43,10 @@ int		parse_links_line(t_lem_in *lemin, t_node **nodes)
 	lemin->adjacency_matrix[room_1][room_2] = 1;
 	lemin->adjacency_matrix[room_2][room_1] = 1;
 	ft_memdel((void**)&lemin->line);
-	return (room_1 < 0 || room_1 < 0 ? 0 : 1);
+	
 
 	connect_node(nodes,  room_name1,  room_name2);
+	return (room_1 < 0 || room_1 < 0 ? 0 : 1);
 }
 
 int		get_links(t_lem_in *lemin, t_node **nodes)

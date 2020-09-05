@@ -8,14 +8,14 @@
 
 # define SIZE 1024
 # define BUFF 1000000
-# define START_A 0 //changed
-# define STANDART 1 //changed
-# define END_A 2 //changed
+# define START_A 1 //changed
+# define STANDART 2 //changed
+# define END_A 3 //changed
 # define VISIT 7
 # define NO_VISIT 0
 
 
-# define ROUTE_SIZE 100
+# define ROUTE_SIZE 2000
 
 
 typedef struct  s_coords
@@ -40,7 +40,7 @@ typedef struct		s_node
 	int				type;
 	int				con_size;
 	struct s_node	**connections;
-	struct s_node	*next;
+	struct s_node	*next;./
 }					t_node;
 
 typedef struct		s_map
@@ -74,6 +74,7 @@ typedef struct		s_map
 
 typedef enum
 {
+	DEFAULT,
 	START,
 	MIDDLE,
 	END
