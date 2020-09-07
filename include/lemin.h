@@ -1,21 +1,30 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   lemin.h                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: dphyliss <dphyliss@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/09/07 17:12:23 by dphyliss          #+#    #+#             */
+/*   Updated: 2020/09/07 17:12:23 by dphyliss         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 
-#ifndef PUSH_SWAP_H
-# define PUSH_SWAP_H
+#ifndef LEM_IN_H
+# define LEM_IN_H
 
 # include "../libft/libft.h"
 # include <stdio.h>
 
-# define SIZE 1024
-# define BUFF 1000000
-# define START_A 1 //changed
-# define STANDART 2 //changed
-# define END_A 3 //changed
+# define START_A 1
+# define STANDART 2
+# define END_A 3
 # define VISIT 7
 # define NO_VISIT 0
 
 
-# define ROUTE_SIZE 2000
+# define ROUTE_SIZE 2500
 
 
 typedef struct  s_coords
@@ -40,7 +49,7 @@ typedef struct		s_node
 	int				type;
 	int				con_size;
 	struct s_node	**connections;
-	struct s_node	*next;./
+	struct s_node	*next;
 }					t_node;
 
 typedef struct		s_map
