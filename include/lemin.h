@@ -22,7 +22,7 @@
 # define END_A 3
 # define VISIT 7
 # define NO_VISIT 0
-
+# define MAX_INT 2147483647
 
 # define ROUTE_SIZE 2500
 
@@ -42,12 +42,14 @@ typedef struct		s_route
 typedef struct		s_node
 {
 	char			*name;
-	t_coords	coordinates;
+	t_coords		coordinates;
 	int				index;
 	int				busy;
 	int				pass;
 	int				type;
 	int				con_size;
+	int				weight;
+	t_route			*route;
 	struct s_node	**connections;
 	struct s_node	*next;
 }					t_node;
@@ -139,6 +141,10 @@ typedef struct      s_lem_in
 }					t_lem_in;
 
 //init/malloc functions
+
+
+void				init_min(t_node **nodes);
+void 				init_middle(t_node **nodes);
 
 void				connect_node(t_node **nodes, char *name1, char *name2);
 void 				node_add(t_node **nodes, char *name, t_coords coordinates, int type);
