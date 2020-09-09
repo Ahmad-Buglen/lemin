@@ -33,6 +33,13 @@ typedef struct  s_coords
 	int         y;
 }               t_coords;
 
+typedef enum
+{
+	EMPTY,
+	NOT_EMPTY
+}	t_status;
+
+
 typedef struct		s_route
 {
 	int				size;
@@ -90,12 +97,6 @@ typedef enum
 	MIDDLE,
 	END
 }	t_position;
-
-typedef enum
-{
-	EMPTY,
-	NOT_EMPTY
-}	t_status;
 
 
 typedef struct		s_room
@@ -204,6 +205,8 @@ void				print_hash_map(t_lem_list *hash_map[HASH_SIZE]);
 void				print_adjacency_matrix(t_lem_in *lemin);
 void				print_array_of_rooms(t_lem_in *lemin);
 
-
+void				init_array_of_ants(t_lem_in *lemin);
+void				find_path_2(t_lem_in *lemin, t_lem_list **path, t_route *route);
+void				print_solution(t_lem_in *lemin);
 
 #endif
