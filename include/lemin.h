@@ -193,6 +193,10 @@ int					check_command_line(t_lem_in *lemin);
 void				free_all(t_lem_in *lemin);
 void				close_program(t_lem_in *lemin, char *error_msg);
 
+//print				functions
+
+void				print_ant_farm(t_lem_in *lemin);
+
 //tmp_functions
 
 void				print_room_list(t_room *room_list);
