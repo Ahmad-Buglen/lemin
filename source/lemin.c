@@ -6,7 +6,7 @@
 /*   By: dphyliss <dphyliss@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/15 14:28:21 by dphyliss          #+#    #+#             */
-/*   Updated: 2020/09/09 19:57:48 by dphyliss         ###   ########.fr       */
+/*   Updated: 2020/09/12 20:02:46 by dphyliss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -489,49 +489,89 @@ void	dijkstra_weight(t_node **nodes)
 	}
 }
 
+void	nodes_pass(t_node **nodes)
+{
+	t_node *temp;
+
+	temp = *nodes;
+	while (NULL != temp)
+	{
+		temp->pass = NO_VISIT;
+		if (NULL != temp->route)
+		{
+			free(temp->route);
+			temp->route = NULL;
+		}
+		temp = temp->next;
+	}
+}
 //need write route free after dijkstra_search
 
-
-void	dijkstra_search(t_route *route, t_node *node, int *map, int node_len)
+int fifo_include(t_node **fifo_nodes, t_node * node)
 {
 	int i;
+
+
+	i = -1;
+	while (NULL != fifo_nodes[++i])
+		if (fifo_nodes[i] == node)
+			return (1);
+	return (0);
+}
+
+	
+void	dijkstra_search(t_route *route, t_node **fifo_nodes)
+{
+	int i;
+	int j;
+	int n;
 	int sides;
 	t_route *temp;
-	route->elem[route->size++] = node;
 	// printf("%s \n", node->name);
 	
+	n = 1;
 	i = 0;
-	while (i < node->con_size)
+	route->elem[route->size++] = fifo_nodes[i];
+	fifo_nodes[i]->route = route;
+	while (n > i)
 	{
-		if (NO_VISIT == map[node->connections[i]->index])
+		j = 0;
+		while (fifo_nodes[i]->con_size > j)
 		{
-			if (node->weight + 1 < node->connections[i]->weight)
-			{
-				node->connections[i]->weight = node->weight + 1;
-				if (NULL != node->connections[i]->route)
+			// if (NO_VISIT == fifo_nodes[i]->connections[j]->pass)
+			// {
+				if ((NO_VISIT == fifo_nodes[i]->connections[j]->pass) &&
+						(fifo_nodes[i]->weight + 1 < fifo_nodes[i]->connections[j]->weight))
 				{
-					free(node->connections[i]->route);
-					node->connections[i]->route = NULL;
+					fifo_nodes[i]->connections[j]->weight = fifo_nodes[i]->weight + 1;
+					if (NULL != fifo_nodes[i]->connections[j]->route)
+					{
+						free(fifo_nodes[i]->connections[j]->route);
+						fifo_nodes[i]->connections[j]->route = NULL;
+					}
+					temp = route_copy(fifo_nodes[i]->route);
+					temp->elem[temp->size++] = fifo_nodes[i]->connections[j];
+					fifo_nodes[i]->connections[j]->route = temp;
 				}
-				temp = route_copy(route);
-				temp->elem[temp->size++] = node->connections[i];
-				node->connections[i]->route = temp;
-			}
+				if (!fifo_include(fifo_nodes, fifo_nodes[i]->connections[j]))
+					fifo_nodes[n++] = fifo_nodes[i]->connections[j];
+			// }
+			++j;
 		}
+		fifo_nodes[i]->pass = VISIT;
 		++i;
 	}
-	i = 0;
-	while (i < node->con_size)
-	{
-		if (NO_VISIT == map[node->connections[i]->index] && !node_include(route, node->connections[i]->index) ) // maybe ? && (route->size < 100)
-			dijkstra_search(route_copy(route), node->connections[i], dublicate_map2(map, node_len), node_len);
-		++i;
-	}
-	node->pass = VISIT;
-	free(route);
-	route = NULL;
-	if (0 < node_len) //<
-		free(map);
+	// i = 0;
+	// while (i < node->con_size)
+	// {
+	// 	if (NO_VISIT == map[node->connections[i]->index] && !node_include(route, node->connections[i]->index) ) // maybe ? && (route->size < 100)
+	// 		dijkstra_search(route_copy(route), node->connections[i], dublicate_map2(map, node_len), node_len);
+	// 	++i;
+	// }
+	// free(route);
+	// route = NULL;
+	// if (0 < node_len) //<
+	// 	free(map);
 }
 //*/
 int main(int argc, char **argv)
@@ -640,16 +680,40 @@ int main(int argc, char **argv)
 //*
 	// nodes = NULL;
 	// init_middle(&nodes);
-	dijkstra_weight(&nodes);
+
+	t_node **fifo_nodes;
+
+
+ 	print_nodes(&nodes);
 	node_len = node_length(nodes);
-	buff = start_find(&nodes, START);
-	buff->weight = 0;
+
+	if (!(fifo_nodes = (t_node **)ft_memalloc(sizeof(t_node *) * node_len)))  // node_len != 0 ?
+		ft_exit_fail("Error 14");
+
+	start = start_find(&nodes, START_A);
+	end = start_find(&nodes, END_A);
+	start->weight = 0;
 	if (!(route = (t_route *)ft_memalloc(sizeof(t_route))))
 			ft_exit_fail("Error 13");
-	dijkstra_search(route, buff, dublicate_map(nodes, node_len), node_len);
-	buff = start_find(&nodes, END);
-	print_route(buff->route);
-	printf("\n %d", buff->route->size);
+
+	while (1)
+	{
+		dijkstra_weight(&nodes);
+		fifo_nodes[0] = start;
+		dijkstra_search(route, fifo_nodes);
+		if (MAX_INT != end->route->size)
+			print_route(end->route);
+		else
+			break;
+		route_inverse(&end->route);
+		ft_bzero(fifo_nodes, sizeof(fifo_nodes) * node_len);
+		ft_bzero(route, sizeof(route));
+		nodes_pass(&nodes);
+	}
+	// route_recovery(nodes);
+
+
+	// printf("\n %d \n", buff->route->size);
 //*/
 
  	// print_nodes(&nodes);
