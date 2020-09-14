@@ -22,7 +22,7 @@
 # define END_A 3
 # define VISIT 7
 # define NO_VISIT 0
-# define MAX_INT 2147483647
+# define BIG_INT 1111111111
 
 # define ROUTE_SIZE 2500
 
@@ -68,6 +68,17 @@ typedef struct		s_map
 	struct s_map	*next;
 }					t_map;
 
+typedef struct      s_lemin
+{
+	t_node			**nodes;
+	int				max_route_count;
+	t_node			*start;
+	t_node			*end;
+	int 			node_len;
+	t_node			**fifo_nodes;
+	t_route			**routes;
+	int				route_count;
+}					t_lemin;
 
 
 // typedef struct  s_ps
