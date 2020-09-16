@@ -25,6 +25,8 @@
 # define BIG_INT 1111111111
 
 # define ROUTE_SIZE 2500
+# define CYCLE_SIZE 2
+
 
 
 typedef struct  s_coords

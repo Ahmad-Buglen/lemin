@@ -6,7 +6,7 @@
 /*   By: dphyliss <dphyliss@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/15 14:28:21 by dphyliss          #+#    #+#             */
-/*   Updated: 2020/09/14 19:44:56 by dphyliss         ###   ########.fr       */
+/*   Updated: 2020/09/16 17:16:18 by dphyliss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -290,7 +290,7 @@ int routes_compare(t_route **prev, t_route **next)
 			return (1);
 		++i;
 	}
-	if (NULL != prev[i] || NULL != next[i])
+	if (NULL != prev[i] && NULL != next[i])
 		return (1);
 	return (0);
 }
@@ -596,7 +596,7 @@ void	dijkstra_search(t_route *route, t_node **fifo_nodes)
 			// if (NO_VISIT == fifo_nodes[i]->connections[j]->pass)
 			// {
 				if ((NO_VISIT == fifo_nodes[i]->connections[j]->pass) &&
-						(fifo_nodes[i]->weight + 1 < fifo_nodes[i]->connections[j]->weight))
+						(fifo_nodes[i]->weight + 1 <= fifo_nodes[i]->connections[j]->weight))
 				{
 					fifo_nodes[i]->connections[j]->weight = fifo_nodes[i]->weight + 1;
 					if (NULL != fifo_nodes[i]->connections[j]->route)
@@ -783,34 +783,23 @@ int main(int argc, char **argv)
 	// nodes = NULL;
 	// init_middle(&nodes);
 
-	// t_route **prev;
-	// t_route **next;
+	t_route **prev;
+	t_route **next;
 
 	lemin_a = lemin_init(&nodes);
 
 	// ft_memcmp(const void *s1, const void *s2, size_t n);
 
-	// bhandari_search(lemin_a);
-	// prev = routes_copy(lemin_a->routes, lemin_a->route_count);
-	// next = NULL;
-	// while (0 != routes_compare(prev, next))
-	// {
-	// 			// write(1, "here\n", 5);
-	// 	prev = routes_copy(lemin_a->routes, lemin_a->route_count);
-	// 	i = -1;
-	// 	write(1, "prev\n", 5);
-	// 	while (NULL != prev[i])
-	// 		print_route(prev[i]);	
-	// 	bhandari_search(lemin_a);
-	// 	next = routes_copy(lemin_a->routes, lemin_a->route_count);
-	// 	i = -1;
-	// 	write(1, "next\n", 5);
-	// 	while (NULL != next[i])
-	// 		print_route(next[i]);
-	// }
-	i = 0;
-	while (++i <= 3)
+	bhandari_search(lemin_a);
+	next = routes_copy(lemin_a->routes, lemin_a->route_count);
+	prev = NULL;
+	i = -1;
+	while (0 != routes_compare(prev, next) && ++i < CYCLE_SIZE)
+	{
 		bhandari_search(lemin_a);
+		prev = next;
+		next = routes_copy(lemin_a->routes, lemin_a->route_count);
+	}
 
 	i = -1;
 	while (++i < lemin_a->route_count)
@@ -821,7 +810,7 @@ int main(int argc, char **argv)
 	}
 	
  	// print_nodes(&nodes);
-	// printf("\n %d \n", buff->route->size);
+	printf("\n %d \n", lemin_a->route_count);
 //*/
 
  	// print_nodes(&nodes);
