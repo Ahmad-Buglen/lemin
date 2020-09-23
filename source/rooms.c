@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rooms.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: Alkor <Alkor@student.42.fr>                +#+  +:+       +#+        */
+/*   By: dphyliss <dphyliss@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/19 11:45:58 by bsausage          #+#    #+#             */
-/*   Updated: 2020/09/03 10:57:30 by Alkor            ###   ########.fr       */
+/*   Updated: 2020/09/23 18:29:36 by dphyliss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 #include <limits.h>
 
 
-void 				connect_node(t_node **nodes, char *name1, char *name2);
+void 				connect_node(t_room **nodes, char *name1, char *name2);
 
 void	check_room_name_coords_line(char **name, t_coords *coords, t_lem_in *lemin)
 {
@@ -48,7 +48,7 @@ void	check_room_name_coords_line(char **name, t_coords *coords, t_lem_in *lemin)
 }
 
 
-void		get_room_name_coords(t_lem_in *lemin, t_node **nodes)
+void		get_room_name_coords(t_lem_in *lemin, t_room **nodes)
 {
 	t_coords		coords;
 	t_room			*room;
@@ -78,7 +78,7 @@ void		get_room_name_coords(t_lem_in *lemin, t_node **nodes)
 	lemin->num_of_rooms++;
 }
 
-void	get_rooms(t_lem_in *lemin, t_node **nodes)
+void	get_rooms(t_lem_in *lemin, t_room **nodes)
 {
 	int		gnl;
 	

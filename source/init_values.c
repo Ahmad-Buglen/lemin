@@ -3,24 +3,24 @@
 /*                                                        :::      ::::::::   */
 /*   init_values.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: Alkor <Alkor@student.42.fr>                +#+  +:+       +#+        */
+/*   By: dphyliss <dphyliss@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/17 11:20:56 by bsausage          #+#    #+#             */
-/*   Updated: 2020/09/03 10:49:21 by Alkor            ###   ########.fr       */
+/*   Updated: 2020/09/23 18:20:33 by dphyliss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lemin.h"
 #include "libft.h"
 
-void		assign_by_zero_path_len(t_lem_in *lemin)
-{
-	int		i;
+// void		assign_by_zero_path_len(t_lem_in *lemin)
+// {
+// 	int		i;
 
-	i = 0;
-	while (i < 100)
-		lemin->path_len[i++] = 0;
-}
+// 	i = 0;
+// 	while (i < 100)
+// 		lemin->path_len[i++] = 0;
+// }
 
 void		init_values(t_lem_in *lemin)
 {
@@ -41,7 +41,7 @@ void		init_values(t_lem_in *lemin)
 	// lemin->path3 = NULL;
 	lemin->array_of_ants = NULL;
 	assign_null_hash_map(lemin);
-	assign_by_zero_path_len(lemin);
+	// assign_by_zero_path_len(lemin);
 }
 
 int			**init_adjacency_matrix(int n)

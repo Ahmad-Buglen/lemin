@@ -45,23 +45,12 @@ typedef enum
 typedef struct		s_route
 {
 	int				size;
-	struct s_node	*elem[ROUTE_SIZE];
+	struct s_room	*elem[ROUTE_SIZE];
 }					t_route;
 
-typedef struct		s_node
-{
-	char			*name;
-	t_coords		coordinates;
-	int				index;
-	int				busy;
-	int				pass;
-	int				type;
-	int				con_size;
-	int				weight;
-	t_route			*route;
-	struct s_node	**connections;
-	struct s_node	*next;
-}					t_node;
+// typedef struct		s_node
+// {
+// }					t_node;
 
 typedef struct		s_map
 {
@@ -70,17 +59,9 @@ typedef struct		s_map
 	struct s_map	*next;
 }					t_map;
 
-typedef struct      s_lemin
-{
-	t_node			**nodes;
-	int				max_route_count;
-	t_node			*start;
-	t_node			*end;
-	int 			node_len;
-	t_node			**fifo_nodes;
-	t_route			**routes;
-	int				route_count;
-}					t_lemin;
+// typedef struct      s_lemin
+// {
+// }					t_lemin;
 
 
 // typedef struct  s_ps
@@ -115,13 +96,26 @@ typedef enum
 typedef struct		s_room
 {
     char			*name;
-	int				index;
-	int				level;
+	int				index_a;
     t_coords		coords;
 	t_position		position;
 	t_status		status;
-	int				flag;
 	struct s_room	*next;
+	
+	char			*name_a;
+	t_coords		coordinates;
+	int				index;
+	int				pass;
+	int				type;
+	int				con_size;
+	int				weight;
+	t_route			*route;
+	struct s_room	**connections;
+	struct s_room	*next_a;
+
+	
+	int				flag;
+	int				level;
 }					t_room;
 
 typedef struct			s_lem_list
@@ -138,30 +132,36 @@ typedef struct      s_lem_in
 	int				**adjacency_matrix;
 	t_lem_list		**array_of_rooms;
 	t_lem_list		*path;
-	//t_lem_list		*path2;
-	//t_lem_list		*path3;
-	t_lem_list		*queue_begin;
-	t_lem_list		*queue_end;
 	t_lem_list		**array_of_ants;
 	t_position		position;
-	int				path_len[100];
 	int				num_of_ants;
 	int				num_of_rooms;
 	int				start_flag;
 	int				end_flag;
+	t_room			*start;
+	t_room			*end;
+	t_room			**nodes;
+	int				max_route_count;
+	int 			node_len;
+	t_room			**fifo_nodes;
+	t_route			**routes;
+	int				route_count;
+	
+	int				vis_flag;
 	unsigned int	start_index;
 	unsigned int	end_index;
-	int				vis_flag;
+	t_lem_list		*queue_begin;
+	t_lem_list		*queue_end;
 }					t_lem_in;
 
 //init/malloc functions
 
 
-void				init_min(t_node **nodes);
-void 				init_middle(t_node **nodes);
+void				init_min(t_room **nodes);
+void 				init_middle(t_room **nodes);
 
-void				connect_node(t_node **nodes, char *name1, char *name2);
-void 				node_add(t_node **nodes, char *name, t_coords coordinates, int type);
+void				connect_node(t_room **nodes, char *name1, char *name2);
+void 				node_add(t_room **nodes, char *name, t_coords coordinates, int type);
 long				ft_strtol(const char *str, char **end);
 t_room				*room_create_elem(char *name, t_coords coords, t_lem_in *lemin);
 t_room				*room_push_back(t_room **begin, char *name, t_coords coords, t_lem_in *lemin);
@@ -184,14 +184,14 @@ void				push_to_stack(t_lem_in *lemin, t_room *room);
 
 //rooms
 
-void				get_room_name_coords(t_lem_in *lemin, t_node **nodes);
-void				get_rooms(t_lem_in *lemin, t_node **nodes);
+void				get_room_name_coords(t_lem_in *lemin, t_room **nodes);
+void				get_rooms(t_lem_in *lemin, t_room **nodes);
 int					find_room_index(t_lem_in *lemin, char *room_name);
 
 //links
 
-int					get_links(t_lem_in *lemin, t_node **nodes);
-int					parse_links_line(t_lem_in *lemin, t_node **nodes);
+int					get_links(t_lem_in *lemin);
+int					parse_links_line(t_lem_in *lemin);
 
 //other parsing funcs
 

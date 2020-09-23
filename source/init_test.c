@@ -6,13 +6,13 @@
 /*   By: dphyliss <dphyliss@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/07 17:15:16 by dphyliss          #+#    #+#             */
-/*   Updated: 2020/09/07 17:15:49 by dphyliss         ###   ########.fr       */
+/*   Updated: 2020/09/23 18:39:33 by dphyliss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/lemin.h"
 
-void init_middle(t_node **nodes)
+void init_middle(t_room **nodes)
 {
 	node_add(nodes, "A0", (t_coords){1, 1}, STANDART);
 	node_add(nodes, "A1", (t_coords){1, 1}, START_A);
@@ -247,7 +247,7 @@ void init_middle(t_node **nodes)
 	// connect_node(nodes, "Z3", "C8");
 }
 
-void	init_min(t_node **nodes)
+void	init_min(t_room **nodes)
 {
 	node_add(nodes, "A", (t_coords){1, 1}, START_A);
 	node_add(nodes, "B", (t_coords){1, 1}, STANDART);

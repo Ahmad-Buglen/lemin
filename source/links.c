@@ -6,7 +6,7 @@
 /*   By: dphyliss <dphyliss@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/19 11:48:50 by bsausage          #+#    #+#             */
-/*   Updated: 2020/09/05 17:45:13 by dphyliss         ###   ########.fr       */
+/*   Updated: 2020/09/23 19:20:40 by dphyliss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include "get_next_line.h"
 #include "lemin.h"
 
-int		parse_links_line(t_lem_in *lemin, t_node **nodes)
+int		parse_links_line(t_lem_in *lemin)
 {
 	char	*end;
 	char	*room_name1;
@@ -44,17 +44,17 @@ int		parse_links_line(t_lem_in *lemin, t_node **nodes)
 	lemin->adjacency_matrix[room_2][room_1] = 1;
 	ft_memdel((void**)&lemin->line);
 	
-
-	connect_node(nodes,  room_name1,  room_name2);
+	connect_node(lemin->nodes,  room_name1,  room_name2);
 	return (room_1 < 0 || room_1 < 0 ? 0 : 1);
 }
 
-int		get_links(t_lem_in *lemin, t_node **nodes)
+int		get_links(t_lem_in *lemin)
 {
 	int		gnl;
 	
-	if (!parse_links_line(lemin, nodes))
+	if (!parse_links_line(lemin))
 		close_program(lemin, "link error");
+
 	while ((gnl = get_next_line(0, &lemin->line) > 0))
 	{
 		if (lemin->line[0] == '\0')
@@ -66,7 +66,7 @@ int		get_links(t_lem_in *lemin, t_node **nodes)
 			ft_memdel((void**)&lemin->line);
 			continue;
 		}
-		if (!parse_links_line(lemin, nodes))
+		if (!parse_links_line(lemin))
 		{
 			ft_memdel((void**)&lemin->line);
 			close_program(lemin, "link error");
