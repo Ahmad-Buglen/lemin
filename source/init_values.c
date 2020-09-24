@@ -6,7 +6,7 @@
 /*   By: dphyliss <dphyliss@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/17 11:20:56 by bsausage          #+#    #+#             */
-/*   Updated: 2020/09/23 18:20:33 by dphyliss         ###   ########.fr       */
+/*   Updated: 2020/09/24 17:19:21 by dphyliss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,8 @@ void		init_values(t_lem_in *lemin)
 	lemin->queue_begin = NULL;
 	lemin->queue_end = NULL;
 	lemin->path = NULL;
+
+	lemin->nodes = NULL; // ?
 	// lemin->path2 = NULL;
 	// lemin->path3 = NULL;
 	lemin->array_of_ants = NULL;

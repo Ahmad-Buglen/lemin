@@ -6,7 +6,7 @@
 /*   By: dphyliss <dphyliss@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/15 14:28:21 by dphyliss          #+#    #+#             */
-/*   Updated: 2020/09/23 19:20:27 by dphyliss         ###   ########.fr       */
+/*   Updated: 2020/09/24 18:39:30 by dphyliss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ long			ft_strtol(const char *str, char **end)
 }
 
 
-void node_add(t_room **nodes, char *name, t_coords coordinates, int type)
+void node_add(t_lem_in *lemin, char *name, t_coords coordinates, int type)
 {
 	t_room *temp;
 	t_room *buff;
@@ -55,34 +55,44 @@ void node_add(t_room **nodes, char *name, t_coords coordinates, int type)
 		ft_exit_fail("Error 2");
 	temp->coordinates.x = coordinates.x;
 	temp->coordinates.y = coordinates.y;
-	if (NULL == *nodes)
+	if (NULL == lemin->nodes)
 	{
-		*nodes = temp;
-		temp->index_a = 0;
+		lemin->nodes = temp;
+		temp->index_a = lemin->node_len++;
+		lemin->last_room = temp;
 	}
 	else
 	{
-		buff = *nodes;
-		while (NULL != buff->next_a)
-			buff = buff->next_a;
-		buff->next_a = temp;
-		temp->index_a = buff->index_a + 1;
+		// buff = *lemin->nodes;
+		// while (NULL != buff->next_a)
+		// 	buff = buff->next_a;
+		// buff = lemin->last_room;
+		lemin->last_room->next_a = temp;
+		temp->index_a = lemin->node_len++;
+		lemin->last_room = temp;
 	}
 	temp->next_a = NULL;
 	temp->type = type;
 }
 
-t_room *node_find(t_room **nodes, char *name)
+t_room *node_find(t_lem_in *lemin, char *name)
 {
-	t_room *temp;
+// 	t_room *temp;
 
-	temp = *nodes;
-	while (NULL != temp)
-	{
-		if (0 == ft_strcmp(name, temp->name_a))
-			return (temp);
-		temp = temp->next_a;
-	}
+// 	temp = nodes;
+// 	while (NULL != temp)
+// 	{
+// 		if (0 == ft_strcmp(name, temp->name_a))
+// 			return (temp);
+// 		temp = temp->next_a;
+// 	}
+// 	return (NULL);
+	int	i;
+
+	i = -1;
+	while (++i < lemin->node_len)
+		if (0 == ft_strcmp(name, lemin->map[i]->name_a))
+			return (lemin->map[i]);
 	return (NULL);
 }
 
@@ -140,13 +150,13 @@ void connect_del(t_room *node1, t_room *node2)
 	// node1->connections[node1->con_size] = NULL;
 }
 
-void connect_node(t_room **nodes, char *name1, char *name2)
+void connect_node(t_lem_in *lemin, char *name1, char *name2)
 {
 	t_room *node1;
 	t_room *node2;
 
-	node1 = node_find(nodes, name1);
-	node2 = node_find(nodes, name2);
+	node1 = node_find(lemin, name1);
+	node2 = node_find(lemin, name2);
 
 	if (!node1 || !node2)
 	{
@@ -173,12 +183,12 @@ void print_connections(t_room **connections, int con_size)
 	printf("}");
 }
 
-void free_nodes(t_room **nodes)
+void free_nodes(t_room *nodes)
 {
 	t_room *temp;
 	t_room *buff;
 
-	temp = *nodes;
+	temp = nodes;
 	while (NULL != temp)
 	{
 		ft_strdel(&(temp->name_a));
@@ -191,12 +201,12 @@ void free_nodes(t_room **nodes)
 	}
 }
 
-void print_rooms(t_room **nodes)
+void print_rooms(t_room *nodes)
 {
 	t_room *temp;
 			int i;
 
-	temp = *nodes;
+	temp = nodes;
 	while (NULL != temp)
 	{
 		printf("%s [%d] (%d, %d) type - %d; con_size - %d, index_a - %d, weight - %d, ", 
@@ -309,11 +319,11 @@ int routes_compare(t_route **prev, t_route **next)
 	return (0);
 }
 
-t_room *node_type_find(t_room **nodes, int start) // need rename in node_type_find
+t_room *node_type_find(t_lem_in *lemin, int start) // need rename in node_type_find
 {
 	t_room *temp;
 
-	temp = *nodes;
+	temp = lemin->nodes;
 	while (NULL != temp)
 	{
 		if (start == temp->type)
@@ -353,15 +363,15 @@ int node_include(t_route *route, int index)
 	return (0);
 }
 
-int node_length(t_room *nodes)
-{
-	t_room *temp;
+// int node_length(t_room *nodes) //?
+// {
+// 	t_room *temp;
 
-	temp = nodes;
-	while (NULL != temp->next_a)
-		temp = temp->next_a;
-	return (temp->index_a + 1);
-}
+// 	temp = nodes;
+// 	while (NULL != temp->next_a)
+// 		temp = temp->next_a;
+// 	return (temp->index_a + 1);
+// }
 
 int		connection_include(t_room *node1, t_room *node2)
 {
@@ -441,32 +451,57 @@ int duplicate_exclusion(t_route **routes)
 	return (i);
 }
 //*
-void	dijkstra_weight(t_room **nodes)
+void	dijkstra_weight(t_lem_in *lemin)
 {
-	t_room *temp;
+	// t_room *temp;
+	int	i;
 
-	temp = *nodes;
-	while (NULL != temp)
-	{
-		temp->weight = BIG_INT;
-		temp = temp->next_a;
-	}
+	i = -1;
+	// temp = *nodes;
+	while (++i < lemin->node_len)
+		lemin->map[i]->weight = BIG_INT;
+	// while (NULL != temp)
+	// {
+	// 	temp->weight = BIG_INT;
+	// 	temp = temp->next_a;
+	// }
 }
 
-void	nodes_pass(t_room **nodes)
+t_room **list_to_array(t_lem_in *lemin)
 {
-	t_room *temp;
+	t_room	*temp;
+	t_room	**map;
+	int		i;
 
-	temp = *nodes;
-	while (NULL != temp)
+	if (NULL != lemin->nodes)
 	{
-		temp->pass = NO_VISIT;
-		if ((NULL != temp->route) && (temp->type != START_A))
+		if (!(map = (t_room **)ft_memalloc(sizeof(t_room *) * (lemin->node_len + 1))))
+			ft_exit_fail("Error 6");
+		temp = lemin->nodes;
+		i = 0;
+		while (NULL != temp)
 		{
-			free(temp->route);
-			temp->route = NULL;
+			map[temp->index_a] = temp;
+			temp = temp->next_a;
 		}
-		temp = temp->next_a;
+		return (map);
+	}
+	return (NULL);
+}
+
+void	nodes_pass(t_lem_in *lemin)
+{
+	int	i;
+
+	i = -1;
+	while (++i < lemin->node_len)
+	{
+		lemin->map[i]->pass = NO_VISIT;
+		if ((NULL != lemin->map[i]->route) && (lemin->map[i]->type != START_A))
+		{
+			free(lemin->map[i]->route);
+			lemin->map[i]->route = NULL;
+		}
 	}
 }
 //need write route free after dijkstra_search
@@ -526,16 +561,16 @@ void	dijkstra_search(t_route *route, t_room **fifo_nodes)
 	}
 }
 
-void lemin_init(t_lem_in *lemin, t_room **nodes)
+void lemin_init(t_lem_in *lemin)
 {
 	// t_lemin *lemin;
 
 	// if (!(lemin = (t_lemin *)ft_memalloc(sizeof(t_lemin))))
 	// 		ft_exit_fail("Error 16");
-	lemin->nodes = nodes;
-	lemin->node_len = node_length(*nodes);
-	lemin->start = node_type_find(nodes, START_A);
-	lemin->end = node_type_find(nodes, END_A);
+	// lemin->nodes = nodes;
+	// lemin->node_len = node_length(*nodes); // ?
+	lemin->start = node_type_find(lemin, START_A);
+	lemin->end = node_type_find(lemin, END_A);
 	lemin->max_route_count = (lemin->start->con_size < lemin->end->con_size) ?
 								lemin->start->con_size : lemin->end->con_size;
 	if (!(lemin->fifo_nodes = (t_room **)ft_memalloc(sizeof(t_room *) * lemin->node_len)))  // node_len != 0 ?
@@ -550,6 +585,8 @@ void lemin_destroy(t_lem_in *lemin)
 	free(lemin->fifo_nodes);
 	lemin->fifo_nodes = NULL;
 	routes_destroy(lemin->routes, lemin->route_count);
+	free(lemin->map);
+	lemin->map = NULL;
 	free(lemin);
 	lemin = NULL;
 }
@@ -563,7 +600,7 @@ void bhandari_search(t_lem_in *lemin)
 	lemin->route_count = 0;
 	while (1)
 	{
-		dijkstra_weight(lemin->nodes);
+		dijkstra_weight(lemin);
 		lemin->start->weight = 0;
 		lemin->fifo_nodes[0] = lemin->start;
 		dijkstra_search(route, lemin->fifo_nodes);
@@ -576,9 +613,9 @@ void bhandari_search(t_lem_in *lemin)
 		lemin->routes[lemin->route_count++] = route_copy(lemin->end->route);
 		ft_bzero(lemin->fifo_nodes, sizeof(lemin->fifo_nodes) * lemin->node_len);
 		ft_bzero(route, sizeof(route));
-		nodes_pass(lemin->nodes);
+		nodes_pass(lemin);
 	}
-	route_recovery(*(lemin->nodes));
+	route_recovery(lemin->nodes);
 }
 //*/
 int main(int argc, char **argv)
@@ -591,21 +628,23 @@ int main(int argc, char **argv)
 //*
 	lemin.vis_flag = (argc == 2 && ft_strequ("-v", argv[1])) ? 1 : 0;
 	init_values(&lemin);
-
+	lemin.nodes = nodes;
 	get_num_of_ants(&lemin);
-	get_rooms(&lemin, &nodes);
+	get_rooms(&lemin);
+
+	lemin.map = list_to_array(&lemin);
 	if (!lemin.start_flag || !lemin.end_flag)
 	 	close_program(&lemin, "no start or end room");		
 	if (!(lemin.adjacency_matrix = init_adjacency_matrix(lemin.num_of_rooms)))
 	 	close_program(&lemin, "init_adjacency_matrix error");
 	lemin.array_of_rooms = init_array_of_rooms(&lemin);
-	lemin.nodes = &nodes;
+
 	get_links(&lemin);
 
 	if (!lemin.array_of_rooms[lemin.start_index] || !lemin.array_of_rooms[lemin.end_index])
 		close_program(&lemin, "start or/and end room is/are without links");
 		
-	lemin_init(&lemin, &nodes);
+	lemin_init(&lemin);
 //*/
  	// printf("num of ants = %d\n", lemin.num_of_ants);
  	// print_room_list(lemin.room_list);
@@ -613,7 +652,7 @@ int main(int argc, char **argv)
  	// print_array_of_rooms(&lemin);
  	// print_adjacency_matrix(&lemin);
 
- 	print_rooms(&nodes);
+ 	print_rooms(lemin.nodes);
 
 //*
 	// nodes = NULL;
@@ -654,6 +693,6 @@ int main(int argc, char **argv)
  	// print_rooms(&nodes);
 	 
 	// lemin_destroy(&lemin);
-	free_nodes(&nodes);
+	free_nodes(nodes);
 	return (1);
 }

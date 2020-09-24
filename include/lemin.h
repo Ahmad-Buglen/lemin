@@ -140,12 +140,14 @@ typedef struct      s_lem_in
 	int				end_flag;
 	t_room			*start;
 	t_room			*end;
-	t_room			**nodes;
+	t_room			*last_room;
+	t_room			*nodes;
 	int				max_route_count;
 	int 			node_len;
 	t_room			**fifo_nodes;
 	t_route			**routes;
 	int				route_count;
+	t_room			**map;
 	
 	int				vis_flag;
 	unsigned int	start_index;
@@ -157,11 +159,11 @@ typedef struct      s_lem_in
 //init/malloc functions
 
 
-void				init_min(t_room **nodes);
-void 				init_middle(t_room **nodes);
+void				init_min(t_lem_in *lemin);
+void 				init_middle(t_lem_in *lemin);
 
-void				connect_node(t_room **nodes, char *name1, char *name2);
-void 				node_add(t_room **nodes, char *name, t_coords coordinates, int type);
+void				connect_node(t_lem_in *lemin, char *name1, char *name2);
+void 				node_add(t_lem_in *lemin, char *name, t_coords coordinates, int type);
 long				ft_strtol(const char *str, char **end);
 t_room				*room_create_elem(char *name, t_coords coords, t_lem_in *lemin);
 t_room				*room_push_back(t_room **begin, char *name, t_coords coords, t_lem_in *lemin);
@@ -184,8 +186,8 @@ void				push_to_stack(t_lem_in *lemin, t_room *room);
 
 //rooms
 
-void				get_room_name_coords(t_lem_in *lemin, t_room **nodes);
-void				get_rooms(t_lem_in *lemin, t_room **nodes);
+void				get_room_name_coords(t_lem_in *lemin);
+void				get_rooms(t_lem_in *lemin);
 int					find_room_index(t_lem_in *lemin, char *room_name);
 
 //links
