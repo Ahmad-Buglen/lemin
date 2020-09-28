@@ -27,7 +27,11 @@
 # define ROUTE_SIZE 2500
 # define CYCLE_SIZE 2
 
-
+typedef enum			e_bool
+{
+	false = 0,
+	true = 1
+}						t_bool;
 
 typedef struct  s_coords
 {
@@ -148,6 +152,8 @@ typedef struct      s_lem_in
 	t_route			**routes;
 	int				route_count;
 	t_room			**map;
+	t_bool			*route;
+	
 	
 	int				vis_flag;
 	unsigned int	start_index;

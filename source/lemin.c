@@ -6,7 +6,7 @@
 /*   By: dphyliss <dphyliss@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/15 14:28:21 by dphyliss          #+#    #+#             */
-/*   Updated: 2020/09/24 18:39:30 by dphyliss         ###   ########.fr       */
+/*   Updated: 2020/09/28 18:57:06 by dphyliss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -319,34 +319,41 @@ int routes_compare(t_route **prev, t_route **next)
 	return (0);
 }
 
-t_room *node_type_find(t_lem_in *lemin, int start) // need rename in node_type_find
+t_room *node_type_find(t_lem_in *lemin, int type) // need rename in node_type_find
 {
-	t_room *temp;
+	int	i;
 
-	temp = lemin->nodes;
-	while (NULL != temp)
-	{
-		if (start == temp->type)
-			return (temp);
-		temp = temp->next_a;
-	}
+	i = -1;
+	while (++i < lemin->node_len)
+		if (type == lemin->map[i]->type)
+			return (lemin->map[i]);
 	return (NULL);
+	// t_room *temp;
+
+	// temp = lemin->nodes;
+	// while (NULL != temp)
+	// {
+	// 	if (start == temp->type)
+	// 		return (temp);
+	// 	temp = temp->next_a;
+	// }
+	// return (NULL);
 }
 
-void map_free(t_map *map)
-{
-	t_map *temp;
-	t_map *buff;
+// void map_free(t_map *map)
+// {
+// 	t_map *temp;
+// 	t_map *buff;
 
-	temp = map;
-	while (NULL != temp)
-	{
-		buff = temp;
-		temp = temp->next;
-		free(buff);
-		buff = NULL;
-	}
-}
+// 	temp = map;
+// 	while (NULL != temp)
+// 	{
+// 		buff = temp;
+// 		temp = temp->next;
+// 		free(buff);
+// 		buff = NULL;
+// 	}
+// }
 
 int node_include(t_route *route, int index)
 {
@@ -389,20 +396,31 @@ void	connection_restore(t_room *node1, t_room *node2)
 	node1->connections[(node1->con_size)++] = node2; 
 }
 
-void	route_recovery(t_room *nodes)
+void	route_recovery(t_lem_in *lemin)
 {
-	t_room *temp;
-	int i;
+	int	i;
+	int	j;
 
-	temp = nodes;
-	while (NULL != temp)
+	i = -1;
+	while (++i < lemin->node_len)
 	{
-		i = -1;
-		while (++i < temp->con_size)
-			if (!connection_include(temp->connections[i], temp))
-				connection_restore(temp->connections[i], temp);
-		temp = temp->next_a;
+		j = -1;
+		while (++j < lemin->map[i]->con_size)
+			if (!connection_include(lemin->map[i]->connections[j], lemin->map[i]))
+				connection_restore(lemin->map[i]->connections[j], lemin->map[i]);
 	}
+	// t_room *temp;
+	// int i;
+
+	// temp = nodes;
+	// while (NULL != temp)
+	// {
+	// 	i = -1;
+	// 	while (++i < temp->con_size)
+	// 		if (!connection_include(temp->connections[i], temp))
+	// 			connection_restore(temp->connections[i], temp);
+	// 	temp = temp->next_a;
+	// }
 }
 
 void	route_inverse(t_route *best_route)
@@ -489,6 +507,27 @@ t_room **list_to_array(t_lem_in *lemin)
 	return (NULL);
 }
 
+void route_mark(t_lem_in *lemin, t_route *route)
+{
+	int	i;
+
+	i = 0;
+	while (++i < route->size - 1)
+		lemin->route[route->elem[i]->index_a] = true;
+}
+
+t_bool route_check(t_lem_in *lemin, t_route *route)
+{
+	int	i;
+
+	i = 0;
+	while (++i < route->size - 1)
+		if (lemin->route[route->elem[i]->index_a] == true)
+			return (false);
+	return (true);
+}
+
+
 void	nodes_pass(t_lem_in *lemin)
 {
 	int	i;
@@ -518,7 +557,7 @@ int fifo_include(t_room **fifo_nodes, t_room * node)
 }
 
 	
-void	dijkstra_search(t_route *route, t_room **fifo_nodes)
+void	dijkstra_search(t_route *route, t_room **fifo_nodes, t_lem_in *lemin)
 {
 	int i;
 	int j;
@@ -539,6 +578,7 @@ void	dijkstra_search(t_route *route, t_room **fifo_nodes)
 			// if (NO_VISIT == fifo_nodes[i]->connections[j]->pass)
 			// {
 				if ((NO_VISIT == fifo_nodes[i]->connections[j]->pass) &&
+						// lemin->route[fifo_nodes[i]->connections[j]->index_a] == false &&
 						(fifo_nodes[i]->weight + 1 <= fifo_nodes[i]->connections[j]->weight))
 				{
 					fifo_nodes[i]->connections[j]->weight = fifo_nodes[i]->weight + 1;
@@ -577,6 +617,8 @@ void lemin_init(t_lem_in *lemin)
 		ft_exit_fail("Error 14");
 	if (!(lemin->routes = (t_route **)ft_memalloc(sizeof(t_route *) * (lemin->max_route_count + 1))))
 			ft_exit_fail("Error 11");
+	if (!(lemin->route = (t_bool *)ft_memalloc(sizeof(t_bool) * (lemin->node_len + 1))))
+			ft_exit_fail("Error 19");
 	// return (lemin);
 }
 
@@ -591,6 +633,28 @@ void lemin_destroy(t_lem_in *lemin)
 	lemin = NULL;
 }
 
+int	route_flow(t_lem_in *lemin, int route_count)
+{
+	int i;
+	int flow;
+	int ants;
+
+	ants = lemin->num_of_ants;
+	flow = 0;
+	i = -1;
+	while (++i < route_count - 1)
+		ants -= lemin->routes[lemin->route_count - 1]->size - lemin->routes[i]->size;
+	flow = lemin->routes[lemin->route_count - 1]->size + ants / route_count;
+	return (flow);
+}
+
+int	route_steps(t_lem_in *lemin)
+{
+	if (lemin->route_count > 1 && route_flow(lemin, lemin->route_count) >= route_flow(lemin, lemin->route_count - 1))
+		return (0);
+	return (1);
+}
+
 void bhandari_search(t_lem_in *lemin)
 {
 	t_route *route;
@@ -598,24 +662,26 @@ void bhandari_search(t_lem_in *lemin)
 	if (!(route = (t_route *)ft_memalloc(sizeof(t_route))))
 			ft_exit_fail("Error 13"); // free?
 	lemin->route_count = 0;
-	while (1)
+	while (lemin->route_count < lemin->max_route_count) // max_route_count ? 
 	{
 		dijkstra_weight(lemin);
 		lemin->start->weight = 0;
 		lemin->fifo_nodes[0] = lemin->start;
-		dijkstra_search(route, lemin->fifo_nodes);
+		dijkstra_search(route, lemin->fifo_nodes, lemin);
 		// print_rooms(&nodes);
-		if (BIG_INT != lemin->end->weight)
-			lemin->end->route = lemin->end->route; 	// print_route(lemin->end->route);
-		else 
+		if (BIG_INT == lemin->end->weight || !route_steps(lemin))
 			break;
-		route_inverse(lemin->end->route);
-		lemin->routes[lemin->route_count++] = route_copy(lemin->end->route);
+		// if (true == route_check(lemin, lemin->end->route))
+		// {
+			route_inverse(lemin->end->route);
+			route_mark(lemin, lemin->end->route);
+			lemin->routes[lemin->route_count++] = route_copy(lemin->end->route);
+		// }
 		ft_bzero(lemin->fifo_nodes, sizeof(lemin->fifo_nodes) * lemin->node_len);
 		ft_bzero(route, sizeof(route));
 		nodes_pass(lemin);
 	}
-	route_recovery(lemin->nodes);
+	route_recovery(lemin);
 }
 //*/
 int main(int argc, char **argv)
@@ -627,6 +693,7 @@ int main(int argc, char **argv)
 	t_lem_in	lemin;
 //*
 	lemin.vis_flag = (argc == 2 && ft_strequ("-v", argv[1])) ? 1 : 0;
+	ft_bzero(&lemin, sizeof(lemin));
 	init_values(&lemin);
 	lemin.nodes = nodes;
 	get_num_of_ants(&lemin);
@@ -652,16 +719,17 @@ int main(int argc, char **argv)
  	// print_array_of_rooms(&lemin);
  	// print_adjacency_matrix(&lemin);
 
- 	print_rooms(lemin.nodes);
+ 	// print_rooms(lemin.nodes);
 
 //*
 	// nodes = NULL;
-	// init_middle(&nodes);
+	// init_middle(&lemin);
 
+	// i = -1;
 	t_route **prev;
 	t_route **next;
 
-
+//  print_rooms(lemin.nodes);
 	// ft_memcmp(const void *s1, const void *s2, size_t n);
 
 	bhandari_search(&lemin);
@@ -670,25 +738,25 @@ int main(int argc, char **argv)
 		next = routes_copy(lemin.routes, lemin.route_count);
 		prev = NULL;
 		i = -1;
-		while (0 != routes_compare(prev, next) && ++i < CYCLE_SIZE)
+		while (0 != routes_compare(prev, next) )//&& ++i < CYCLE_SIZE)
 		{
 			bhandari_search(&lemin);
 			prev = next;
 			next = routes_copy(lemin.routes, lemin.route_count);
 		}
 	}
-	lemin.route_count = duplicate_exclusion(lemin.routes);
+	// lemin.route_count = duplicate_exclusion(lemin.routes);
 
 	i = -1;
 	while (++i < lemin.route_count)
 	{
 		print_route(lemin.routes[i]);
-		free(lemin.routes[i]);
-		lemin.routes[i] = NULL;
+		// free(lemin.routes[i]);
+		// lemin.routes[i] = NULL;
 	}
 	
  	// print_rooms(&nodes);
-	printf("\n %d \n", lemin.route_count);
+	printf(" routes - %d, steps - %d\n", lemin.route_count, route_flow(&lemin, lemin.route_count));
 //*/
  	// print_rooms(&nodes);
 	 
