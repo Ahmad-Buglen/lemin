@@ -128,6 +128,14 @@ typedef struct			s_lem_list
 	struct s_lem_list	*next;
 }						t_lem_list;
 
+typedef struct			s_path
+{
+    char				*name;
+	t_status			status;
+	int					index;
+	struct s_path		*next;
+}						t_path;
+
 typedef struct      s_lem_in
 {
 	char			*line;
@@ -136,7 +144,8 @@ typedef struct      s_lem_in
 	int				**adjacency_matrix;
 	t_lem_list		**array_of_rooms;
 	t_lem_list		*path;
-	t_lem_list		**array_of_ants;
+	t_path			**paths;
+	t_path			**array_of_ants;
 	t_position		position;
 	int				num_of_ants;
 	int				num_of_rooms;
@@ -227,7 +236,11 @@ void				print_adjacency_matrix(t_lem_in *lemin);
 void				print_array_of_rooms(t_lem_in *lemin);
 
 void				init_array_of_ants(t_lem_in *lemin);
-void				find_path_2(t_lem_in *lemin, t_lem_list **path, t_route *route);
+void				init_path_array(t_lem_in *lemin);
+void				flow_distribution(t_lem_in *lemin);
+void				find_path_2(t_lem_in *lemin, t_path **path, t_route *route);
 void				print_solution(t_lem_in *lemin);
+void				add_elem_to_path(t_lem_in *lemin, t_path **path, char *name, int index);
+void		debug(t_lem_in *lemin);
 
 #endif

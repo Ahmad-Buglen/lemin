@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lemin.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dphyliss <dphyliss@student.42.fr>          +#+  +:+       +#+        */
+/*   By: Alkor <Alkor@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/15 14:28:21 by dphyliss          #+#    #+#             */
-/*   Updated: 2020/09/28 18:57:06 by dphyliss         ###   ########.fr       */
+/*   Updated: 2020/09/29 13:08:35 by Alkor            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -718,9 +718,8 @@ int main(int argc, char **argv)
  	// print_hash_map(lemin.hash_map);
  	// print_array_of_rooms(&lemin);
  	// print_adjacency_matrix(&lemin);
-
+	// print_ant_farm(&lemin);
  	// print_rooms(lemin.nodes);
-
 //*
 	// nodes = NULL;
 	// init_middle(&lemin);
@@ -754,13 +753,23 @@ int main(int argc, char **argv)
 		// free(lemin.routes[i]);
 		// lemin.routes[i] = NULL;
 	}
-	
  	// print_rooms(&nodes);
-	printf(" routes - %d, steps - %d\n", lemin.route_count, route_flow(&lemin, lemin.route_count));
+	// printf(" routes - %d, steps - %d\n", lemin.route_count, route_flow(&lemin, lemin.route_count));
 //*/
  	// print_rooms(&nodes);
 	 
 	// lemin_destroy(&lemin);
+
+////////
+////////	SOLUTION PRINT FUNCTIONS
+////////
+	init_path_array(&lemin);
+	init_array_of_ants(&lemin);
+	flow_distribution(&lemin);	//функция распределения потоков
+	print_ant_farm(&lemin);		//вывод фермы
+	print_solution(&lemin);		//вывод решения
+////////
+////////	
 	free_nodes(nodes);
 	return (1);
 }
