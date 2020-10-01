@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   list.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dphyliss <dphyliss@student.42.fr>          +#+  +:+       +#+        */
+/*   By: Alkor <Alkor@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/13 00:49:42 by bsausage          #+#    #+#             */
-/*   Updated: 2020/09/02 18:47:14 by dphyliss         ###   ########.fr       */
+/*   Updated: 2020/09/29 10:46:52 by Alkor            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,5 +122,37 @@ void			remove_begin_list(t_lem_list **begin_list, t_lem_list **end_list)
 		tmp = *begin_list;
 		*begin_list = (*begin_list)->next;
 		ft_memdel((void**)&tmp);
+	}
+}
+
+
+t_path		*create_path_elem(t_lem_in *lemin, char *name, int index)
+{
+	t_path		*elem;
+
+	elem = NULL;
+	if (!(elem = (t_path*)malloc(sizeof(t_path))))
+		return (NULL);
+	if (!(elem->name = ft_strdup(name)))
+		close_program(lemin, "malloc error");
+	elem->status = EMPTY;
+	elem->index = index;
+	elem->next = NULL;
+	return (elem);
+}
+
+void		add_elem_to_path(t_lem_in *lemin, t_path **path, char *name, int index)
+{
+	t_path	*tmp;
+	
+	if (!path)
+		return ;
+	if (*path == NULL)
+		*path = create_path_elem(lemin, name, index);
+	else
+	{
+		tmp = *path;
+		*path = create_path_elem(lemin, name, index);
+		(*path)->next = tmp;
 	}
 }

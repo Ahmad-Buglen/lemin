@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bsausage <bsausage@student.42.fr>          +#+  +:+       +#+        */
+/*   By: Alkor <Alkor@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/13 00:41:56 by bsausage          #+#    #+#             */
-/*   Updated: 2020/09/09 13:49:59 by bsausage         ###   ########.fr       */
+/*   Updated: 2020/09/29 12:56:25 by Alkor            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,17 +74,18 @@
 // 	}
 // }
 
-void	find_path_2(t_lem_in *lemin, t_lem_list **path, t_route *route)
+void	find_path_2(t_lem_in *lemin, t_path **path, t_route *route)
 {
-	t_room		*room;
-	int			i;
-	int			j;
+	// t_room		*room;
+	// int			i;
+	// int			j;
 	int			n = route->size - 1;
 
 	while (n >= 0)
 	{
-		room = lemin->array_of_rooms[route->elem[n]->index]->room;
-		list_push_front(path, NULL, room);
+		// room = lemin->array_of_rooms[route->elem[n]->index_a]->room;
+		// list_push_front(path, NULL, room);
+		add_elem_to_path(lemin, path, route->elem[n]->name_a, route->elem[n]->index_a);
 		n--;
 	}
 }
@@ -93,25 +94,33 @@ void	print_solution(t_lem_in *lemin)
 {
 	int		i;
 	int		k;
+	t_path	*debug;
 	
 	printf("\n");
 	k = 0;
+	debug = lemin->array_of_ants[lemin->num_of_ants - 1];
 	while (lemin->array_of_ants[lemin->num_of_ants - 1]->next)
 	{
 		i = 0;
 		while (i < lemin->num_of_ants)
 		{
-			if (lemin->array_of_ants[i] && lemin->array_of_ants[i]->room->index != (int)lemin->end_index && lemin->array_of_ants[i]->next->room->status == EMPTY)
+			if (lemin->array_of_ants[i] && lemin->array_of_ants[i]->index != (int)lemin->end_index && lemin->array_of_ants[i]->next->status == EMPTY)
 			{
-				lemin->array_of_ants[i]->room->status = EMPTY;
+				lemin->array_of_ants[i]->status = EMPTY;
 				lemin->array_of_ants[i] = lemin->array_of_ants[i]->next;
-				if (lemin->array_of_ants[i]->room->index != (int)lemin->end_index)
-					lemin->array_of_ants[i]->room->status = NOT_EMPTY;
-				printf("L%d-%s ", i + 1, lemin->array_of_ants[i]->room->name);
+				if (lemin->array_of_ants[i]->index != (int)lemin->end_index)
+					lemin->array_of_ants[i]->status = NOT_EMPTY;
+				//printf("L%d-%s ", i + 1, lemin->array_of_ants[i]->name);
+				write(1, "L", 1);
+				ft_putnbr(i + 1);
+				write(1, "-", 1);
+				ft_putstr(lemin->array_of_ants[i]->name);
+				write(1, " ", 1);
 			}
 			i++;
 		}
-		printf("\b\n");
+		//printf("\b\n");
+		write(1, "\n", 2);
 		k++;
 	}
 }
@@ -159,11 +168,68 @@ void	init_array_of_ants(t_lem_in *lemin)
 	int		i;
 
 	i = 0;
-	lemin->array_of_ants = (t_lem_list**)malloc(sizeof(t_lem_list*) * lemin->num_of_ants);
-	while (i < lemin->num_of_ants)
-		lemin->array_of_ants[i++] = lemin->path;
+	lemin->array_of_ants = (t_path**)malloc(sizeof(t_path*) * lemin->num_of_ants);
+	// while (i < lemin->num_of_ants)
+	// 	lemin->array_of_ants[i++] = lemin->path;
 }
 
+void	init_path_array(t_lem_in *lemin)
+{
+	if (!(lemin->paths = (t_path**)malloc(sizeof(t_path*) * (lemin->route_count + 1))))
+		close_program(lemin, "malloc error");
+	int i = 0;
+	while (i <= lemin->route_count)
+		lemin->paths[i++] = NULL;
+}
+
+void	flow_distribution(t_lem_in *lemin)
+{
+	int		i; //ant index
+	int		p; //path index
+	int		diff; //len diff between paths
+	int		k; //вспомогательный счетчик цикла
+	t_path *debug;
+
+	i = 0;
+	find_path_2(lemin, &lemin->paths[0], lemin->routes[0]);
+	debug = lemin->paths[0];
+	// printf("path number %d has been created\n", 0);
+	while (i < lemin->num_of_ants)
+	{
+		p = 0;
+		while (p < lemin->route_count - 1 && i < lemin->num_of_ants)
+		{
+			find_path_2(lemin, &lemin->paths[p+1], lemin->routes[p+1]);
+			debug = lemin->paths[p+1];
+			// printf("path number %d has been created\n", p + 1);
+			diff = lemin->routes[p + 1]->size - lemin->routes[p]->size;
+			while (diff > 0 && i < lemin->num_of_ants)
+			{
+				k = 0;
+				while (k <= p && i < lemin->num_of_ants)
+				{
+					lemin->array_of_ants[i++] = lemin->paths[k++];
+					// printf("ant number %d - path number %d\n", i, k);
+				}
+				diff--;
+			}
+			p++;
+		}
+		if (p == lemin->route_count - 1)
+			break ;
+	}
+	// printf("here %d\n", i);
+	while (i < lemin->num_of_ants)
+	{
+		k = 0;
+		while (k <= p && i < lemin->num_of_ants)
+		{
+			lemin->array_of_ants[i++] = lemin->paths[k++];
+			//printf("ant number %d - path number %d\n", i, k);
+		}
+	}
+	// printf("finish\n");
+}
 
 // int		main(int argc, char **argv)
 // {
@@ -201,3 +267,23 @@ void	init_array_of_ants(t_lem_in *lemin)
 // 	free_all(&lemin);
 // 	return (0);
 // }
+
+
+void		debug(t_lem_in *lemin)
+{
+	t_path		*debug[50];
+	int			i = 0;
+
+	while (i < 50)
+	{
+		debug[i] = NULL;
+		i++;
+	}
+	i = 0;
+	while (i < 50 && i < lemin->route_count)
+	{
+		debug[i] = lemin->paths[i];
+		i++;
+	}
+	printf("finish debug\n");
+}
