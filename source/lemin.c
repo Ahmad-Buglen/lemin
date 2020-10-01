@@ -6,7 +6,7 @@
 /*   By: dphyliss <dphyliss@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/15 14:28:21 by dphyliss          #+#    #+#             */
-/*   Updated: 2020/09/28 18:57:06 by dphyliss         ###   ########.fr       */
+/*   Updated: 2020/10/01 18:18:41 by dphyliss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -266,18 +266,19 @@ t_route **routes_copy(t_route **routes, int size)
 }
 
 
-void	routes_destroy(t_route **routes, int count)
+void	routes_destroy(t_lem_in *lemin)
 {
 	int i;
 
 	i = -1;
-	while (++i < count)
+	while (++i < lemin->route_count)
 	{
-		free(routes[i]);
-		routes[i] = NULL;
+		free(lemin->routes[i]);
+		lemin->routes[i] = NULL;
 	}
-	free(routes);
-	routes = NULL;
+	// free(lemin->routes);
+	// lemin->routes = NULL;
+	lemin->route_count = 0;
 }
 
 
@@ -507,6 +508,15 @@ t_room **list_to_array(t_lem_in *lemin)
 	return (NULL);
 }
 
+void route_clean(t_lem_in *lemin)
+{
+	int	i;
+
+	i = 0;
+	while (++i < lemin->node_len)
+		lemin->route[i] = false;
+}
+
 void route_mark(t_lem_in *lemin, t_route *route)
 {
 	int	i;
@@ -626,7 +636,7 @@ void lemin_destroy(t_lem_in *lemin)
 {
 	free(lemin->fifo_nodes);
 	lemin->fifo_nodes = NULL;
-	routes_destroy(lemin->routes, lemin->route_count);
+	routes_destroy(lemin);
 	free(lemin->map);
 	lemin->map = NULL;
 	free(lemin);
@@ -644,7 +654,8 @@ int	route_flow(t_lem_in *lemin, int route_count)
 	i = -1;
 	while (++i < route_count - 1)
 		ants -= lemin->routes[lemin->route_count - 1]->size - lemin->routes[i]->size;
-	flow = lemin->routes[lemin->route_count - 1]->size + ants / route_count;
+	if (route_count > 0)
+		flow = lemin->routes[lemin->route_count - 1]->size + ants / route_count;
 	return (flow);
 }
 
@@ -661,6 +672,11 @@ void bhandari_search(t_lem_in *lemin)
 
 	if (!(route = (t_route *)ft_memalloc(sizeof(t_route))))
 			ft_exit_fail("Error 13"); // free?
+	// if (lemin->route_count > 0)
+	// {
+	// 	routes_destroy(lemin);
+	// 	route_clean(lemin);
+	// }
 	lemin->route_count = 0;
 	while (lemin->route_count < lemin->max_route_count) // max_route_count ? 
 	{
@@ -740,12 +756,18 @@ int main(int argc, char **argv)
 		i = -1;
 		while (0 != routes_compare(prev, next) )//&& ++i < CYCLE_SIZE)
 		{
+
+
+		// write(1, "\nhere!\n", 7);
 			bhandari_search(&lemin);
+			
 			prev = next;
 			next = routes_copy(lemin.routes, lemin.route_count);
+
 		}
 	}
-	// lemin.route_count = duplicate_exclusion(lemin.routes);
+	// write(1, "\nhere!\n", 7);
+	lemin.route_count = duplicate_exclusion(lemin.routes);
 
 	i = -1;
 	while (++i < lemin.route_count)
