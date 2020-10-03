@@ -6,7 +6,7 @@
 /*   By: bsausage <bsausage@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/19 11:48:50 by bsausage          #+#    #+#             */
-/*   Updated: 2020/10/03 12:28:23 by bsausage         ###   ########.fr       */
+/*   Updated: 2020/10/03 13:31:48 by bsausage         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,7 @@
 int		parse_links_line(t_lem_in *lemin)
 {
 	char	*end;
-	char	*room_name1;
-	char	*room_name2;
+	char	*room_name;
 	size_t	name_len;
 	int		room_1;
 	int		room_2;
@@ -27,24 +26,25 @@ int		parse_links_line(t_lem_in *lemin)
 	if (!(end = ft_strchr(lemin->line, '-')))
 		close_program(lemin, "link error");
 	name_len = end - lemin->line;
-	if (!(room_name1 = ft_strsub(lemin->line, 0, name_len)))
+	if (!(room_name = ft_strsub(lemin->line, 0, name_len)))
 		close_program(lemin, "malloc error");
-	if ((room_1 = find_room_index(lemin, room_name1)) < 0)
+	if ((room_1 = find_room_index(lemin, room_name)) < 0)
 		close_program(lemin, "links list contains non-existing room");
-	// ft_memdel((void**)&room_name1);
+	ft_memdel((void**)&room_name);
 	end++;
-	if (!(room_name2 = ft_strdup(end)))
+	if (!(room_name = ft_strdup(end)))
 		close_program(lemin, "malloc error");
-	if ((room_2 = find_room_index(lemin, room_name2)) < 0)
+	if ((room_2 = find_room_index(lemin, room_name)) < 0)
 		close_program(lemin, "links list contains non-existing room");
-	// ft_memdel((void**)&room_name2);
+	ft_memdel((void**)&room_name);
 	if (lemin->adjacency_matrix[room_1][room_2] == 1 || lemin->adjacency_matrix[room_2][room_1] == 1)
 		close_program(lemin, "Error: link duplicate");
 	lemin->adjacency_matrix[room_1][room_2] = 1;
 	lemin->adjacency_matrix[room_2][room_1] = 1;
 	ft_memdel((void**)&lemin->line);
 	
-	connect_node(lemin, room_name1, room_name2);
+	connect_node(lemin, lemin->array_of_rooms[room_1]->name, lemin->array_of_rooms[room_2]->name);
+	//connect_node(lemin, room_name1, room_name2);
 	return (room_1 < 0 || room_1 < 0 ? 0 : 1);
 }
 

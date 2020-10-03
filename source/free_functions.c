@@ -6,7 +6,7 @@
 /*   By: bsausage <bsausage@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/17 12:28:40 by bsausage          #+#    #+#             */
-/*   Updated: 2020/10/03 12:31:32 by bsausage         ###   ########.fr       */
+/*   Updated: 2020/10/03 13:26:58 by bsausage         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,13 +72,14 @@ void		free_paths(t_lem_in *lemin)
 	t_path		**paths;
 	t_path		*path;
 	t_path		*tmp;
+	int			n;
 
-	if (!paths)
+	n = 0;
+	if (!lemin->paths)
 		return ;
-	paths = lemin->paths;
-	while (tmp)
+	while (n <= lemin->route_count)
 	{
-		path = *paths;
+		path = lemin->paths[n];
 		while (path)
 		{
 			tmp = path->next;
@@ -86,8 +87,9 @@ void		free_paths(t_lem_in *lemin)
 			ft_memdel((void**)&path);
 			path = tmp;
 		}
-		paths++;
+		n++;
 	}
+	ft_memdel((void**)&lemin->paths);
 }
 
 void		free_all(t_lem_in *lemin)
