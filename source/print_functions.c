@@ -6,7 +6,7 @@
 /*   By: bsausage <bsausage@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/17 11:36:51 by bsausage          #+#    #+#             */
-/*   Updated: 2020/10/03 11:37:49 by bsausage         ###   ########.fr       */
+/*   Updated: 2020/10/03 11:49:14 by bsausage         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,12 +100,12 @@ void		print_room_part(t_lem_in *lemin)
 	room = lemin->room_list;
 	while (room)
 	{
-		if (room->index == lemin->start_index)
+		if (room->index == (int)lemin->start_index)
 		{
 			ft_putendl("##start");
 			print_room(room);
 		}
-		else if (room->index == lemin->end_index)
+		else if (room->index == (int)lemin->end_index)
 		{
 			ft_putendl("##end");
 			print_room(room);

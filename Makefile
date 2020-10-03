@@ -56,9 +56,9 @@ CC = gcc
 FLAGS = -g
 #-Wextra -Wall -Werror -g
 LIBRARIES = -lm -lft -L$(LIBFT_DIRECTORY)
-VIS_LIBRARIES = -lmlx -lm -L$(MINILIBX_DIRECTORY) -framework OpenGL -framework AppKit
+#VIS_LIBRARIES = -lmlx -lm -L$(MINILIBX_DIRECTORY) -framework OpenGL -framework AppKit
 
-INCLUDES = -I $(LIBFT_HEADERS_DIRECTORY) -I $(HEADERS_DIRECTORY) -I$(MINILIBX_HEADERS)
+INCLUDES = -I $(LIBFT_HEADERS_DIRECTORY) -I $(HEADERS_DIRECTORY) 
 
 # LIBFT
 LIBFT = $(LIBFT_DIRECTORY)libft.a
@@ -66,20 +66,20 @@ LIBFT_DIRECTORY = libft/
 LIBFT_HEADERS_DIRECTORY = $(LIBFT_DIRECTORY)/
 
 # MINILIBX
-MINILIBX = $(MINILIBX_DIRECTORY)libmlx.a
-MINILIBX_DIRECTORY = ./minilibx_macos/
-MINILIBX_HEADERS = $(MINILIBX_DIRECTORY)
+#MINILIBX = $(MINILIBX_DIRECTORY)libmlx.a
+#MINILIBX_DIRECTORY = ./minilibx_macos/
+#MINILIBX_HEADERS = $(MINILIBX_DIRECTORY)
 
 # LEM-IN
 
-HEADERS_LIST = lemin.h vis.h get_next_line.h
+HEADERS_LIST = lemin.h get_next_line.h
 HEADERS_DIRECTORY = include/
 HEADERS = $(addprefix $(HEADERS_DIRECTORY), $(HEADERS_LIST))
 
 SOURCES_DIRECTORY = source/
 SOURCES_LIST = list.c main.c hash_map.c init_values.c print_functions.c \
 free_functions.c rooms.c links.c other_parsing_funcs.c \
-rgb.c init_mlx.c draw.c lemin.c get_next_line.c init_test.c
+rgb.c lemin.c get_next_line.c init_test.c
 SOURCES = $(addprefix $(SOURCES_DIRECTORY), $(SOURCES_LIST))
 
 OBJECTS_DIRECTORY = objects/
@@ -96,7 +96,7 @@ RESET = \033[0m
 
 all: $(NAME)
 
-$(NAME): $(OBJECTS_DIRECTORY) $(OBJECTS) $(LIBFT) $(MINILIBX)
+$(NAME): $(OBJECTS_DIRECTORY) $(OBJECTS) $(LIBFT)
 	@$(CC) $(FLAGS) $(INCLUDES) $(OBJECTS) $(LIBRARIES) $(VIS_LIBRARIES) -o $(NAME)
 	@echo "\n$(NAME): $(GREEN)object files were created$(RESET)"
 	@echo "$(NAME): $(GREEN)$(NAME) was created$(RESET)"
@@ -113,20 +113,20 @@ $(LIBFT):
 	@echo "$(NAME): $(GREEN)Creating $(LIBFT)...$(RESET)"
 	@$(MAKE) -sC $(LIBFT_DIRECTORY)
 
-$(MINILIBX):
-	@echo "MINILIBX: $(GREEN)Creating $(MINILIBX)$(RESET)"
-	@$(MAKE) -sC $(MINILIBX_DIRECTORY)
+#$(MINILIBX):
+#	@echo "MINILIBX: $(GREEN)Creating $(MINILIBX)$(RESET)"
+#	@$(MAKE) -sC $(MINILIBX_DIRECTORY)
 
 clean:
 	@$(MAKE) -sC $(LIBFT_DIRECTORY) clean
-	@$(MAKE) -sC $(MINILIBX_DIRECTORY) clean
+#	@$(MAKE) -sC $(MINILIBX_DIRECTORY) clean
 	@rm -rf $(OBJECTS_DIRECTORY)
 	@echo "$(NAME): $(RED)$(OBJECTS_DIRECTORY) was deleted$(RESET)"
 	@echo "$(NAME): $(RED)object files were deleted$(RESET)"
 
 fclean: clean
 	@rm -f $(LIBFT)
-	@rm -f $(MINILIBX)
+#	@rm -f $(MINILIBX)
 	@echo "$(NAME): $(RED)$(LIBFT) was deleted$(RESET)"
 	@rm -f $(NAME)
 	@echo "$(NAME): $(RED)$(NAME) was deleted$(RESET)"

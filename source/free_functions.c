@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free_functions.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dphyliss <dphyliss@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bsausage <bsausage@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/17 12:28:40 by bsausage          #+#    #+#             */
-/*   Updated: 2020/09/02 18:48:19 by dphyliss         ###   ########.fr       */
+/*   Updated: 2020/10/03 12:02:17 by bsausage         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,27 @@ void		free_hash_map(t_lem_in *lemin)
 	}
 }
 
+void		free_paths(t_lem_in *lemin)
+{
+	t_path		**paths;
+	t_path		*path;
+	t_path		*tmp;
+
+	paths = lemin->paths;
+	while (tmp)
+	{
+		path = *paths;
+		while (path)
+		{
+			tmp = path->next;
+			ft_memdel((void**)&path->name);
+			ft_memdel((void**)&path);
+			path = tmp;
+		}
+		paths++;
+	}
+}
+
 void		free_all(t_lem_in *lemin)
 {
 	ft_memdel((void**)&lemin->line);
@@ -75,6 +96,7 @@ void		free_all(t_lem_in *lemin)
 	free_list(&lemin->path);
 	free_list(&lemin->queue_begin);
 	free_room_list(&lemin->room_list);
+	free_paths(lemin);
 	ft_memdel((void**)&lemin->array_of_rooms);
 	ft_memdel((void**)&lemin->array_of_ants);
 }

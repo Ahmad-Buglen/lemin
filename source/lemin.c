@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lemin.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dphyliss <dphyliss@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bsausage <bsausage@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/15 14:28:21 by dphyliss          #+#    #+#             */
-/*   Updated: 2020/10/01 18:25:56 by dphyliss         ###   ########.fr       */
+/*   Updated: 2020/10/03 12:01:20 by bsausage         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -708,7 +708,7 @@ int main(int argc, char **argv)
 	// t_lemin *lemin_a;
 	t_lem_in	lemin;
 //*
-	lemin.vis_flag = (argc == 2 && ft_strequ("-v", argv[1])) ? 1 : 0;
+	//lemin.vis_flag = (argc == 2 && ft_strequ("-v", argv[1])) ? 1 : 0;
 	ft_bzero(&lemin, sizeof(lemin));
 	init_values(&lemin);
 	lemin.nodes = nodes;
@@ -771,7 +771,7 @@ int main(int argc, char **argv)
 	i = -1;
 	while (++i < lemin.route_count)
 	{
-		print_route(lemin.routes[i]);
+		//print_route(lemin.routes[i]);
 		// free(lemin.routes[i]);
 		// lemin.routes[i] = NULL;
 	}
@@ -793,5 +793,6 @@ int main(int argc, char **argv)
 ////////
 ////////	
 	free_nodes(nodes);
+	free_all(&lemin);
 	return (1);
 }
