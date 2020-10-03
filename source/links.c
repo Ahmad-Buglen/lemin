@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   links.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dphyliss <dphyliss@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bsausage <bsausage@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/19 11:48:50 by bsausage          #+#    #+#             */
-/*   Updated: 2020/09/24 18:32:46 by dphyliss         ###   ########.fr       */
+/*   Updated: 2020/10/03 12:28:23 by bsausage         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,4 +76,34 @@ int		get_links(t_lem_in *lemin)
 		close_program(lemin, "link error");
 	//return (gnl == 0 ? 1 : 0);
 	return (1);
+}
+
+
+int		check_start_end_links(t_lem_in *lemin)
+{
+	int		i;
+	int		start;
+	int		end;
+	
+	start = 0;
+	end = 0;
+	i = 0;
+	while (i < lemin->num_of_rooms)
+	{
+		if (lemin->adjacency_matrix[lemin->start_index][i++])
+		{
+			start = 1;
+			break ;
+		}
+	}
+	i = 0;
+	while (i < lemin->num_of_rooms)
+	{
+		if (lemin->adjacency_matrix[lemin->end_index][i++])
+		{
+			end = 1;
+			break ;
+		}
+	}
+	return (start * end);
 }

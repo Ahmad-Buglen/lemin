@@ -6,7 +6,7 @@
 /*   By: bsausage <bsausage@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/17 12:28:40 by bsausage          #+#    #+#             */
-/*   Updated: 2020/10/03 12:02:17 by bsausage         ###   ########.fr       */
+/*   Updated: 2020/10/03 12:31:32 by bsausage         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,8 @@ void		free_paths(t_lem_in *lemin)
 	t_path		*path;
 	t_path		*tmp;
 
+	if (!paths)
+		return ;
 	paths = lemin->paths;
 	while (tmp)
 	{

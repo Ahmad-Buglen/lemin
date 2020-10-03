@@ -6,7 +6,7 @@
 /*   By: bsausage <bsausage@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/15 14:28:21 by dphyliss          #+#    #+#             */
-/*   Updated: 2020/10/03 12:01:20 by bsausage         ###   ########.fr       */
+/*   Updated: 2020/10/03 12:34:24 by bsausage         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -714,7 +714,6 @@ int main(int argc, char **argv)
 	lemin.nodes = nodes;
 	get_num_of_ants(&lemin);
 	get_rooms(&lemin);
-
 	lemin.map = list_to_array(&lemin);
 	if (!lemin.start_flag || !lemin.end_flag)
 	 	close_program(&lemin, "no start or end room");		
@@ -723,10 +722,11 @@ int main(int argc, char **argv)
 	lemin.array_of_rooms = init_array_of_rooms(&lemin);
 
 	get_links(&lemin);
-
+	if (!check_start_end_links(&lemin))
+		close_program(&lemin, "start or/and end room is/are without links");
 	if (!lemin.array_of_rooms[lemin.start_index] || !lemin.array_of_rooms[lemin.end_index])
 		close_program(&lemin, "start or/and end room is/are without links");
-		
+	
 	lemin_init(&lemin);
 //*/
  	// printf("num of ants = %d\n", lemin.num_of_ants);
@@ -748,6 +748,7 @@ int main(int argc, char **argv)
 	// ft_memcmp(const void *s1, const void *s2, size_t n);
 
 	bhandari_search(&lemin);
+
 	if (lemin.node_len < 1500)
 	{
 		next = routes_copy(lemin.routes, lemin.route_count);
@@ -771,7 +772,7 @@ int main(int argc, char **argv)
 	i = -1;
 	while (++i < lemin.route_count)
 	{
-		//print_route(lemin.routes[i]);
+		print_route(lemin.routes[i]);
 		// free(lemin.routes[i]);
 		// lemin.routes[i] = NULL;
 	}
@@ -785,13 +786,18 @@ int main(int argc, char **argv)
 ////////
 ////////	SOLUTION PRINT FUNCTIONS
 ////////
+printf("here\n");
 	init_path_array(&lemin);
+
 	init_array_of_ants(&lemin);
+	
 	flow_distribution(&lemin);	//функция распределения потоков
+
 	print_ant_farm(&lemin);		//вывод фермы
 	print_solution(&lemin);		//вывод решения
 ////////
 ////////	
+
 	free_nodes(nodes);
 	free_all(&lemin);
 	return (1);

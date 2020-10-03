@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: Alkor <Alkor@student.42.fr>                +#+  +:+       +#+        */
+/*   By: bsausage <bsausage@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/13 00:41:56 by bsausage          #+#    #+#             */
-/*   Updated: 2020/09/29 12:56:25 by Alkor            ###   ########.fr       */
+/*   Updated: 2020/10/03 12:36:48 by bsausage         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -175,6 +175,8 @@ void	init_array_of_ants(t_lem_in *lemin)
 
 void	init_path_array(t_lem_in *lemin)
 {
+	if (!lemin->route_count)
+		close_program(lemin, "no ways for ants");
 	if (!(lemin->paths = (t_path**)malloc(sizeof(t_path*) * (lemin->route_count + 1))))
 		close_program(lemin, "malloc error");
 	int i = 0;
