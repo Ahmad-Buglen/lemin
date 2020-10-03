@@ -100,15 +100,13 @@ typedef enum
 typedef struct		s_room
 {
     char			*name;
-	int				index_a;
     t_coords		coords;
 	t_position		position;
-	//t_status		status;
+	int				index;
 	struct s_room	*next;
 	
-	char			*name_a;
 	t_coords		coordinates;
-	int				index;
+	
 	int				pass;
 	int				type;
 	int				con_size;
@@ -116,10 +114,7 @@ typedef struct		s_room
 	t_route			*route;
 	struct s_room	**connections;
 	struct s_room	*next_a;
-
 	
-	int				flag;
-	int				level;
 }					t_room;
 
 typedef struct			s_lem_list

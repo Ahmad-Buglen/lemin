@@ -6,7 +6,7 @@
 /*   By: bsausage <bsausage@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/15 14:28:21 by dphyliss          #+#    #+#             */
-/*   Updated: 2020/10/03 13:33:48 by bsausage         ###   ########.fr       */
+/*   Updated: 2020/10/03 14:15:18 by bsausage         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,14 +51,14 @@ void node_add(t_lem_in *lemin, char *name, t_coords coordinates, int type)
 
 	if (!(temp = (t_room *)ft_memalloc(sizeof(t_room))))
 		ft_exit_fail("Error 1");
-	if (!(temp->name_a = ft_strdup(name)))
+	if (!(temp->name = ft_strdup(name)))
 		ft_exit_fail("Error 2");
-	temp->coordinates.x = coordinates.x;
-	temp->coordinates.y = coordinates.y;
+	// temp->coordinates.x = coordinates.x;
+	// temp->coordinates.y = coordinates.y;
 	if (NULL == lemin->nodes)
 	{
 		lemin->nodes = temp;
-		temp->index_a = lemin->node_len++;
+		temp->index = lemin->node_len++;
 		lemin->last_room = temp;
 	}
 	else
@@ -68,7 +68,7 @@ void node_add(t_lem_in *lemin, char *name, t_coords coordinates, int type)
 		// 	buff = buff->next_a;
 		// buff = lemin->last_room;
 		lemin->last_room->next_a = temp;
-		temp->index_a = lemin->node_len++;
+		temp->index = lemin->node_len++;
 		lemin->last_room = temp;
 	}
 	temp->next_a = NULL;
@@ -91,7 +91,7 @@ t_room *node_find(t_lem_in *lemin, char *name)
 
 	i = -1;
 	while (++i < lemin->node_len)
-		if (0 == ft_strcmp(name, lemin->map[i]->name_a))
+		if (0 == ft_strcmp(name, lemin->map[i]->name))
 			return (lemin->map[i]);
 	return (NULL);
 }
@@ -177,7 +177,7 @@ void print_connections(t_room **connections, int con_size)
 	printf("{");
 	while (i < con_size)
 	{
-		printf("%s ", temp[i]->name_a);
+		printf("%s ", temp[i]->name);
 		++i;
 	}
 	printf("}");
@@ -191,7 +191,7 @@ void free_nodes(t_room *nodes)
 	temp = nodes;
 	while (NULL != temp)
 	{
-		ft_strdel(&(temp->name_a));
+		ft_strdel(&(temp->name));
 		free(temp->connections);
 		temp->connections = NULL;
 		buff = temp;
@@ -209,15 +209,15 @@ void print_rooms(t_room *nodes)
 	temp = nodes;
 	while (NULL != temp)
 	{
-		printf("%s [%d] (%d, %d) type - %d; con_size - %d, index_a - %d, weight - %d, ", 
-			temp->name_a, temp->index_a, temp->coordinates.x, temp->coordinates.y, temp->type, temp->con_size, temp->index_a, temp->weight);
+		printf("%s [%d] (%d, %d) type - %d; con_size - %d, index - %d, weight - %d, ", 
+			temp->name, temp->index, temp->coordinates.x, temp->coordinates.y, temp->type, temp->con_size, temp->index, temp->weight);
 		if (0 != temp->con_size)
 		{
 			i = 0;
 			printf("{");
 			while (i < temp->con_size)
 			{
-				printf("%s ", temp->connections[i]->name_a);
+				printf("%s ", temp->connections[i]->name);
 				++i;
 			}
 			printf("}");
@@ -234,7 +234,7 @@ void print_route(t_route *route)
 
 	i = -1;
 	while (++i < route->size)
-		printf("%s ", route->elem[i]->name_a);
+		printf("%s ", route->elem[i]->name);
 	printf(" size - %d;\n", route->size);
 }
 
@@ -364,7 +364,7 @@ int node_include(t_route *route, int index)
 	i = 0;
 	while (i < route->size)
 	{
-		if (index == route->elem[i]->index_a)
+		if (index == route->elem[i]->index)
 			return (1);
 		++i;
 	}
@@ -449,7 +449,7 @@ int duplicate_exclusion(t_route **routes)
 		{
 			n = 0;
 			while (++n < routes[j]->size - 1)
-				if (node_include(routes[i], routes[j]->elem[n]->index_a))
+				if (node_include(routes[i], routes[j]->elem[n]->index))
 				{
 					n = routes[i]->size >= routes[j]->size ? i : j;
 					free(routes[n]);
@@ -500,7 +500,7 @@ t_room **list_to_array(t_lem_in *lemin)
 		i = 0;
 		while (NULL != temp)
 		{
-			map[temp->index_a] = temp;
+			map[temp->index] = temp;
 			temp = temp->next_a;
 		}
 		return (map);
@@ -523,7 +523,7 @@ void route_mark(t_lem_in *lemin, t_route *route)
 
 	i = 0;
 	while (++i < route->size - 1)
-		lemin->route[route->elem[i]->index_a] = true;
+		lemin->route[route->elem[i]->index] = true;
 }
 
 t_bool route_check(t_lem_in *lemin, t_route *route)
@@ -532,7 +532,7 @@ t_bool route_check(t_lem_in *lemin, t_route *route)
 
 	i = 0;
 	while (++i < route->size - 1)
-		if (lemin->route[route->elem[i]->index_a] == true)
+		if (lemin->route[route->elem[i]->index] == true)
 			return (false);
 	return (true);
 }
@@ -704,14 +704,14 @@ int main(int argc, char **argv)
 {
 	t_room *nodes;
 	int i;
-	nodes = NULL;
+	//nodes = NULL;
 	// t_lemin *lemin_a;
 	t_lem_in	lemin;
 //*
 	//lemin.vis_flag = (argc == 2 && ft_strequ("-v", argv[1])) ? 1 : 0;
 	ft_bzero(&lemin, sizeof(lemin));
 	init_values(&lemin);
-	lemin.nodes = nodes;
+	//lemin.nodes = nodes;
 	get_num_of_ants(&lemin);
 	get_rooms(&lemin);
 	lemin.map = list_to_array(&lemin);
@@ -720,7 +720,6 @@ int main(int argc, char **argv)
 	if (!(lemin.adjacency_matrix = init_adjacency_matrix(lemin.num_of_rooms)))
 	 	close_program(&lemin, "init_adjacency_matrix error");
 	lemin.array_of_rooms = init_array_of_rooms(&lemin);
-
 	get_links(&lemin);
 	if (!check_start_end_links(&lemin))
 		close_program(&lemin, "start or/and end room is/are without links");
@@ -730,9 +729,9 @@ int main(int argc, char **argv)
 	lemin_init(&lemin);
 //*/
  	// printf("num of ants = %d\n", lemin.num_of_ants);
- 	// print_room_list(lemin.room_list);
+ 	 print_room_list(lemin.room_list);
  	// print_hash_map(lemin.hash_map);
- 	// print_array_of_rooms(&lemin);
+ 	 print_array_of_rooms(&lemin);
  	// print_adjacency_matrix(&lemin);
 	// print_ant_farm(&lemin);
  	// print_rooms(lemin.nodes);

@@ -6,7 +6,7 @@
 /*   By: bsausage <bsausage@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/17 11:36:51 by bsausage          #+#    #+#             */
-/*   Updated: 2020/10/03 11:49:14 by bsausage         ###   ########.fr       */
+/*   Updated: 2020/10/03 14:08:54 by bsausage         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,8 +73,8 @@ void	print_array_of_rooms(t_lem_in *lemin)
 		if (!lemin->array_of_rooms[n])
 			printf("NULL\n");
 		else
-			printf("n = %u\tname = %s\tindex = %d\tbfs_level = %d\t flag = %d\n",
-				n, lemin->array_of_rooms[n]->name, lemin->array_of_rooms[n]->index, lemin->array_of_rooms[n]->level, lemin->array_of_rooms[n]->flag);
+			printf("n = %u\tname = %s\tindex = %d\n",
+				n, lemin->array_of_rooms[n]->name, lemin->array_of_rooms[n]->index);
 		n++;
 	}		
 }

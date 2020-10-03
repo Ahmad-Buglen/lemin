@@ -6,7 +6,7 @@
 /*   By: bsausage <bsausage@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/13 00:49:42 by bsausage          #+#    #+#             */
-/*   Updated: 2020/10/03 11:42:40 by bsausage         ###   ########.fr       */
+/*   Updated: 2020/10/03 14:09:19 by bsausage         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,13 +24,7 @@ t_room		*room_create_elem(char *name, t_coords coords, t_lem_in *lemin)
 	room->coords = coords;
 	room->position = lemin->position;
 	room->index = lemin->num_of_rooms;
-	//room->status = EMPTY;
 	room->next = NULL;
-	room->flag = 0;
-	if (lemin->position == MIDDLE)
-		room->level = -1;
-	else
-		room->level = lemin->position == START ? 0 : INT_MAX;
 	return (room);
 }
 

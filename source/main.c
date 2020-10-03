@@ -6,7 +6,7 @@
 /*   By: bsausage <bsausage@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/13 00:41:56 by bsausage          #+#    #+#             */
-/*   Updated: 2020/10/03 13:32:33 by bsausage         ###   ########.fr       */
+/*   Updated: 2020/10/03 13:44:34 by bsausage         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ void	find_path_2(t_lem_in *lemin, t_path **path, t_route *route)
 	{
 		// room = lemin->array_of_rooms[route->elem[n]->index_a]->room;
 		// list_push_front(path, NULL, room);
-		add_elem_to_path(lemin, path, route->elem[n]->name_a, route->elem[n]->index_a);
+		add_elem_to_path(lemin, path, route->elem[n]->name, route->elem[n]->index);
 		n--;
 	}
 }
