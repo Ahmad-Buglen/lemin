@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_values.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: Alkor <Alkor@student.42.fr>                +#+  +:+       +#+        */
+/*   By: bsausage <bsausage@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/17 11:20:56 by bsausage          #+#    #+#             */
-/*   Updated: 2020/09/29 11:19:14 by Alkor            ###   ########.fr       */
+/*   Updated: 2020/10/03 11:37:03 by bsausage         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,16 +73,21 @@ int			**init_adjacency_matrix(int n)
 	return (matrix);
 }
 
-t_lem_list		**init_array_of_rooms(t_lem_in *lemin)
+t_room		**init_array_of_rooms(t_lem_in *lemin)
 {
-	t_lem_list		**tmp;
+	t_room		**tmp;
+	t_room		*list;
 	int			n;
 
 	n = 0;
-	if (!(tmp = (t_lem_list**)malloc(sizeof(t_lem_list*) * lemin->num_of_rooms)))
+	if (!(tmp = (t_room**)malloc(sizeof(t_room*) * lemin->num_of_rooms)))
 		close_program(lemin, "init array of rooms error");
-	while (n < lemin->num_of_rooms)
-		tmp[n++] = NULL;
+	list = lemin->room_list;
+	while (list)
+	{
+		tmp[n++] = list;
+		list = list->next;
+	}
 	return (tmp);
 }
 

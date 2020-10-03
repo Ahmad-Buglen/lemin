@@ -6,7 +6,7 @@
 /*   By: bsausage <bsausage@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/17 11:36:51 by bsausage          #+#    #+#             */
-/*   Updated: 2020/09/09 11:40:45 by bsausage         ###   ########.fr       */
+/*   Updated: 2020/10/03 11:37:49 by bsausage         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ void	print_array_of_rooms(t_lem_in *lemin)
 			printf("NULL\n");
 		else
 			printf("n = %u\tname = %s\tindex = %d\tbfs_level = %d\t flag = %d\n",
-				n, lemin->array_of_rooms[n]->room->name, lemin->array_of_rooms[n]->room->index, lemin->array_of_rooms[n]->room->level, lemin->array_of_rooms[n]->room->flag);
+				n, lemin->array_of_rooms[n]->name, lemin->array_of_rooms[n]->index, lemin->array_of_rooms[n]->level, lemin->array_of_rooms[n]->flag);
 		n++;
 	}		
 }
@@ -137,7 +137,7 @@ void		print_link_part(t_lem_in *lemin)
 		{
 			if (lemin->adjacency_matrix[i][j] && lemin->adjacency_matrix[j][i])
 			{
-				print_link(lemin->array_of_rooms[i]->room->name, lemin->array_of_rooms[j]->room->name);
+				print_link(lemin->array_of_rooms[i]->name, lemin->array_of_rooms[j]->name);
 				lemin->adjacency_matrix[i][j] = 0;
 				lemin->adjacency_matrix[j][i] = 0;
 			}

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   list.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: Alkor <Alkor@student.42.fr>                +#+  +:+       +#+        */
+/*   By: bsausage <bsausage@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/13 00:49:42 by bsausage          #+#    #+#             */
-/*   Updated: 2020/09/29 10:46:52 by Alkor            ###   ########.fr       */
+/*   Updated: 2020/10/03 11:42:40 by bsausage         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ t_room		*room_create_elem(char *name, t_coords coords, t_lem_in *lemin)
 	room->coords = coords;
 	room->position = lemin->position;
 	room->index = lemin->num_of_rooms;
-	room->status = EMPTY;
+	//room->status = EMPTY;
 	room->next = NULL;
 	room->flag = 0;
 	if (lemin->position == MIDDLE)

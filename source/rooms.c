@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rooms.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dphyliss <dphyliss@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bsausage <bsausage@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/19 11:45:58 by bsausage          #+#    #+#             */
-/*   Updated: 2020/09/24 18:33:43 by dphyliss         ###   ########.fr       */
+/*   Updated: 2020/10/03 11:41:08 by bsausage         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,10 +122,7 @@ int		find_room_index(t_lem_in *lemin, char *room_name)
 	while (room_list)
 	{
 		if (ft_strequ(room_list->room->name, room_name))
-		{
-			lemin->array_of_rooms[room_list->room->index] = room_list;
 			return (room_list->room->index);
-		}
 		room_list = room_list->next;
 	}
 	return (-1);

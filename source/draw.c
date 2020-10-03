@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   draw.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dphyliss <dphyliss@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bsausage <bsausage@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/01 11:58:12 by Alkor             #+#    #+#             */
-/*   Updated: 2020/09/02 18:48:22 by dphyliss         ###   ########.fr       */
+/*   Updated: 2020/10/03 11:38:46 by bsausage         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,8 +74,8 @@ void	draw_ants_farm(t_lem_in *lemin, t_visual *ptr)
 	i = 0;
 	while (i < lemin->num_of_rooms)
 	{
-		draw_room(ptr, lemin->array_of_rooms[i]->room->coords.x * (ptr->room_len + 5),
-					   lemin->array_of_rooms[i]->room->coords.y * (ptr->room_len + 5), WHITE);
+		draw_room(ptr, lemin->array_of_rooms[i]->coords.x * (ptr->room_len + 5),
+					   lemin->array_of_rooms[i]->coords.y * (ptr->room_len + 5), WHITE);
 		i++;
 	}
 	mlx_put_image_to_window(ptr->mlx, ptr->win, ptr->img, 0, 0);
@@ -152,10 +152,10 @@ void	draw_links(t_lem_in *lemin, t_visual *ptr)
 		{
 			if (lemin->adjacency_matrix[i][j])
 			{
-				start.x = lemin->array_of_rooms[i]->room->coords.x * (ptr->room_len + 2) + 2;
-				start.y = lemin->array_of_rooms[i]->room->coords.y * (ptr->room_len + 2) + 2;
-				end.x = lemin->array_of_rooms[j]->room->coords.x * (ptr->room_len + 2) + 2;
-				end.y = lemin->array_of_rooms[j]->room->coords.y * (ptr->room_len + 2) + 2;
+				start.x = lemin->array_of_rooms[i]->coords.x * (ptr->room_len + 2) + 2;
+				start.y = lemin->array_of_rooms[i]->coords.y * (ptr->room_len + 2) + 2;
+				end.x = lemin->array_of_rooms[j]->coords.x * (ptr->room_len + 2) + 2;
+				end.y = lemin->array_of_rooms[j]->coords.y * (ptr->room_len + 2) + 2;
 				draw_line(ptr, start, end, WHITE);
 			}
 			j++;

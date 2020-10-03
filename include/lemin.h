@@ -103,7 +103,7 @@ typedef struct		s_room
 	int				index_a;
     t_coords		coords;
 	t_position		position;
-	t_status		status;
+	//t_status		status;
 	struct s_room	*next;
 	
 	char			*name_a;
@@ -142,7 +142,7 @@ typedef struct      s_lem_in
 	t_room			*room_list;
 	t_lem_list		*hash_map[HASH_SIZE];
 	int				**adjacency_matrix;
-	t_lem_list		**array_of_rooms;
+	t_room			**array_of_rooms;
 	t_lem_list		*path;
 	t_path			**paths;
 	t_path			**array_of_ants;
@@ -188,7 +188,7 @@ unsigned int		calc_hash_index(char *str);
 void				init_values(t_lem_in *lemin);
 void				assign_null_hash_map(t_lem_in *lemim);
 int					**init_adjacency_matrix(int n);
-t_lem_list			**init_array_of_rooms(t_lem_in *lemin);
+t_room				**init_array_of_rooms(t_lem_in *lemin);
 
 int					list_push_front(t_lem_list **begin_list, t_lem_list **end_list, t_room *data);
 int					list_push_back(t_lem_list **begin_list, t_lem_list **end_list, t_room *data);
