@@ -6,7 +6,7 @@
 /*   By: bsausage <bsausage@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/17 12:28:40 by bsausage          #+#    #+#             */
-/*   Updated: 2020/10/03 13:26:58 by bsausage         ###   ########.fr       */
+/*   Updated: 2020/10/03 16:51:27 by bsausage         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,7 @@ void		free_all(t_lem_in *lemin)
 	free_adjacency_matrix(lemin);
 	free_hash_map(lemin);
 	free_list(&lemin->path);
-	free_list(&lemin->queue_begin);
+	//free_list(&lemin->queue_begin);
 	free_room_list(&lemin->room_list);
 	free_paths(lemin);
 	ft_memdel((void**)&lemin->array_of_rooms);

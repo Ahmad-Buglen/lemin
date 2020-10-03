@@ -105,7 +105,6 @@ typedef struct		s_room
 	int				index;
 	struct s_room	*next;
 	
-	t_coords		coordinates;
 	
 	int				pass;
 	int				type;
@@ -134,36 +133,47 @@ typedef struct			s_path
 typedef struct      s_lem_in
 {
 	char			*line;
+
 	t_room			*room_list;
+	//t_room			*nodes;
+
 	t_lem_list		*hash_map[HASH_SIZE];
 	int				**adjacency_matrix;
+
 	t_room			**array_of_rooms;
+	//t_room			**map;
+
+	t_path			**array_of_ants;
+
 	t_lem_list		*path;
 	t_path			**paths;
-	t_path			**array_of_ants;
 	t_position		position;
 	int				num_of_ants;
+
+	//int 			node_len;
 	int				num_of_rooms;
+
 	int				start_flag;
 	int				end_flag;
 	t_room			*start;
 	t_room			*end;
-	t_room			*last_room;
-	t_room			*nodes;
+
+	//t_room			*last_room;
+	
 	int				max_route_count;
-	int 			node_len;
+	
 	t_room			**fifo_nodes;
 	t_route			**routes;
 	int				route_count;
-	t_room			**map;
+	
 	t_bool			*route;
 	
 	
-	int				vis_flag;
+	// int				vis_flag;
 	unsigned int	start_index;
 	unsigned int	end_index;
-	t_lem_list		*queue_begin;
-	t_lem_list		*queue_end;
+	// t_lem_list		*queue_begin;
+	// t_lem_list		*queue_end;
 }					t_lem_in;
 
 //init/malloc functions
@@ -172,7 +182,8 @@ typedef struct      s_lem_in
 void				init_min(t_lem_in *lemin);
 void 				init_middle(t_lem_in *lemin);
 
-void				connect_node(t_lem_in *lemin, char *name1, char *name2);
+//void				connect_node(t_lem_in *lemin, char *name1, char *name2);
+void 				connect_node(t_lem_in *lemin, t_room *room1, t_room *room2);
 void 				node_add(t_lem_in *lemin, char *name, t_coords coordinates, int type);
 long				ft_strtol(const char *str, char **end);
 t_room				*room_create_elem(char *name, t_coords coords, t_lem_in *lemin);

@@ -6,7 +6,7 @@
 /*   By: bsausage <bsausage@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/19 11:45:58 by bsausage          #+#    #+#             */
-/*   Updated: 2020/10/03 13:59:43 by bsausage         ###   ########.fr       */
+/*   Updated: 2020/10/03 15:15:37 by bsausage         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ void		get_room_name_coords(t_lem_in *lemin)
 	if (!(room = room_push_back(&lemin->room_list, name, coords, lemin)))
 		close_program(lemin, "malloc error");
 	
-	node_add(lemin,  name,  coords, lemin->position); //dphyliss' function
+	//node_add(lemin,  name,  coords, lemin->position); //dphyliss' function
 									//последний аргумент идет из структуры bsausage,
 									//числовые значения соответвуют значениям dphyliss
 
@@ -68,11 +68,13 @@ void		get_room_name_coords(t_lem_in *lemin)
 	{
 		lemin->start_flag = 1;
 		lemin->start_index = lemin->num_of_rooms;
+		lemin->start = room;
 	}
 	if (lemin->position == END && !lemin->end_flag)
 	{
 		lemin->end_flag = 1;
 		lemin->end_index = lemin->num_of_rooms;
+		lemin->end = room;
 	}
 	lemin->position = MIDDLE;
 	lemin->num_of_rooms++;

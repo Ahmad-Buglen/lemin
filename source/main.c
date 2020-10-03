@@ -6,7 +6,7 @@
 /*   By: bsausage <bsausage@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/13 00:41:56 by bsausage          #+#    #+#             */
-/*   Updated: 2020/10/03 13:44:34 by bsausage         ###   ########.fr       */
+/*   Updated: 2020/10/03 15:58:24 by bsausage         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -168,7 +168,7 @@ void	init_array_of_ants(t_lem_in *lemin)
 	int		i;
 
 	i = 0;
-	lemin->array_of_ants = (t_path**)malloc(sizeof(t_path*) * lemin->num_of_ants);
+	lemin->array_of_ants = (t_path**)ft_memalloc(sizeof(t_path*) * lemin->num_of_ants);
 	// while (i < lemin->num_of_ants)
 	// 	lemin->array_of_ants[i++] = lemin->path;
 }
@@ -177,7 +177,7 @@ void	init_path_array(t_lem_in *lemin)
 {
 	if (!lemin->route_count)
 		close_program(lemin, "no ways for ants");
-	if (!(lemin->paths = (t_path**)malloc(sizeof(t_path*) * (lemin->route_count + 1))))
+	if (!(lemin->paths = (t_path**)ft_memalloc(sizeof(t_path*) * (lemin->route_count + 1))))
 		close_program(lemin, "malloc error");
 	int i = 0;
 	while (i <= lemin->route_count)

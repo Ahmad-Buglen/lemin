@@ -6,7 +6,7 @@
 /*   By: bsausage <bsausage@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/19 11:48:50 by bsausage          #+#    #+#             */
-/*   Updated: 2020/10/03 13:31:48 by bsausage         ###   ########.fr       */
+/*   Updated: 2020/10/03 15:38:03 by bsausage         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ int		parse_links_line(t_lem_in *lemin)
 	lemin->adjacency_matrix[room_2][room_1] = 1;
 	ft_memdel((void**)&lemin->line);
 	
-	connect_node(lemin, lemin->array_of_rooms[room_1]->name, lemin->array_of_rooms[room_2]->name);
+	connect_node(lemin, lemin->array_of_rooms[room_1], lemin->array_of_rooms[room_2]);
 	//connect_node(lemin, room_name1, room_name2);
 	return (room_1 < 0 || room_1 < 0 ? 0 : 1);
 }

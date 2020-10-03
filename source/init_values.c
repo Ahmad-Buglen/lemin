@@ -6,7 +6,7 @@
 /*   By: bsausage <bsausage@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/17 11:20:56 by bsausage          #+#    #+#             */
-/*   Updated: 2020/10/03 11:37:03 by bsausage         ###   ########.fr       */
+/*   Updated: 2020/10/03 16:51:10 by bsausage         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,13 +34,13 @@ void		init_values(t_lem_in *lemin)
 	lemin->adjacency_matrix = NULL;
 	lemin->start_index = 0;
 	lemin->end_flag = 0;
-	lemin->queue_begin = NULL;
-	lemin->queue_end = NULL;
+	//lemin->queue_begin = NULL;
+	//lemin->queue_end = NULL;
 	lemin->path = NULL;
 	lemin->paths = NULL;
 
-	lemin->nodes = NULL; // ?
-	lemin->node_len = 0;
+	//lemin->nodes = NULL; // ?
+	//lemin->node_len = 0;
 	// lemin->path2 = NULL;
 	// lemin->path3 = NULL;
 	lemin->array_of_ants = NULL;
@@ -55,11 +55,11 @@ int			**init_adjacency_matrix(int n)
 	int		j;
 
 	i = 0;
-	if (!(matrix = (int**)malloc(sizeof(int*) * n)))
+	if (!(matrix = (int**)ft_memalloc(sizeof(int*) * n)))
 		return (NULL);
 	while (i < n)
 	{
-		if (!(matrix[i] = (int*)malloc(sizeof(int) * n)))
+		if (!(matrix[i] = (int*)ft_memalloc(sizeof(int) * n)))
 		{
 			while (i >= 0)
 				ft_memdel((void**)&matrix[i--]);
@@ -80,7 +80,7 @@ t_room		**init_array_of_rooms(t_lem_in *lemin)
 	int			n;
 
 	n = 0;
-	if (!(tmp = (t_room**)malloc(sizeof(t_room*) * lemin->num_of_rooms)))
+	if (!(tmp = (t_room**)ft_memalloc(sizeof(t_room*) * (lemin->num_of_rooms + 1))))
 		close_program(lemin, "init array of rooms error");
 	list = lemin->room_list;
 	while (list)
