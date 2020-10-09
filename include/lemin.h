@@ -167,7 +167,7 @@ typedef struct      s_lem_in
 	int				route_count;
 	
 	t_bool			*route;
-	
+	t_route			*buff;
 	
 	// int				vis_flag;
 	unsigned int	start_index;
@@ -178,7 +178,7 @@ typedef struct      s_lem_in
 
 //init/malloc functions
 
-
+void	routes_destroy(t_route **routes, int *route_count);
 void				init_min(t_lem_in *lemin);
 void 				init_middle(t_lem_in *lemin);
 
@@ -189,7 +189,7 @@ long				ft_strtol(const char *str, char **end);
 t_room				*room_create_elem(char *name, t_coords coords, t_lem_in *lemin);
 t_room				*room_push_back(t_room **begin, char *name, t_coords coords, t_lem_in *lemin);
 void				add_new_room(t_lem_list **begin_list, char *name, t_coords coords, t_lem_in *lemin);
-void				free_room_list(t_room **begin_list);
+void				free_room_list(t_lem_in *lemin);
 unsigned int		calc_hash_index(char *str);
 void				init_values(t_lem_in *lemin);
 void				assign_null_hash_map(t_lem_in *lemim);
