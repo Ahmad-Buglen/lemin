@@ -6,7 +6,7 @@
 /*   By: bsausage <bsausage@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/17 12:28:40 by bsausage          #+#    #+#             */
-/*   Updated: 2020/10/10 11:54:05 by bsausage         ###   ########.fr       */
+/*   Updated: 2020/10/10 12:34:09 by bsausage         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,6 +91,14 @@ void		free_paths(t_lem_in *lemin)
 	int			n;
 
 	n = 0;
+	path = lemin->path;
+	while (path)
+	{
+		tmp = path->next;
+		ft_memdel((void**)&path->name);
+		ft_memdel((void**)&path);
+		path = tmp;
+	}
 	if (!lemin->paths)
 		return ;
 	while (n <= lemin->route_count)
@@ -113,14 +121,15 @@ void		free_all(t_lem_in *lemin)
 	ft_memdel((void**)&lemin->line);
 	free_adjacency_matrix(lemin);
 	free_hash_map(lemin);
-	free_list(&lemin->path);
-	ft_memdel((void**)&lemin->fifo_nodes[0]->route);
+	if (lemin->fifo_nodes)
+		ft_memdel((void**)&lemin->fifo_nodes[0]->route);///segmentation fault
 	free_room_list(lemin);
 	free_paths(lemin);
 	ft_memdel((void**)&lemin->array_of_rooms);
 	ft_memdel((void**)&lemin->array_of_ants);
 	ft_memdel((void**)&lemin->fifo_nodes);
-	routes_destroy(lemin->routes, &lemin->route_count);
+	if (lemin->routes)
+		routes_destroy(lemin->routes, &lemin->route_count);
 	ft_memdel((void**)&lemin->routes);
 	ft_memdel((void**)&lemin->route);
 	// if (NULL != lemin->room_list)

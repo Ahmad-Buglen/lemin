@@ -145,7 +145,7 @@ typedef struct      s_lem_in
 
 	t_path			**array_of_ants;
 
-	t_lem_list		*path;
+	t_path		*path;
 	t_path			**paths;
 	t_position		position;
 	int				num_of_ants;
@@ -247,6 +247,7 @@ void				init_path_array(t_lem_in *lemin);
 void				flow_distribution(t_lem_in *lemin);
 void				find_path_2(t_lem_in *lemin, t_path **path, t_route *route);
 void				print_solution(t_lem_in *lemin);
+void				start_end_solution(t_lem_in *lemin);
 void				add_elem_to_path(t_lem_in *lemin, t_path **path, char *name, int index);
 void		debug(t_lem_in *lemin);
 

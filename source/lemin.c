@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lemin.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dphyliss <dphyliss@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bsausage <bsausage@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/15 14:28:21 by dphyliss          #+#    #+#             */
-/*   Updated: 2020/10/09 18:42:17 by dphyliss         ###   ########.fr       */
+/*   Updated: 2020/10/10 12:16:09 by bsausage         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -525,8 +525,14 @@ int main(int argc, char **argv)
 	get_links(&lemin);
 	if (!check_start_end_links(&lemin))
 		close_program(&lemin, "start or/and end room is/are without links");
-	if (!lemin.array_of_rooms[lemin.start_index] || !lemin.array_of_rooms[lemin.end_index])
-		close_program(&lemin, "start or/and end room is/are without links");
+	if (lemin.adjacency_matrix[lemin.start_index][lemin.end_index])
+	{
+		start_end_solution(&lemin);
+		free_all(&lemin);
+		return (0);
+	}
+	// if (!lemin.array_of_rooms[lemin.start_index] || !lemin.array_of_rooms[lemin.end_index])
+	// 	close_program(&lemin, "start or/and end room is/are without links");
 	
 	lemin_init(&lemin);
 //*/

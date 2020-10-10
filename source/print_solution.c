@@ -6,7 +6,7 @@
 /*   By: bsausage <bsausage@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/10 10:47:12 by bsausage          #+#    #+#             */
-/*   Updated: 2020/10/10 11:00:57 by bsausage         ###   ########.fr       */
+/*   Updated: 2020/10/10 12:11:36 by bsausage         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,4 +51,18 @@ void			print_solution(t_lem_in *lemin)
 		}
 		write(1, "\n", 1);
 	}
+}
+
+void			start_end_solution(t_lem_in *lemin)
+{
+	int		i;
+
+	i = 0;
+	add_elem_to_path(lemin, &lemin->path, lemin->end->name, lemin->end_index);
+	add_elem_to_path(lemin, &lemin->path, lemin->start->name, lemin->start_index);
+	init_array_of_ants(lemin);
+	while (i < lemin->num_of_ants)
+		lemin->array_of_ants[i++] = lemin->path;
+	print_ant_farm(lemin);
+	print_solution(lemin);
 }
