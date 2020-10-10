@@ -163,7 +163,7 @@ typedef struct      s_lem_in
 
 //init/malloc functions
 
-void	routes_destroy(t_route **routes, int *route_count);
+void				routes_destroy(t_route **routes, int *route_count);
 void				init_min(t_lem_in *lemin);
 void 				init_middle(t_lem_in *lemin);
 
@@ -230,10 +230,10 @@ void				print_array_of_rooms(t_lem_in *lemin);
 void				init_array_of_ants(t_lem_in *lemin);
 void				init_path_array(t_lem_in *lemin);
 void				flow_distribution(t_lem_in *lemin);
-void				find_path_2(t_lem_in *lemin, t_path **path, t_route *route);
+void				find_path(t_lem_in *lemin, t_path **path, t_route *route);
 void				print_solution(t_lem_in *lemin);
 void				start_end_solution(t_lem_in *lemin);
 void				add_elem_to_path(t_lem_in *lemin, t_path **path, char *name, int index);
-void		debug(t_lem_in *lemin);
+void				debug(t_lem_in *lemin);
 
 #endif
