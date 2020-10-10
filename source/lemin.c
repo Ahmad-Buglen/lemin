@@ -6,7 +6,7 @@
 /*   By: dphyliss <dphyliss@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/15 14:28:21 by dphyliss          #+#    #+#             */
-/*   Updated: 2020/10/09 18:42:17 by dphyliss         ###   ########.fr       */
+/*   Updated: 2020/10/10 16:04:34 by dphyliss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -418,7 +418,7 @@ int	route_flow(t_lem_in *lemin, int route_count)
 	flow = 0;
 	i = -1;
 	while (++i < route_count - 1)
-		ants -= lemin->routes[lemin->route_count - 1]->size - lemin->routes[i]->size;
+		ants = ft_abs(ants - (lemin->routes[lemin->route_count - 1]->size - lemin->routes[i]->size));
 	if (route_count > 0)
 		flow = lemin->routes[lemin->route_count - 1]->size + ants / route_count;
 	return (flow);
@@ -470,7 +470,7 @@ void	dijkstra_search( t_room **fifo_nodes, t_lem_in *lemin)
 		while (fifo_nodes[i]->con_size > j)
 		{
 				if ((NO_VISIT == fifo_nodes[i]->connections[j]->pass) &&
-						(fifo_nodes[i]->weight + 1 <= fifo_nodes[i]->connections[j]->weight))
+		(fifo_nodes[i]->weight + 1 <= fifo_nodes[i]->connections[j]->weight))
 				{
 					fifo_nodes[i]->connections[j]->weight = fifo_nodes[i]->weight + 1;
 					if (NULL != fifo_nodes[i]->connections[j]->route)
@@ -572,9 +572,9 @@ int main(int argc, char **argv)
 	}
 	//lemin.route_count = duplicate_exclusion(lemin.routes);
 
-	// i = -1;
-	// while (++i < lemin.route_count)
-	// 	print_route(lemin.routes[i]);
+	i = -1;
+	while (++i < lemin.route_count)
+		print_route(lemin.routes[i]);
 		
 //*/
 	 
