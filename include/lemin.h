@@ -133,30 +133,21 @@ typedef struct			s_path
 typedef struct      s_lem_in
 {
 	char			*line;
-
 	t_room			*room_list;
-	//t_room			*nodes;
-
 	t_lem_list		*hash_map[HASH_SIZE];
 	int				**adjacency_matrix;
-
 	t_room			**array_of_rooms;
-	//t_room			**map;
-
 	t_path			**array_of_ants;
-
-	t_path		*path;
 	t_path			**paths;
 	t_position		position;
 	int				num_of_ants;
-
-	//int 			node_len;
 	int				num_of_rooms;
-
 	int				start_flag;
 	int				end_flag;
 	t_room			*start;
 	t_room			*end;
+	unsigned int	start_index;
+	unsigned int	end_index;
 
 	//t_room			*last_room;
 	
@@ -168,12 +159,6 @@ typedef struct      s_lem_in
 	
 	t_bool			*route;
 	t_route			*buff;
-	
-	// int				vis_flag;
-	unsigned int	start_index;
-	unsigned int	end_index;
-	// t_lem_list		*queue_begin;
-	// t_lem_list		*queue_end;
 }					t_lem_in;
 
 //init/malloc functions

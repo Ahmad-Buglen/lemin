@@ -6,15 +6,13 @@
 /*   By: bsausage <bsausage@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/15 14:28:21 by dphyliss          #+#    #+#             */
-/*   Updated: 2020/10/10 14:03:20 by bsausage         ###   ########.fr       */
+/*   Updated: 2020/10/10 15:27:06 by bsausage         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 
-#include "../include/lemin.h"
-
+#include "lemin.h"
 #include <stdio.h>
-
 #include <limits.h>
 
 long			ft_strtol(const char *str, char **end)
@@ -513,7 +511,7 @@ int main(int argc, char **argv)
 	t_lem_in	lemin;
 //*
 	ft_bzero(&lemin, sizeof(lemin));
-	init_values(&lemin);
+	//init_values(&lemin);
 	get_num_of_ants(&lemin);
 	get_rooms(&lemin);
 	if (!lemin.start_flag || !lemin.end_flag)

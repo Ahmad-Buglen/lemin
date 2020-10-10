@@ -6,7 +6,7 @@
 /*   By: bsausage <bsausage@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/17 11:20:56 by bsausage          #+#    #+#             */
-/*   Updated: 2020/10/10 11:53:25 by bsausage         ###   ########.fr       */
+/*   Updated: 2020/10/10 15:48:20 by bsausage         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,10 @@ void		init_values(t_lem_in *lemin)
 	lemin->adjacency_matrix = NULL;
 	lemin->start_index = 0;
 	lemin->end_flag = 0;
-	lemin->path = NULL;
 	lemin->paths = NULL;
 	lemin->array_of_ants = NULL;
+	lemin->fifo_nodes = NULL;
+	lemin->routes = NULL;
 	assign_null_hash_map(lemin);
 }
 

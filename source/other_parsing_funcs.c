@@ -6,7 +6,7 @@
 /*   By: bsausage <bsausage@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/19 11:51:50 by bsausage          #+#    #+#             */
-/*   Updated: 2020/10/10 14:18:43 by bsausage         ###   ########.fr       */
+/*   Updated: 2020/10/10 15:59:09 by bsausage         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,8 +52,8 @@ void		get_num_of_ants(t_lem_in *lemin)
 	char	*end;
 
 	if (get_next_line(0, &lemin->line) <= 0)
-		close_program(lemin, \
-	 		"empty file or map doesn't contain rooms and link part");
+		close_program(lemin,\
+		"empty file or map doesn't contain rooms and link part");
 	check_first_line(lemin);
 	end = lemin->line;
 	num = ft_strtol(end, &end);
@@ -75,9 +75,3 @@ int			check_command_line(t_lem_in *lemin)
 		lemin->position = END;
 	return (1);
 }
-
-// void		skip_line(t_lem_in *lemin)
-// {
-// 	ft_memdel((void**)&lemin->line);
-// 	get_next_line(0, &lemin->line);
-// }

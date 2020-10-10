@@ -6,7 +6,7 @@
 /*   By: bsausage <bsausage@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/10 10:47:12 by bsausage          #+#    #+#             */
-/*   Updated: 2020/10/10 12:11:36 by bsausage         ###   ########.fr       */
+/*   Updated: 2020/10/10 15:59:50 by bsausage         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,11 +58,15 @@ void			start_end_solution(t_lem_in *lemin)
 	int		i;
 
 	i = 0;
-	add_elem_to_path(lemin, &lemin->path, lemin->end->name, lemin->end_index);
-	add_elem_to_path(lemin, &lemin->path, lemin->start->name, lemin->start_index);
+	lemin->route_count = 1;
+	init_path_array(lemin);
+	add_elem_to_path(lemin, &lemin->paths[0],\
+					lemin->end->name, lemin->end_index);
+	add_elem_to_path(lemin, &lemin->paths[0],\
+					lemin->start->name, lemin->start_index);
 	init_array_of_ants(lemin);
 	while (i < lemin->num_of_ants)
-		lemin->array_of_ants[i++] = lemin->path;
+		lemin->array_of_ants[i++] = lemin->paths[0];
 	print_ant_farm(lemin);
 	print_solution(lemin);
 }
