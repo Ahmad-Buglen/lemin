@@ -6,7 +6,7 @@
 /*   By: bsausage <bsausage@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/17 12:28:40 by bsausage          #+#    #+#             */
-/*   Updated: 2020/10/10 12:34:09 by bsausage         ###   ########.fr       */
+/*   Updated: 2020/10/10 13:56:45 by bsausage         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,10 +139,10 @@ void		free_all(t_lem_in *lemin)
 
 void		close_program(t_lem_in *lemin, char *error_msg)
 {
-	free_all(lemin);
+	//free_all(lemin);
 	if (!errno)
 		ft_putendl_fd(error_msg, 2);
 	else
-		perror(error_msg);
+		perror("Error");
 	exit (1);
 }

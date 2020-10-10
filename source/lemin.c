@@ -6,7 +6,7 @@
 /*   By: bsausage <bsausage@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/15 14:28:21 by dphyliss          #+#    #+#             */
-/*   Updated: 2020/10/10 12:16:09 by bsausage         ###   ########.fr       */
+/*   Updated: 2020/10/10 14:03:20 by bsausage         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -512,7 +512,6 @@ int main(int argc, char **argv)
 	int i;
 	t_lem_in	lemin;
 //*
-	//lemin.vis_flag = (argc == 2 && ft_strequ("-v", argv[1])) ? 1 : 0;
 	ft_bzero(&lemin, sizeof(lemin));
 	init_values(&lemin);
 	get_num_of_ants(&lemin);
