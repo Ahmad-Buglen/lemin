@@ -6,7 +6,7 @@
 /*   By: bsausage <bsausage@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/13 00:41:56 by bsausage          #+#    #+#             */
-/*   Updated: 2020/10/03 15:58:24 by bsausage         ###   ########.fr       */
+/*   Updated: 2020/10/10 10:47:55 by bsausage         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 #include "get_next_line.h"
 #include "lemin.h"
 #include <stdio.h>
-#include "vis.h"
 
 // int		calc_bfs_level(t_lem_in *lemin)
 // {
@@ -90,40 +89,7 @@ void	find_path_2(t_lem_in *lemin, t_path **path, t_route *route)
 	}
 }
 
-void	print_solution(t_lem_in *lemin)
-{
-	int		i;
-	int		k;
-	t_path	*debug;
-	
-	printf("\n");
-	k = 0;
-	debug = lemin->array_of_ants[lemin->num_of_ants - 1];
-	while (lemin->array_of_ants[lemin->num_of_ants - 1]->next)
-	{
-		i = 0;
-		while (i < lemin->num_of_ants)
-		{
-			if (lemin->array_of_ants[i] && lemin->array_of_ants[i]->index != (int)lemin->end_index && lemin->array_of_ants[i]->next->status == EMPTY)
-			{
-				lemin->array_of_ants[i]->status = EMPTY;
-				lemin->array_of_ants[i] = lemin->array_of_ants[i]->next;
-				if (lemin->array_of_ants[i]->index != (int)lemin->end_index)
-					lemin->array_of_ants[i]->status = NOT_EMPTY;
-				//printf("L%d-%s ", i + 1, lemin->array_of_ants[i]->name);
-				write(1, "L", 1);
-				ft_putnbr(i + 1);
-				write(1, "-", 1);
-				ft_putstr(lemin->array_of_ants[i]->name);
-				write(1, " ", 1);
-			}
-			i++;
-		}
-		//printf("\b\n");
-		write(1, "\n", 2);
-		k++;
-	}
-}
+
 
 // void	init_array_of_ants_2(t_lem_in *lemin, t_route *route)
 // {

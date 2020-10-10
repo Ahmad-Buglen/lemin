@@ -79,7 +79,7 @@ HEADERS = $(addprefix $(HEADERS_DIRECTORY), $(HEADERS_LIST))
 SOURCES_DIRECTORY = source/
 SOURCES_LIST = list.c main.c hash_map.c init_values.c print_functions.c \
 free_functions.c rooms.c links.c other_parsing_funcs.c \
-rgb.c lemin.c get_next_line.c init_test.c
+lemin.c get_next_line.c init_test.c print_ant_farm.c print_solution.c
 SOURCES = $(addprefix $(SOURCES_DIRECTORY), $(SOURCES_LIST))
 
 OBJECTS_DIRECTORY = objects/
@@ -97,7 +97,7 @@ RESET = \033[0m
 all: $(NAME)
 
 $(NAME): $(OBJECTS_DIRECTORY) $(OBJECTS) $(LIBFT)
-	@$(CC) $(FLAGS) $(INCLUDES) $(OBJECTS) $(LIBRARIES) $(VIS_LIBRARIES) -o $(NAME)
+	@$(CC) $(FLAGS) $(INCLUDES) $(OBJECTS) $(LIBRARIES) -o $(NAME)
 	@echo "\n$(NAME): $(GREEN)object files were created$(RESET)"
 	@echo "$(NAME): $(GREEN)$(NAME) was created$(RESET)"
 

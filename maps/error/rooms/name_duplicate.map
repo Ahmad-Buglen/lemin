@@ -1,0 +1,17 @@
+10
+# rooms
+##start
+one 450 50
+two 450 250
+3 650 250
+4 450 450
+5 250 450
+##end
+two 450 650
+# links
+one-two
+one-3
+two-5
+two-4
+3-4
+5-18

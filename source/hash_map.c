@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   hash_map.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dphyliss <dphyliss@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bsausage <bsausage@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/15 13:56:21 by bsausage          #+#    #+#             */
-/*   Updated: 2020/09/02 18:48:19 by dphyliss         ###   ########.fr       */
+/*   Updated: 2020/10/10 11:33:04 by bsausage         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ unsigned int		calc_hash_index(char *str)
 				tmp = tmp << 8;
 			str++;
 		}
-		hash_index += tmp;	
+		hash_index += tmp;
 	}
 	return (hash_index % HASH_SIZE);
 }

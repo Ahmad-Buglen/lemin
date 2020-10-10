@@ -6,15 +6,13 @@
 /*   By: dphyliss <dphyliss@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/15 14:28:21 by dphyliss          #+#    #+#             */
-/*   Updated: 2020/10/10 16:04:34 by dphyliss         ###   ########.fr       */
+/*   Updated: 2020/10/10 16:42:48 by dphyliss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 
-#include "../include/lemin.h"
-
+#include "lemin.h"
 #include <stdio.h>
-
 #include <limits.h>
 
 long			ft_strtol(const char *str, char **end)
@@ -443,7 +441,7 @@ void	dijkstra_setup(t_lem_in *lemin)
 	{
 		lemin->array_of_rooms[i]->weight = BIG_INT;
 		lemin->array_of_rooms[i]->pass = NO_VISIT;
-		if (i != 0 && NULL != lemin->array_of_rooms[i]->route)
+		if (i != lemin->start->index && NULL != lemin->array_of_rooms[i]->route)
 			ft_memdel((void **)&lemin->array_of_rooms[i]->route);
 		++i;
 	}
@@ -512,9 +510,8 @@ int main(int argc, char **argv)
 	int i;
 	t_lem_in	lemin;
 //*
-	//lemin.vis_flag = (argc == 2 && ft_strequ("-v", argv[1])) ? 1 : 0;
 	ft_bzero(&lemin, sizeof(lemin));
-	init_values(&lemin);
+	//init_values(&lemin);
 	get_num_of_ants(&lemin);
 	get_rooms(&lemin);
 	if (!lemin.start_flag || !lemin.end_flag)
@@ -525,8 +522,14 @@ int main(int argc, char **argv)
 	get_links(&lemin);
 	if (!check_start_end_links(&lemin))
 		close_program(&lemin, "start or/and end room is/are without links");
-	if (!lemin.array_of_rooms[lemin.start_index] || !lemin.array_of_rooms[lemin.end_index])
-		close_program(&lemin, "start or/and end room is/are without links");
+	if (lemin.adjacency_matrix[lemin.start_index][lemin.end_index])
+	{
+		start_end_solution(&lemin);
+		free_all(&lemin);
+		return (0);
+	}
+	// if (!lemin.array_of_rooms[lemin.start_index] || !lemin.array_of_rooms[lemin.end_index])
+	// 	close_program(&lemin, "start or/and end room is/are without links");
 	
 	lemin_init(&lemin);
 //*/
@@ -572,9 +575,9 @@ int main(int argc, char **argv)
 	}
 	//lemin.route_count = duplicate_exclusion(lemin.routes);
 
-	i = -1;
-	while (++i < lemin.route_count)
-		print_route(lemin.routes[i]);
+	// i = -1;
+	// while (++i < lemin.route_count)
+	// 	print_route(lemin.routes[i]);
 		
 //*/
 	 

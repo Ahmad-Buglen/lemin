@@ -17,9 +17,9 @@
 # include "../libft/libft.h"
 # include <stdio.h>
 
-# define START_A 1
-# define STANDART 2
-# define END_A 3
+// # define START_A 1
+// # define STANDART 2
+// # define END_A 3
 # define VISIT 7
 # define NO_VISIT 0
 # define BIG_INT 1111111111
@@ -133,30 +133,21 @@ typedef struct			s_path
 typedef struct      s_lem_in
 {
 	char			*line;
-
 	t_room			*room_list;
-	//t_room			*nodes;
-
 	t_lem_list		*hash_map[HASH_SIZE];
 	int				**adjacency_matrix;
-
 	t_room			**array_of_rooms;
-	//t_room			**map;
-
 	t_path			**array_of_ants;
-
-	t_lem_list		*path;
 	t_path			**paths;
 	t_position		position;
 	int				num_of_ants;
-
-	//int 			node_len;
 	int				num_of_rooms;
-
 	int				start_flag;
 	int				end_flag;
 	t_room			*start;
 	t_room			*end;
+	unsigned int	start_index;
+	unsigned int	end_index;
 
 	//t_room			*last_room;
 	
@@ -168,12 +159,6 @@ typedef struct      s_lem_in
 	
 	t_bool			*route;
 	t_route			*buff;
-	
-	// int				vis_flag;
-	unsigned int	start_index;
-	unsigned int	end_index;
-	// t_lem_list		*queue_begin;
-	// t_lem_list		*queue_end;
 }					t_lem_in;
 
 //init/malloc functions
@@ -247,6 +232,7 @@ void				init_path_array(t_lem_in *lemin);
 void				flow_distribution(t_lem_in *lemin);
 void				find_path_2(t_lem_in *lemin, t_path **path, t_route *route);
 void				print_solution(t_lem_in *lemin);
+void				start_end_solution(t_lem_in *lemin);
 void				add_elem_to_path(t_lem_in *lemin, t_path **path, char *name, int index);
 void		debug(t_lem_in *lemin);
 
