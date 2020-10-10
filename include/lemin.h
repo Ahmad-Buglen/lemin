@@ -17,9 +17,9 @@
 # include "../libft/libft.h"
 # include <stdio.h>
 
-# define START_A 1
-# define STANDART 2
-# define END_A 3
+// # define START_A 1
+// # define STANDART 2
+// # define END_A 3
 # define VISIT 7
 # define NO_VISIT 0
 # define BIG_INT 1111111111

@@ -79,7 +79,7 @@ HEADERS = $(addprefix $(HEADERS_DIRECTORY), $(HEADERS_LIST))
 SOURCES_DIRECTORY = source/
 SOURCES_LIST = list.c main.c hash_map.c init_values.c print_functions.c \
 free_functions.c rooms.c links.c other_parsing_funcs.c \
-lemin.c get_next_line.c init_test.c
+lemin.c get_next_line.c init_test.c print_ant_farm.c print_solution.c
 SOURCES = $(addprefix $(SOURCES_DIRECTORY), $(SOURCES_LIST))
 
 OBJECTS_DIRECTORY = objects/

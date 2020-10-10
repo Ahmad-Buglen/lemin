@@ -6,7 +6,7 @@
 /*   By: bsausage <bsausage@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/13 00:49:42 by bsausage          #+#    #+#             */
-/*   Updated: 2020/10/03 16:21:14 by bsausage         ###   ########.fr       */
+/*   Updated: 2020/10/10 11:26:06 by bsausage         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,11 +30,11 @@ t_room		*room_create_elem(char *name, t_coords coords, t_lem_in *lemin)
 	return (room);
 }
 
-t_room		*room_push_back(t_room **begin, char *name, t_coords coords, t_lem_in *lemin)
+t_room		*room_push_back(t_room **begin, char *name,\
+							t_coords coords, t_lem_in *lemin)
 {
-	//this functions also checks duplacates of rooms' names and coords
 	t_room	*room;
-	
+
 	if (!*begin)
 	{
 		*begin = room_create_elem(name, coords, lemin);
@@ -55,7 +55,7 @@ t_room		*room_push_back(t_room **begin, char *name, t_coords coords, t_lem_in *l
 	return (room->next);
 }
 
-t_lem_list		*list_elem_create(t_room *data)
+t_lem_list	*list_elem_create(t_room *data)
 {
 	t_lem_list		*tmp;
 
@@ -66,7 +66,8 @@ t_lem_list		*list_elem_create(t_room *data)
 	return (tmp);
 }
 
-int			list_push_front(t_lem_list **begin_list, t_lem_list **end_list, t_room *data)
+int			list_push_front(t_lem_list **begin_list,\
+							t_lem_list **end_list, t_room *data)
 {
 	t_lem_list		*tmp;
 
@@ -86,7 +87,8 @@ int			list_push_front(t_lem_list **begin_list, t_lem_list **end_list, t_room *da
 	return (1);
 }
 
-int			list_push_back(t_lem_list **begin_list, t_lem_list **end_list, t_room *data)
+int			list_push_back(t_lem_list **begin_list,\
+							t_lem_list **end_list, t_room *data)
 {
 	t_lem_list		*tmp;
 
@@ -105,10 +107,11 @@ int			list_push_back(t_lem_list **begin_list, t_lem_list **end_list, t_room *dat
 	return (1);
 }
 
-void			remove_begin_list(t_lem_list **begin_list, t_lem_list **end_list)
+void		remove_begin_list(t_lem_list **begin_list,\
+								t_lem_list **end_list)
 {
 	t_lem_list		*tmp;
-	
+
 	if (!begin_list)
 		return ;
 	if (*begin_list == *end_list)
@@ -120,7 +123,6 @@ void			remove_begin_list(t_lem_list **begin_list, t_lem_list **end_list)
 		ft_memdel((void**)&tmp);
 	}
 }
-
 
 t_path		*create_path_elem(t_lem_in *lemin, char *name, int index)
 {
@@ -137,10 +139,11 @@ t_path		*create_path_elem(t_lem_in *lemin, char *name, int index)
 	return (elem);
 }
 
-void		add_elem_to_path(t_lem_in *lemin, t_path **path, char *name, int index)
+void		add_elem_to_path(t_lem_in *lemin, t_path **path,\
+							char *name, int index)
 {
 	t_path	*tmp;
-	
+
 	if (!path)
 		return ;
 	if (*path == NULL)

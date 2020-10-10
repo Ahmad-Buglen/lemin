@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free_functions.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dphyliss <dphyliss@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bsausage <bsausage@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/17 12:28:40 by bsausage          #+#    #+#             */
-/*   Updated: 2020/10/09 18:29:50 by dphyliss         ###   ########.fr       */
+/*   Updated: 2020/10/10 11:54:05 by bsausage         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,7 +114,6 @@ void		free_all(t_lem_in *lemin)
 	free_adjacency_matrix(lemin);
 	free_hash_map(lemin);
 	free_list(&lemin->path);
-	//free_list(&lemin->queue_begin);
 	ft_memdel((void**)&lemin->fifo_nodes[0]->route);
 	free_room_list(lemin);
 	free_paths(lemin);

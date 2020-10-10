@@ -6,21 +6,12 @@
 /*   By: bsausage <bsausage@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/17 11:20:56 by bsausage          #+#    #+#             */
-/*   Updated: 2020/10/03 16:51:10 by bsausage         ###   ########.fr       */
+/*   Updated: 2020/10/10 11:53:25 by bsausage         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lemin.h"
 #include "libft.h"
-
-// void		assign_by_zero_path_len(t_lem_in *lemin)
-// {
-// 	int		i;
-
-// 	i = 0;
-// 	while (i < 100)
-// 		lemin->path_len[i++] = 0;
-// }
 
 void		init_values(t_lem_in *lemin)
 {
@@ -34,18 +25,10 @@ void		init_values(t_lem_in *lemin)
 	lemin->adjacency_matrix = NULL;
 	lemin->start_index = 0;
 	lemin->end_flag = 0;
-	//lemin->queue_begin = NULL;
-	//lemin->queue_end = NULL;
 	lemin->path = NULL;
 	lemin->paths = NULL;
-
-	//lemin->nodes = NULL; // ?
-	//lemin->node_len = 0;
-	// lemin->path2 = NULL;
-	// lemin->path3 = NULL;
 	lemin->array_of_ants = NULL;
 	assign_null_hash_map(lemin);
-	// assign_by_zero_path_len(lemin);
 }
 
 int			**init_adjacency_matrix(int n)
@@ -80,7 +63,8 @@ t_room		**init_array_of_rooms(t_lem_in *lemin)
 	int			n;
 
 	n = 0;
-	if (!(tmp = (t_room**)ft_memalloc(sizeof(t_room*) * (lemin->num_of_rooms + 1))))
+	if (!(tmp = (t_room**)ft_memalloc(sizeof(t_room*) * \
+				(lemin->num_of_rooms + 1))))
 		close_program(lemin, "init array of rooms error");
 	list = lemin->room_list;
 	while (list)
@@ -90,4 +74,3 @@ t_room		**init_array_of_rooms(t_lem_in *lemin)
 	}
 	return (tmp);
 }
-
