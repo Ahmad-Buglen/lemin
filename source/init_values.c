@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_values.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bsausage <bsausage@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dphyliss <dphyliss@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/17 11:20:56 by bsausage          #+#    #+#             */
-/*   Updated: 2020/10/10 15:48:20 by bsausage         ###   ########.fr       */
+/*   Updated: 2020/10/10 21:28:03 by dphyliss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void		init_values(t_lem_in *lemin)
 	lemin->end_flag = 0;
 	lemin->paths = NULL;
 	lemin->array_of_ants = NULL;
-	lemin->fifo_nodes = NULL;
+	lemin->fifo = NULL;
 	lemin->routes = NULL;
 	assign_null_hash_map(lemin);
 }

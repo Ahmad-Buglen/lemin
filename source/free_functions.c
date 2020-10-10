@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free_functions.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bsausage <bsausage@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dphyliss <dphyliss@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/17 12:28:40 by bsausage          #+#    #+#             */
-/*   Updated: 2020/10/10 15:55:56 by bsausage         ###   ########.fr       */
+/*   Updated: 2020/10/10 21:28:15 by dphyliss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,14 +99,14 @@ void		free_all(t_lem_in *lemin)
 	ft_memdel((void**)&lemin->line);
 	free_adjacency_matrix(lemin);
 	free_hash_map(lemin);
-	ft_memdel((void**)&lemin->fifo_nodes[0]->route);
+	ft_memdel((void**)&lemin->start->route);
 	free_room_list(lemin);
 	free_paths(lemin);
 	ft_memdel((void**)&lemin->array_of_rooms);
 	ft_memdel((void**)&lemin->array_of_ants);
-	ft_memdel((void**)&lemin->fifo_nodes);
-	routes_destroy(lemin->routes, &lemin->route_count);
-	ft_memdel((void**)&lemin->routes);
+	ft_memdel((void**)&lemin->fifo);
+	routes_destroy(lemin->routes);
+	// ft_memdel((void**)&lemin->routes);
 	ft_memdel((void**)&lemin->route);
 }
 

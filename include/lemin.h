@@ -24,8 +24,8 @@
 # define NO_VISIT 0
 # define BIG_INT 1111111111
 
-# define ROUTE_SIZE 2500
-# define CYCLE_SIZE 2
+# define ROUTE_SIZE 2048
+#define HASH_SIZE	10000
 
 typedef enum			e_bool
 {
@@ -45,16 +45,11 @@ typedef enum
 	NOT_EMPTY
 }	t_status;
 
-
 typedef struct		s_route
 {
 	int				size;
 	struct s_room	*elem[ROUTE_SIZE];
 }					t_route;
-
-// typedef struct		s_node
-// {
-// }					t_node;
 
 typedef struct		s_map
 {
@@ -62,31 +57,6 @@ typedef struct		s_map
 	int				pass;
 	struct s_map	*next;
 }					t_map;
-
-// typedef struct      s_lemin
-// {
-// }					t_lemin;
-
-
-// typedef struct  s_ps
-// {
-//     t_box       a[SIZE];
-//     t_box       b[SIZE];
-// 	int         len_a;
-// 	int         len_b;
-// 	int			oper[BUFF];
-// 	int			len_o;
-// }               t_ps;
-
-
-
-#define HASH_SIZE	10000
-
-// typedef struct		s_coords
-// {
-//     int				x;
-//     int				y;
-// }					t_coords;
 
 typedef enum
 {
@@ -104,8 +74,6 @@ typedef struct		s_room
 	t_position		position;
 	int				index;
 	struct s_room	*next;
-	
-	
 	int				pass;
 	int				type;
 	int				con_size;
@@ -148,26 +116,20 @@ typedef struct      s_lem_in
 	t_room			*end;
 	unsigned int	start_index;
 	unsigned int	end_index;
-
-	//t_room			*last_room;
-	
 	int				max_route_count;
-	
-	t_room			**fifo_nodes;
+	t_room			**fifo;
 	t_route			**routes;
 	int				route_count;
-	
 	t_bool			*route;
 	t_route			*buff;
 }					t_lem_in;
 
 //init/malloc functions
 
-void				routes_destroy(t_route **routes, int *route_count);
+void				routes_destroy(t_route **routes);
 void				init_min(t_lem_in *lemin);
 void 				init_middle(t_lem_in *lemin);
 
-//void				connect_node(t_lem_in *lemin, char *name1, char *name2);
 void 				connect_node(t_lem_in *lemin, t_room *room1, t_room *room2);
 void 				node_add(t_lem_in *lemin, char *name, t_coords coordinates, int type);
 long				ft_strtol(const char *str, char **end);
