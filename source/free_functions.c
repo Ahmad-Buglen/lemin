@@ -6,7 +6,7 @@
 /*   By: dphyliss <dphyliss@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/17 12:28:40 by bsausage          #+#    #+#             */
-/*   Updated: 2020/10/10 21:28:15 by dphyliss         ###   ########.fr       */
+/*   Updated: 2020/10/12 17:16:08 by dphyliss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,8 @@ void		free_all(t_lem_in *lemin)
 	ft_memdel((void**)&lemin->line);
 	free_adjacency_matrix(lemin);
 	free_hash_map(lemin);
-	ft_memdel((void**)&lemin->start->route);
+	if (NULL != lemin->start->route)
+		ft_memdel((void**)&lemin->start->route);
 	free_room_list(lemin);
 	free_paths(lemin);
 	ft_memdel((void**)&lemin->array_of_rooms);

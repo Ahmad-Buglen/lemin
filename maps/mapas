@@ -1,0 +1,29 @@
+50
+##start
+st 0 0
+##end
+fin 6 0
+A 1 0
+B 1 1
+C 2 -1
+D 2 0
+E 2 1
+F 3 -1
+G 3 0
+H 3 1
+I 4 1
+J 5 1
+st-A
+st-B
+A-D
+A-C
+B-E
+E-D
+D-H
+D-G
+C-F
+F-G
+H-I
+I-J
+J-fin
+G-fin

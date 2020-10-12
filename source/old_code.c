@@ -139,7 +139,7 @@
 // 	}
 // 	return (NULL);
 // }
-
+/*
 
 int duplicate_exclusion(t_route **routes)
 {
@@ -175,3 +175,4 @@ int duplicate_exclusion(t_route **routes)
 	}
 	return (i);
 }
+*/

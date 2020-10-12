@@ -49,6 +49,8 @@ typedef struct		s_route
 {
 	int				size;
 	struct s_room	*elem[ROUTE_SIZE];
+	int				weight;
+	int				unique;
 }					t_route;
 
 typedef struct		s_map

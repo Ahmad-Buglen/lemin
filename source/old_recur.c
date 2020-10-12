@@ -63,6 +63,10 @@
 	routes = NULL;
 	printf("\n%d", i);
 //*/	
+/*
+
+recur_route(route_copy(route), start, dublicate_map(nodes, node_len), node_len, &best_route, &counter, status, routes);
+		
 
 
 int *dublicate_map(t_node *nodes, int node_len)
@@ -169,3 +173,4 @@ void recur_route(t_route * route, t_node *node, int *map, int node_len, t_route 
 		free(map);
 	return ;
 }
+*/
