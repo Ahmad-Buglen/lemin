@@ -128,6 +128,7 @@ typedef struct      s_lem_in
 
 //init/malloc functions
 
+void				lemin_routes_destroy(t_lem_in *lemin);
 void				routes_destroy(t_route **routes);
 void				init_min(t_lem_in *lemin);
 void 				init_middle(t_lem_in *lemin);

@@ -6,7 +6,7 @@
 /*   By: dphyliss <dphyliss@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/17 12:28:40 by bsausage          #+#    #+#             */
-/*   Updated: 2020/10/12 17:16:08 by dphyliss         ###   ########.fr       */
+/*   Updated: 2020/10/13 16:44:31 by dphyliss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,8 +106,8 @@ void		free_all(t_lem_in *lemin)
 	ft_memdel((void**)&lemin->array_of_rooms);
 	ft_memdel((void**)&lemin->array_of_ants);
 	ft_memdel((void**)&lemin->fifo);
-	routes_destroy(lemin->routes);
-	// ft_memdel((void**)&lemin->routes);
+	lemin_routes_destroy(lemin);
+	ft_memdel((void**)&lemin->routes);
 	ft_memdel((void**)&lemin->route);
 }
 

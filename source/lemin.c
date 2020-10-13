@@ -6,7 +6,7 @@
 /*   By: dphyliss <dphyliss@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/15 14:28:21 by dphyliss          #+#    #+#             */
-/*   Updated: 2020/10/12 18:26:17 by dphyliss         ###   ########.fr       */
+/*   Updated: 2020/10/13 18:05:12 by dphyliss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,8 +130,7 @@ void	routes_destroy(t_route **routes)
 	i = -1;
 	while (NULL != routes[++i])
 		ft_memdel((void**)&routes[i]);
-	if (NULL != routes)
-		ft_memdel((void**)&routes);
+	ft_memdel((void**)&routes);
 }
 
 void	lemin_routes_destroy(t_lem_in *lemin)
@@ -139,7 +138,7 @@ void	lemin_routes_destroy(t_lem_in *lemin)
 	int i;
 
 	i = -1;
-	while (NULL != lemin->routes[++i])
+	while (++i < lemin->route_count)
 		ft_memdel((void**)&lemin->routes[i]);
 	lemin->route_count = 0;
 }
@@ -284,10 +283,11 @@ void lemin_init(t_lem_in *lemin)
 								lemin->start->con_size : lemin->end->con_size;
 	if (!(lemin->fifo = (t_room **)ft_memalloc(sizeof(t_room *) * lemin->num_of_rooms)))  // num_of_rooms != 0 ?
 		ft_exit_fail("Error 14");
-	if (!(lemin->routes = (t_route **)ft_memalloc(sizeof(t_route *) * (lemin->max_route_count * 5 + 1)))) // max_route_count
+	if (!(lemin->routes = (t_route **)ft_memalloc(sizeof(t_route *) * (lemin->num_of_rooms * ROUTE_SIZE + 1)))) // max_route_count
 			ft_exit_fail("Error 11");
 	if (!(lemin->route = (t_bool *)ft_memalloc(sizeof(t_bool) * (lemin->num_of_rooms + 1))))
 			ft_exit_fail("Error 19");
+	route_clean(lemin);
 	lemin->fifo[0] = lemin->start;
 	ft_bzero(&route, sizeof(t_route));
 	route.elem[route.size++] = lemin->fifo[0];
@@ -394,19 +394,23 @@ void recur_route(t_route *route, t_room *room, int *map, t_lem_in *lemin)
 	if (lemin->end == room)
 	{
 		// print_route(route);
-		lemin->routes[lemin->route_count++] = route;
-		if (0 < lemin->num_of_rooms)
-			free(map);
+		lemin->routes[lemin->route_count++] = route_copy(route);
+		// if (0 < lemin->num_of_rooms)
+
+		ft_memdel((void **)&route);
+		ft_memdel((void **)&map);
 		return ;
 	}
 	i = -1;
 	while (++i < room->con_size)
 		if (NO_VISIT == map[room->connections[i]->index] && !node_include(route, room->connections[i]->index))
+		{
+			map[room->index] = VISIT;
 			recur_route(route_copy(route), room->connections[i], dublicate_map2(map, lemin->num_of_rooms), lemin);
-	map[room->index] = VISIT;
-	free(route);
-	if (0 < lemin->num_of_rooms)
-		free(map);
+		}
+	
+	ft_memdel((void **)&route);
+	ft_memdel((void **)&map);
 	return ;
 }
 
@@ -464,27 +468,27 @@ void bhandari_search(t_lem_in *lemin)
 //*/
 void	routes_search(t_lem_in *lemin)
 {
-	t_route **prev;
-	t_route **next;
+	// t_route **prev;
+	// t_route **next;
 
 	bhandari_search(lemin);
-	if (lemin->num_of_rooms < 1500)
-	{
-		next = routes_copy(lemin->routes, lemin->route_count);
-		prev = NULL;
-		while (0 != routes_compare(prev, next))
-		{
-			lemin_routes_destroy(lemin);
-			route_clean(lemin);
-			bhandari_search(lemin);
-			if (NULL != prev)
-				routes_destroy(prev);
-			prev = next;
-			next = routes_copy(lemin->routes, lemin->route_count);
-		}
-		routes_destroy(prev);
-		routes_destroy(next);
-	}
+	// if (lemin->num_of_rooms < 1500)
+	// {
+	// 	next = routes_copy(lemin->routes, lemin->route_count);
+	// 	prev = NULL;
+	// 	while (0 != routes_compare(prev, next))
+	// 	{
+	// 		lemin_routes_destroy(lemin);
+	// 		route_clean(lemin);
+	// 		bhandari_search(lemin);
+	// 		if (NULL != prev)
+	// 			routes_destroy(prev);
+	// 		prev = next;
+	// 		next = routes_copy(lemin->routes, lemin->route_count);
+	// 	}
+	// 	routes_destroy(prev);
+	// 	routes_destroy(next);
+	// }
 }
 
 void	lemin_check(t_lem_in *lemin)
@@ -534,23 +538,35 @@ int unique_search(t_route **routes, t_lem_in *lemin)
 void routes_complete(t_route **routes, t_lem_in *lemin, int number)
 {
 	int i;
-	int j;
+	int temp;
 
-	j = 0;
+	temp = lemin->route_count;
+	lemin->route_count = 0;
+	i = 0;
+	while (i < number)
+		ft_memdel((void**)&routes[i++]);
 	i = number;
 	route_mark(lemin, routes[i]);
-	routes[j++] = routes[i];
+	routes[lemin->route_count++] = routes[i];
 	while (NULL != routes[++i])
 	{
+		// if (i > 1 && !route_steps(lemin))
+		// {
+		// 	ft_memdel((void**)&routes[--lemin->route_count]);
+		// 	break;
+		// }
 		if (true == route_check(lemin, routes[i]))
 		{
 			route_mark(lemin, routes[i]);
-			routes[j++] = routes[i];
+			routes[lemin->route_count++] = route_copy(routes[i]);
 		}
+		// else
+		ft_memdel((void**)&routes[i]);
 	}
-	lemin->route_count = j;
-	// while (NULL != routes[j])
-	// 	ft_memdel((void**)&routes[j++]);
+	// lemin->route_count = j;
+
+	while (i < temp)
+		ft_memdel((void**)&routes[i++]);
 }
 int duplicate_exclusion(t_route **routes)
 {
@@ -601,23 +617,29 @@ int main(int argc, char **argv)
 		return (0);
 	}
 	lemin_init(&lemin);
-	// routes_search(&lemin);
-
-	t_route route;
-	recur_route(route_copy(&route), lemin.start, dublicate_map(&lemin), &lemin);
-	printf("\n duplicate_exclusion \n");
-	routes_complete(lemin.routes, &lemin, unique_search(lemin.routes, &lemin));
-	// lemin.route_count = duplicate_exclusion(lemin.routes);
+	if (lemin.num_of_rooms < 1500 ) // || lemin.num_of_rooms > 3000)
+	{
+		t_route route;
+		bzero(&route, sizeof(route));
+		recur_route(route_copy(&route), lemin.start, dublicate_map(&lemin), &lemin);
+		// printf("\n duplicate_exclusion \n");
+		routes_complete(lemin.routes, &lemin, unique_search(lemin.routes, &lemin));
+		// lemin.route_count = duplicate_exclusion(lemin.routes);
+	}
+	else
+		routes_search(&lemin);
 	int i;
-	i = -1;
-	while (++i < lemin.route_count)
-		print_route(lemin.routes[i]);
+	// i = -1;
+	// while (++i < lemin.route_count)
+	// 	print_route(lemin.routes[i]);
 
 	init_path_array(&lemin);
 	init_array_of_ants(&lemin);
 	flow_distribution(&lemin);	//функция распределения потоков
-	print_ant_farm(&lemin);		//вывод фермы
+	// print_ant_farm(&lemin);		//вывод фермы
 	print_solution(&lemin);		//вывод решения
+
+	// printf("\n %p \n %p", lemin.routes, lemin.routes[0]);
 	// printf(" routes - %d, steps - %d\n", lemin.route_count, route_flow(&lemin, lemin.route_count));
 	free_all(&lemin);
 	return (1);
