@@ -26,6 +26,8 @@
 
 # define ROUTE_SIZE 2048
 #define HASH_SIZE	10000
+#define BIG			1500
+
 
 typedef enum			e_bool
 {

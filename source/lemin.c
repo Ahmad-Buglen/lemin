@@ -6,7 +6,7 @@
 /*   By: dphyliss <dphyliss@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/15 14:28:21 by dphyliss          #+#    #+#             */
-/*   Updated: 2020/10/13 18:05:12 by dphyliss         ###   ########.fr       */
+/*   Updated: 2020/10/15 17:35:29 by dphyliss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -451,7 +451,7 @@ void bhandari_search(t_lem_in *lemin)
 		if (BIG_INT == lemin->end->weight)
 			break;
 		route_inverse(lemin->end->route);
-		print_route(lemin->end->route);
+		// print_route(lemin->end->route);
 		if (true == route_check(lemin, lemin->end->route))
 		{
 			lemin->routes[lemin->route_count++] = route_copy(lemin->end->route);
@@ -539,6 +539,7 @@ void routes_complete(t_route **routes, t_lem_in *lemin, int number)
 {
 	int i;
 	int temp;
+	t_route *buff;
 
 	temp = lemin->route_count;
 	lemin->route_count = 0;
@@ -557,11 +558,13 @@ void routes_complete(t_route **routes, t_lem_in *lemin, int number)
 		// }
 		if (true == route_check(lemin, routes[i]))
 		{
+			// buff = route_copy(routes[i]);
+			// ft_memdel((void**)&routes[i]);
 			route_mark(lemin, routes[i]);
-			routes[lemin->route_count++] = route_copy(routes[i]);
+			routes[lemin->route_count++] = routes[i];
 		}
-		// else
-		ft_memdel((void**)&routes[i]);
+		else
+			ft_memdel((void**)&routes[i]);
 	}
 	// lemin->route_count = j;
 
@@ -602,6 +605,43 @@ int duplicate_exclusion(t_route **routes)
 	}
 	return (i);
 }
+
+void	route_sort(t_lem_in *lemin)
+{
+	int i;
+	int j;
+	t_route *temp;
+
+	i = 0;
+	while (i < lemin->route_count - 1)
+	{
+		j = 0;
+		while (j < lemin->route_count - 1)
+		{
+			if (lemin->routes[j]->size > lemin->routes[j + 1]->size)
+			{
+				temp = lemin->routes[j];
+				lemin->routes[j] = lemin->routes[j + 1];
+				lemin->routes[j + 1] = temp;
+			}
+			++j;
+		}
+		++i;
+	}
+}
+void recur_search(t_lem_in *lemin)
+{
+	t_route route;
+	bzero(&route, sizeof(route));
+	recur_route(route_copy(&route), lemin->start, dublicate_map(lemin), lemin);
+	route_sort(lemin);
+	// printf("\n duplicate_exclusion \n");
+	
+	// print_route(lemin.routes[1]);
+	routes_complete(lemin->routes, lemin, unique_search(lemin->routes, lemin));
+	
+	// lemin.route_count = duplicate_exclusion(lemin.routes);
+}
 int main(int argc, char **argv)
 {
 	t_lem_in	lemin;
@@ -617,18 +657,12 @@ int main(int argc, char **argv)
 		return (0);
 	}
 	lemin_init(&lemin);
-	if (lemin.num_of_rooms < 1500 ) // || lemin.num_of_rooms > 3000)
-	{
-		t_route route;
-		bzero(&route, sizeof(route));
-		recur_route(route_copy(&route), lemin.start, dublicate_map(&lemin), &lemin);
-		// printf("\n duplicate_exclusion \n");
-		routes_complete(lemin.routes, &lemin, unique_search(lemin.routes, &lemin));
-		// lemin.route_count = duplicate_exclusion(lemin.routes);
-	}
+	if (lemin.num_of_rooms < BIG) //  || lemin.num_of_rooms > 3000)
+		recur_search(&lemin);
 	else
-		routes_search(&lemin);
-	int i;
+		bhandari_search(&lemin);
+	
+	// int i;
 	// i = -1;
 	// while (++i < lemin.route_count)
 	// 	print_route(lemin.routes[i]);
@@ -636,7 +670,7 @@ int main(int argc, char **argv)
 	init_path_array(&lemin);
 	init_array_of_ants(&lemin);
 	flow_distribution(&lemin);	//функция распределения потоков
-	// print_ant_farm(&lemin);		//вывод фермы
+	print_ant_farm(&lemin);		//вывод фермы
 	print_solution(&lemin);		//вывод решения
 
 	// printf("\n %p \n %p", lemin.routes, lemin.routes[0]);
