@@ -6,7 +6,7 @@
 /*   By: Alkor <Alkor@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/19 11:51:50 by bsausage          #+#    #+#             */
-/*   Updated: 2020/10/16 14:45:32 by Alkor            ###   ########.fr       */
+/*   Updated: 2020/10/16 19:08:52 by Alkor            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ void		get_num_of_ants(t_lem_in *lemin)
 		close_program(lemin,\
 		"empty file or map doesn't contain rooms and link part");
 	lemin->line_num++;
+	add_line_to_farm_list(lemin);
 	check_first_line(lemin);
 	end = lemin->line;
 	num = ft_strtol(end, &end);

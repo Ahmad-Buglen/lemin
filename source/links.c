@@ -6,7 +6,7 @@
 /*   By: Alkor <Alkor@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/19 11:48:50 by bsausage          #+#    #+#             */
-/*   Updated: 2020/10/16 14:56:17 by Alkor            ###   ########.fr       */
+/*   Updated: 2020/10/16 19:10:16 by Alkor            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,7 @@ void	get_links(t_lem_in *lemin)
 	while ((gnl = get_next_line(0, &lemin->line) > 0))
 	{
 		lemin->line_num++;
+		add_line_to_farm_list(lemin);
 		if (lemin->line[0] == '\0')
 			close_program(lemin, "empty line");
 		if (ft_strequ(lemin->line, "##start") ||\

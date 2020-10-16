@@ -6,7 +6,7 @@
 /*   By: Alkor <Alkor@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/19 11:45:58 by bsausage          #+#    #+#             */
-/*   Updated: 2020/10/16 15:10:14 by Alkor            ###   ########.fr       */
+/*   Updated: 2020/10/16 19:09:46 by Alkor            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,6 +118,7 @@ void		get_rooms(t_lem_in *lemin)
 	while ((gnl = get_next_line(0, &lemin->line)))
 	{
 		lemin->line_num++;
+		add_line_to_farm_list(lemin);
 		if (!cycle_body(lemin))
 			return ;
 	}

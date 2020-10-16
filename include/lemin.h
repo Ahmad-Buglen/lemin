@@ -90,9 +90,16 @@ typedef struct			s_path
 	struct s_path		*next;
 }						t_path;
 
+typedef struct			s_farm
+{
+    char				*line;
+	struct s_farm		*next;
+}						t_farm;
+
 typedef struct      s_lem_in
 {
 	char			*line;
+	t_farm			*farm_list;
 	int				line_num;
 	t_room			*room_list;
 	t_room			*hash_map[HASH_SIZE];
@@ -157,6 +164,7 @@ void				get_links(t_lem_in *lemin);
 */
 
 long				ft_strtol(const char *str, char **end);
+void				add_line_to_farm_list(t_lem_in *lemin);
 int					check_num_of_ants_line(char *line);
 void				get_num_of_ants(t_lem_in *lemin);
 void				check_command_line(t_lem_in *lemin);
