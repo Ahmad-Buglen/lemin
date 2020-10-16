@@ -189,5 +189,6 @@ void				print_hash_map(t_room *hash_map[HASH_SIZE]);
 void				print_adjacency_matrix(t_lem_in *lemin);
 void				print_array_of_rooms(t_lem_in *lemin);
 void				print_routes(t_lem_in *lemin);
+void				check_routes(t_lem_in *lemin);
 
 #endif
