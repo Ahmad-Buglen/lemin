@@ -173,7 +173,7 @@ void				get_links(t_lem_in *lemin);
 long				ft_strtol(const char *str, char **end);
 int					check_num_of_ants_line(char *line);
 void				get_num_of_ants(t_lem_in *lemin);
-int					check_command_line(t_lem_in *lemin);
+void				check_command_line(t_lem_in *lemin);
 int					check_start_end_links(t_lem_in *lemin);
 
 /*

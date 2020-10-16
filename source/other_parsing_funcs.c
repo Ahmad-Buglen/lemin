@@ -6,7 +6,7 @@
 /*   By: Alkor <Alkor@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/19 11:51:50 by bsausage          #+#    #+#             */
-/*   Updated: 2020/10/16 11:06:51 by Alkor            ###   ########.fr       */
+/*   Updated: 2020/10/16 14:45:32 by Alkor            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,15 +64,20 @@ void		get_num_of_ants(t_lem_in *lemin)
 	ft_memdel((void**)&lemin->line);
 }
 
-int			check_command_line(t_lem_in *lemin)
+void		check_command_line(t_lem_in *lemin)
 {
-	if (lemin->start_flag && ft_strequ("start", lemin->line + 2))
-		return (0);
-	if (lemin->end_flag && ft_strequ("end", lemin->line + 2))
-		return (0);
-	if (!lemin->start_flag && ft_strequ("start", lemin->line + 2))
+	if (ft_strequ("start", lemin->line + 2))
+	{
 		lemin->position = START;
-	if (!lemin->end_flag && ft_strequ("end", lemin->line + 2))
+		lemin->start_flag++;
+	}
+	if (ft_strequ("end", lemin->line + 2))
+	{
 		lemin->position = END;
-	return (1);
+		lemin->end_flag++;
+	}
+	if (lemin->start_flag > 1)
+		close_program(lemin, "more than one ##start command");
+	if (lemin->end_flag > 1)
+		close_program(lemin, "more than one ##end command");
 }

@@ -6,7 +6,7 @@
 /*   By: Alkor <Alkor@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/19 11:45:58 by bsausage          #+#    #+#             */
-/*   Updated: 2020/10/16 13:31:40 by Alkor            ###   ########.fr       */
+/*   Updated: 2020/10/16 14:44:57 by Alkor            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ static int	check_ptr(char *end)
 		return (1);
 	return (0);
 }
+
 
 void		check_room_name_coords_line(char **name, t_coords *coords,\
 									t_lem_in *lemin)
@@ -57,9 +58,6 @@ void		check_room_name_coords_line(char **name, t_coords *coords,\
 	coords->y = coord;
 	if (*end)
 		close_program(lemin, "wrong room's coords");
-	if ((lemin->start_flag && lemin->position == START) ||\
-		(lemin->end_flag && lemin->position == END))
-		close_program(lemin, "more than one start or end room");
 }
 
 void		get_room_name_coords(t_lem_in *lemin)
@@ -73,15 +71,13 @@ void		get_room_name_coords(t_lem_in *lemin)
 	if (!(room = room_push_back(&lemin->room_list, name, coords, lemin)))
 		close_program(lemin, "malloc error");
 	list_push_front(&lemin->hash_map[calc_hash_index(name)], NULL, room);
-	if (lemin->position == START && !lemin->start_flag)
+	if (lemin->position == START)
 	{
-		lemin->start_flag = 1;
 		lemin->start_index = lemin->num_of_rooms;
 		lemin->start = room;
 	}
-	if (lemin->position == END && !lemin->end_flag)
+	if (lemin->position == END)
 	{
-		lemin->end_flag = 1;
 		lemin->end_index = lemin->num_of_rooms;
 		lemin->end = room;
 	}
@@ -110,10 +106,7 @@ static int	cycle_body(t_lem_in *lemin)
 		}
 	}
 	if (lemin->line[0] == '#' && lemin->line[1] == '#')
-	{
-		if (!check_command_line(lemin))
-			close_program(lemin, "command error");
-	}
+		check_command_line(lemin);
 	ft_memdel((void**)&lemin->line);
 	return (1);
 }
