@@ -6,7 +6,7 @@
 /*   By: Alkor <Alkor@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/19 11:45:58 by bsausage          #+#    #+#             */
-/*   Updated: 2020/10/16 11:29:49 by Alkor            ###   ########.fr       */
+/*   Updated: 2020/10/16 13:31:40 by Alkor            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,23 @@
 #include "get_next_line.h"
 #include "lemin.h"
 #include <limits.h>
+
+static int	check_ptr(char *end)
+{
+	int		i;
+
+	i = 0;
+	if (end[i] != ' ')
+		return (0);
+	i++;
+	if (end[i] && ft_isdigit(end[i]))
+		return (1);
+	if (end[i] == '-')
+		i++;
+	if (end[i] && ft_isdigit(end[i]))
+		return (1);
+	return (0);
+}
 
 void		check_room_name_coords_line(char **name, t_coords *coords,\
 									t_lem_in *lemin)
@@ -24,16 +41,16 @@ void		check_room_name_coords_line(char **name, t_coords *coords,\
 
 	end = ft_strchr(lemin->line, ' ');
 	name_len = end - lemin->line;
-	if (++end && !ft_isdigit(*end) && *end != '-')
-		close_program(lemin, "wrong room's coords");
 	if (!(*name = ft_strsub(lemin->line, 0, name_len)))
 		close_program(lemin, "malloc error");
 	if (ft_strchr(*name, '-'))
 		close_program(lemin, "room's name can not contain -");
+	if (!check_ptr(end))
+		close_program(lemin, "wrong room's coords");
 	if ((coord = ft_strtol(end, &end)) > INT_MAX || coord < INT_MIN)
 		close_program(lemin, "coords overflow");
 	coords->x = coord;
-	if (++end && !ft_isdigit(*end) && *end != '-')
+	if (!check_ptr(end))
 		close_program(lemin, "wrong room's coords");
 	if ((coord = ft_strtol(end, &end)) > INT_MAX || coord < INT_MIN)
 		close_program(lemin, "room's coords overflow");
@@ -75,17 +92,19 @@ void		get_room_name_coords(t_lem_in *lemin)
 static int	cycle_body(t_lem_in *lemin)
 {
 	if (lemin->line[0] == 'L')
-		close_program(lemin, "Error: line starts with L character");
+		close_program(lemin, "line starts with L character");
 	if (lemin->line[0] == '\0')
-		close_program(lemin, "Error: lempty line");
+		close_program(lemin, "lempty line");
 	if (lemin->line[0] != '#')
 	{
 		if (ft_strchr(lemin->line, ' '))
 			get_room_name_coords(lemin);
+		else if (!ft_strchr(lemin->line, '-'))
+			close_program(lemin, "wrong room line");
 		else
 		{
 			if (!lemin->num_of_rooms)
-				close_program(lemin, "Error: no rooms");
+				close_program(lemin, "room part doesn't exist or wrong line");
 			else
 				return (0);
 		}

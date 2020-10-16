@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   links.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bsausage <bsausage@student.42.fr>          +#+  +:+       +#+        */
+/*   By: Alkor <Alkor@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/19 11:48:50 by bsausage          #+#    #+#             */
-/*   Updated: 2020/10/10 11:32:05 by bsausage         ###   ########.fr       */
+/*   Updated: 2020/10/16 13:34:57 by Alkor            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	get_names(t_lem_in *lemin, int *room_1, int *room_2)
 
 	end = NULL;
 	if (!(end = ft_strchr(lemin->line, '-')))
-		close_program(lemin, "link error");
+		close_program(lemin, "wrong link line");
 	name_len = end - lemin->line;
 	if (!(room_name = ft_strsub(lemin->line, 0, name_len)))
 		close_program(lemin, "malloc error");
@@ -42,6 +42,8 @@ int		parse_links_line(t_lem_in *lemin)
 	int		room_1;
 	int		room_2;
 
+	if (ft_strchr(lemin->line, ' '))
+		close_program(lemin, "wrong link line");
 	get_names(lemin, &room_1, &room_2);
 	if (lemin->adjacency_matrix[room_1][room_2] == 1 ||\
 		lemin->adjacency_matrix[room_2][room_1] == 1)
@@ -54,7 +56,7 @@ int		parse_links_line(t_lem_in *lemin)
 	return (room_1 < 0 || room_1 < 0 ? 0 : 1);
 }
 
-int		get_links(t_lem_in *lemin)
+void	get_links(t_lem_in *lemin)
 {
 	int		gnl;
 
@@ -62,6 +64,7 @@ int		get_links(t_lem_in *lemin)
 		close_program(lemin, "link error");
 	while ((gnl = get_next_line(0, &lemin->line) > 0))
 	{
+		lemin->line_num++;
 		if (lemin->line[0] == '\0')
 			close_program(lemin, "empty line");
 		if (ft_strequ(lemin->line, "##start") ||\
@@ -73,14 +76,10 @@ int		get_links(t_lem_in *lemin)
 			continue;
 		}
 		if (!parse_links_line(lemin))
-		{
-			ft_memdel((void**)&lemin->line);
 			close_program(lemin, "link error");
-		}
 	}
 	if (gnl < 0)
 		close_program(lemin, "link error");
-	return (1);
 }
 
 int		check_start_end_links(t_lem_in *lemin)

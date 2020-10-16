@@ -3,40 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   init_values.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dphyliss <dphyliss@student.42.fr>          +#+  +:+       +#+        */
+/*   By: Alkor <Alkor@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/17 11:20:56 by bsausage          #+#    #+#             */
-/*   Updated: 2020/10/10 21:28:03 by dphyliss         ###   ########.fr       */
+/*   Updated: 2020/10/16 13:51:48 by Alkor            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lemin.h"
 #include "libft.h"
 
-void		init_values(t_lem_in *lemin)
-{
-	lemin->line = NULL;
-	lemin->room_list = NULL;
-	lemin->num_of_ants = 0;
-	lemin->num_of_rooms = 0;
-	lemin->position = MIDDLE;
-	lemin->start_flag = 0;
-	lemin->end_flag = 0;
-	lemin->adjacency_matrix = NULL;
-	lemin->start_index = 0;
-	lemin->end_flag = 0;
-	lemin->paths = NULL;
-	lemin->array_of_ants = NULL;
-	lemin->fifo = NULL;
-	lemin->routes = NULL;
-	assign_null_hash_map(lemin);
-}
-
 int			**init_adjacency_matrix(int n)
 {
 	int		**matrix;
 	int		i;
-	int		j;
 
 	i = 0;
 	if (!(matrix = (int**)ft_memalloc(sizeof(int*) * n)))
@@ -49,9 +29,6 @@ int			**init_adjacency_matrix(int n)
 				ft_memdel((void**)&matrix[i--]);
 			return (NULL);
 		}
-		j = 0;
-		while (j < n)
-			matrix[i][j++] = 0;
 		i++;
 	}
 	return (matrix);

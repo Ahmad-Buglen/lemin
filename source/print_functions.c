@@ -6,14 +6,14 @@
 /*   By: Alkor <Alkor@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/17 11:36:51 by bsausage          #+#    #+#             */
-/*   Updated: 2020/10/16 10:38:06 by Alkor            ###   ########.fr       */
+/*   Updated: 2020/10/16 13:43:20 by Alkor            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-/*																*/
-/*	this file contains forbidden functions						*/
-/*	this code is not used in the final version of the project	*/
-/*																*/
+/*
+**	this file contains forbidden functions
+**	this code is not used in the final version of the project
+*/
 
 #include "lemin.h"
 #include "libft.h"
