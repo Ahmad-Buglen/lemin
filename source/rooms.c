@@ -6,7 +6,7 @@
 /*   By: Alkor <Alkor@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/19 11:45:58 by bsausage          #+#    #+#             */
-/*   Updated: 2020/10/16 14:44:57 by Alkor            ###   ########.fr       */
+/*   Updated: 2020/10/16 15:10:14 by Alkor            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ void		get_room_name_coords(t_lem_in *lemin)
 	check_room_name_coords_line(&name, &coords, lemin);
 	if (!(room = room_push_back(&lemin->room_list, name, coords, lemin)))
 		close_program(lemin, "malloc error");
-	list_push_front(&lemin->hash_map[calc_hash_index(name)], NULL, room);
+	add_to_hash_map(&lemin->hash_map[calc_hash_index(name)], room);
 	if (lemin->position == START)
 	{
 		lemin->start_index = lemin->num_of_rooms;
@@ -127,16 +127,16 @@ void		get_rooms(t_lem_in *lemin)
 
 int			find_room_index(t_lem_in *lemin, char *room_name)
 {
-	t_lem_list			*room_list;
+	t_room				*room_list;
 	unsigned int		hash_index;
 
 	hash_index = calc_hash_index(room_name);
 	room_list = lemin->hash_map[hash_index];
 	while (room_list)
 	{
-		if (ft_strequ(room_list->room->name, room_name))
-			return (room_list->room->index);
-		room_list = room_list->next;
+		if (ft_strequ(room_list->name, room_name))
+			return (room_list->index);
+		room_list = room_list->hash_next;
 	}
 	return (-1);
 }

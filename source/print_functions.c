@@ -6,7 +6,7 @@
 /*   By: Alkor <Alkor@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/17 11:36:51 by bsausage          #+#    #+#             */
-/*   Updated: 2020/10/16 13:43:20 by Alkor            ###   ########.fr       */
+/*   Updated: 2020/10/16 15:30:09 by Alkor            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,10 +30,10 @@ void	print_room_list(t_room *room_list)
 	}
 }
 
-void	print_hash_map(t_lem_list *hash_map[HASH_SIZE])
+void	print_hash_map(t_room *hash_map[HASH_SIZE])
 {
 	int		i;
-	t_lem_list	*list;
+	t_room	*list;
 
 	i = 0;
 	while (i < HASH_SIZE)
@@ -44,8 +44,8 @@ void	print_hash_map(t_lem_list *hash_map[HASH_SIZE])
 			while (list)
 			{
 				printf("i = %d\n", i);
-				printf("\tname = %s\tindex = %d\n", list->room->name, list->room->index);
-				list = list->next;
+				printf("\tname = %s\tindex = %d\n", list->name, list->index);
+				list = list->hash_next;
 			}
 		}
 		i++;

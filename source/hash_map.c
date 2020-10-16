@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   hash_map.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bsausage <bsausage@student.42.fr>          +#+  +:+       +#+        */
+/*   By: Alkor <Alkor@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/15 13:56:21 by bsausage          #+#    #+#             */
-/*   Updated: 2020/10/10 11:33:04 by bsausage         ###   ########.fr       */
+/*   Updated: 2020/10/16 14:55:29 by Alkor            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,14 +37,3 @@ unsigned int		calc_hash_index(char *str)
 	return (hash_index % HASH_SIZE);
 }
 
-void				assign_null_hash_map(t_lem_in *lemim)
-{
-	int		i;
-
-	i = 0;
-	while (i < HASH_SIZE)
-	{
-		lemim->hash_map[i] = NULL;
-		i++;
-	}
-}

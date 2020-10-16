@@ -6,7 +6,7 @@
 /*   By: Alkor <Alkor@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/19 11:48:50 by bsausage          #+#    #+#             */
-/*   Updated: 2020/10/16 13:34:57 by Alkor            ###   ########.fr       */
+/*   Updated: 2020/10/16 14:56:17 by Alkor            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ int		parse_links_line(t_lem_in *lemin)
 	get_names(lemin, &room_1, &room_2);
 	if (lemin->adjacency_matrix[room_1][room_2] == 1 ||\
 		lemin->adjacency_matrix[room_2][room_1] == 1)
-		close_program(lemin, "Error: link duplicate");
+		close_program(lemin, "link duplicate");
 	lemin->adjacency_matrix[room_1][room_2] = 1;
 	lemin->adjacency_matrix[room_2][room_1] = 1;
 	ft_memdel((void**)&lemin->line);

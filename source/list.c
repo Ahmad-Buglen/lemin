@@ -6,7 +6,7 @@
 /*   By: Alkor <Alkor@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/13 00:49:42 by bsausage          #+#    #+#             */
-/*   Updated: 2020/10/16 14:14:44 by Alkor            ###   ########.fr       */
+/*   Updated: 2020/10/16 15:34:16 by Alkor            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,83 +42,28 @@ t_room		*room_push_back(t_room **begin, char *name,\
 	{
 		if (ft_strequ(room->name, name) ||
 			(room->coords.x == coords.x && room->coords.y == coords.y))
-		close_program(lemin, "Error: duplacate of name or coords");
+		close_program(lemin, "duplacate of name or coords");
 		room = room->next;
 	}
 	if (ft_strequ(room->name, name) ||
 			(room->coords.x == coords.x && room->coords.y == coords.y))
-		close_program(lemin, "Error: duplacate of name or coords");
+		close_program(lemin, "duplacate of name or coords");
 	room->next = room_create_elem(name, coords, lemin);
 	return (room->next);
 }
 
-t_lem_list	*list_elem_create(t_room *data)
+void		add_to_hash_map(t_room **begin, t_room *room)
 {
-	t_lem_list		*tmp;
+	t_room		*tmp;
 
-	if (!(tmp = (t_lem_list*)ft_memalloc(sizeof(t_lem_list))))
-		return (NULL);
-	tmp->room = data;
-	tmp->next = NULL;
-	return (tmp);
-}
-
-int			list_push_front(t_lem_list **begin_list,\
-							t_lem_list **end_list, t_room *data)
-{
-	t_lem_list		*tmp;
-
-	if (!(tmp = list_elem_create(data)))
-		return (0);
-	if (!*begin_list)
+	if (!*begin)
 	{
-		*begin_list = tmp;
-		if (end_list)
-			*end_list = tmp;
-	}
-	else
-	{
-		tmp->next = *begin_list;
-		*begin_list = tmp;
-	}
-	return (1);
-}
-
-int			list_push_back(t_lem_list **begin_list,\
-							t_lem_list **end_list, t_room *data)
-{
-	t_lem_list		*tmp;
-
-	if (!(tmp = list_elem_create(data)))
-		return (0);
-	if (!*begin_list)
-	{
-		*begin_list = tmp;
-		*end_list = tmp;
-	}
-	else
-	{
-		(*end_list)->next = tmp;
-		*end_list = (*end_list)->next;
-	}
-	return (1);
-}
-
-void		remove_begin_list(t_lem_list **begin_list,\
-								t_lem_list **end_list)
-{
-	t_lem_list		*tmp;
-
-	if (!begin_list)
+		*begin = room;
 		return ;
-	if (*begin_list == *end_list)
-		ft_memdel((void**)begin_list);
-	else
-	{
-		tmp = *begin_list;
-		*begin_list = (*begin_list)->next;
-		ft_memdel((void**)&tmp);
 	}
+	tmp = *begin;
+	*begin = room;
+	(*begin)->hash_next = tmp;
 }
 
 t_path		*create_path_elem(t_lem_in *lemin, char *name, int index)
