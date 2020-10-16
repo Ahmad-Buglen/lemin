@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   flow_distribution.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bsausage <bsausage@student.42.fr>          +#+  +:+       +#+        */
+/*   By: Alkor <Alkor@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/10 16:12:17 by bsausage          #+#    #+#             */
-/*   Updated: 2020/10/10 16:26:38 by bsausage         ###   ########.fr       */
+/*   Updated: 2020/10/16 10:32:04 by Alkor            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include "get_next_line.h"
 #include "lemin.h"
 
-void			find_path(t_lem_in *lemin, t_path **path, t_route *route)
+void			create_path(t_lem_in *lemin, t_path **path, t_route *route)
 {
 	int		n;
 
@@ -78,13 +78,13 @@ void			flow_distribution(t_lem_in *lemin)
 	int		k;
 
 	i = 0;
-	find_path(lemin, &lemin->paths[0], lemin->routes[0]);
+	create_path(lemin, &lemin->paths[0], lemin->routes[0]);
 	while (i < lemin->num_of_ants)
 	{
 		p = 0;
 		while (p < lemin->route_count - 1 && i < lemin->num_of_ants)
 		{
-			find_path(lemin, &lemin->paths[p + 1], lemin->routes[p + 1]);
+			create_path(lemin, &lemin->paths[p + 1], lemin->routes[p + 1]);
 			diff = lemin->routes[p + 1]->size - lemin->routes[p]->size;
 			while (diff > 0 && i < lemin->num_of_ants)
 				cycle_body_1(lemin, p, &i, &diff);

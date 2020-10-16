@@ -105,6 +105,7 @@ typedef struct			s_path
 typedef struct      s_lem_in
 {
 	char			*line;
+	int				line_num;
 	t_room			*room_list;
 	t_lem_list		*hash_map[HASH_SIZE];
 	int				**adjacency_matrix;
@@ -141,7 +142,6 @@ long				ft_strtol(const char *str, char **end);
 t_room				*room_create_elem(char *name, t_coords coords, t_lem_in *lemin);
 t_room				*room_push_back(t_room **begin, char *name, t_coords coords, t_lem_in *lemin);
 void				add_new_room(t_lem_list **begin_list, char *name, t_coords coords, t_lem_in *lemin);
-void				free_room_list(t_lem_in *lemin);
 unsigned int		calc_hash_index(char *str);
 void				init_values(t_lem_in *lemin);
 void				assign_null_hash_map(t_lem_in *lemim);
@@ -152,9 +152,9 @@ int					list_push_front(t_lem_list **begin_list, t_lem_list **end_list, t_room *
 int					list_push_back(t_lem_list **begin_list, t_lem_list **end_list, t_room *data);
 void				remove_begin_list(t_lem_list **begin_list, t_lem_list **end_list);
 
-void				queue_insert(t_lem_in *lemin, t_room *room);
-void				queue_remove(t_lem_in *lemin);
-void				queue_clear(t_lem_in *lemin);
+// void				queue_insert(t_lem_in *lemin, t_room *room);
+// void				queue_remove(t_lem_in *lemin);
+// void				queue_clear(t_lem_in *lemin);
 void				push_to_stack(t_lem_in *lemin, t_room *room);
 
 //rooms
@@ -177,15 +177,13 @@ int					check_start_end_links(t_lem_in *lemin);
 
 //free_functions
 
-// void				free_adjacency_matrix(t_lem_in *lemin);
-// void				free_room_list(t_room **begin_list);
-// void				free_hash_map(t_lem_in *lemin);
 void				free_all(t_lem_in *lemin);
 void				close_program(t_lem_in *lemin, char *error_msg);
 
-//print				functions
+//print	functions
 
 void				print_ant_farm(t_lem_in *lemin);
+void				print_solution(t_lem_in *lemin);
 
 //tmp_functions
 
@@ -193,12 +191,13 @@ void				print_room_list(t_room *room_list);
 void				print_hash_map(t_lem_list *hash_map[HASH_SIZE]);
 void				print_adjacency_matrix(t_lem_in *lemin);
 void				print_array_of_rooms(t_lem_in *lemin);
+void				print_routes(t_lem_in *lemin);
 
 void				init_array_of_ants(t_lem_in *lemin);
 void				init_path_array(t_lem_in *lemin);
 void				flow_distribution(t_lem_in *lemin);
-void				find_path(t_lem_in *lemin, t_path **path, t_route *route);
-void				print_solution(t_lem_in *lemin);
+void				create_path(t_lem_in *lemin, t_path **path, t_route *route);
+
 void				start_end_solution(t_lem_in *lemin);
 void				add_elem_to_path(t_lem_in *lemin, t_path **path, char *name, int index);
 void				debug(t_lem_in *lemin);

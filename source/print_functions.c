@@ -3,12 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   print_functions.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bsausage <bsausage@student.42.fr>          +#+  +:+       +#+        */
+/*   By: Alkor <Alkor@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/17 11:36:51 by bsausage          #+#    #+#             */
-/*   Updated: 2020/10/10 10:46:09 by bsausage         ###   ########.fr       */
+/*   Updated: 2020/10/16 10:38:06 by Alkor            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+/*																*/
+/*	this file contains forbidden functions						*/
+/*	this code is not used in the final version of the project	*/
+/*																*/
 
 #include "lemin.h"
 #include "libft.h"
@@ -79,3 +84,21 @@ void	print_array_of_rooms(t_lem_in *lemin)
 	}		
 }
 
+void	print_route(t_route *route)
+{
+	int i;
+
+	i = -1;
+	while (++i < route->size)
+		printf("%s ", route->elem[i]->name);
+	printf(" size - %d, weight - %d, unique - %d;\n", route->size, route->weight, route->unique);
+}
+
+void	print_routes(t_lem_in *lemin)
+{
+	int i;
+	
+	i = -1;
+	while (++i < lemin->route_count)
+		print_route(lemin->routes[i]);
+}

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   other_parsing_funcs.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bsausage <bsausage@student.42.fr>          +#+  +:+       +#+        */
+/*   By: Alkor <Alkor@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/19 11:51:50 by bsausage          #+#    #+#             */
-/*   Updated: 2020/10/10 15:59:09 by bsausage         ###   ########.fr       */
+/*   Updated: 2020/10/16 11:06:51 by Alkor            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int			check_num_of_ants_line(char *line)
 {
 	if (!*line)
 		return (0);
-	if (*line == '0')
+	if (*line == '0' && ft_strlen(line) > 1)
 		return (0);
 	while (*line)
 	{
@@ -43,7 +43,7 @@ static void	check_first_line(t_lem_in *lemin)
 		close_program(lemin, "map must starts with num of ants");
 	}
 	if (!check_num_of_ants_line(lemin->line))
-		close_program(lemin, "error: wrong num of ants line");
+		close_program(lemin, "wrong num of ants line");
 }
 
 void		get_num_of_ants(t_lem_in *lemin)
@@ -54,11 +54,12 @@ void		get_num_of_ants(t_lem_in *lemin)
 	if (get_next_line(0, &lemin->line) <= 0)
 		close_program(lemin,\
 		"empty file or map doesn't contain rooms and link part");
+	lemin->line_num++;
 	check_first_line(lemin);
 	end = lemin->line;
 	num = ft_strtol(end, &end);
 	if (num <= 0 || num > INT_MAX)
-		close_program(lemin, "error msg");
+		close_program(lemin, "num of ants is <= 0 or > INT_MAX");
 	lemin->num_of_ants = num;
 	ft_memdel((void**)&lemin->line);
 }

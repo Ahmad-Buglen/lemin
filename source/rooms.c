@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rooms.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bsausage <bsausage@student.42.fr>          +#+  +:+       +#+        */
+/*   By: Alkor <Alkor@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/19 11:45:58 by bsausage          #+#    #+#             */
-/*   Updated: 2020/10/10 11:50:05 by bsausage         ###   ########.fr       */
+/*   Updated: 2020/10/16 11:29:49 by Alkor            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,21 +25,21 @@ void		check_room_name_coords_line(char **name, t_coords *coords,\
 	end = ft_strchr(lemin->line, ' ');
 	name_len = end - lemin->line;
 	if (++end && !ft_isdigit(*end) && *end != '-')
-		close_program(lemin, "room's coords should contaons only digits");
+		close_program(lemin, "wrong room's coords");
 	if (!(*name = ft_strsub(lemin->line, 0, name_len)))
 		close_program(lemin, "malloc error");
 	if (ft_strchr(*name, '-'))
-		close_program(lemin, "room's name can nor contain -");
+		close_program(lemin, "room's name can not contain -");
 	if ((coord = ft_strtol(end, &end)) > INT_MAX || coord < INT_MIN)
 		close_program(lemin, "coords overflow");
 	coords->x = coord;
 	if (++end && !ft_isdigit(*end) && *end != '-')
-		close_program(lemin, "room's coords should contaons only digits");
+		close_program(lemin, "wrong room's coords");
 	if ((coord = ft_strtol(end, &end)) > INT_MAX || coord < INT_MIN)
-		close_program(lemin, "room's coords should contaons only digits");
+		close_program(lemin, "room's coords overflow");
 	coords->y = coord;
 	if (*end)
-		close_program(lemin, "room's coords shouldn't contain more symbols");
+		close_program(lemin, "wrong room's coords");
 	if ((lemin->start_flag && lemin->position == START) ||\
 		(lemin->end_flag && lemin->position == END))
 		close_program(lemin, "more than one start or end room");
@@ -105,6 +105,7 @@ void		get_rooms(t_lem_in *lemin)
 
 	while ((gnl = get_next_line(0, &lemin->line)))
 	{
+		lemin->line_num++;
 		if (!cycle_body(lemin))
 			return ;
 	}

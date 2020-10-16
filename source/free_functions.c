@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free_functions.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dphyliss <dphyliss@student.42.fr>          +#+  +:+       +#+        */
+/*   By: Alkor <Alkor@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/17 12:28:40 by bsausage          #+#    #+#             */
-/*   Updated: 2020/10/13 16:44:31 by dphyliss         ###   ########.fr       */
+/*   Updated: 2020/10/16 11:05:46 by Alkor            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,6 @@ void		free_hash_map(t_lem_in *lemin)
 
 void		free_paths(t_lem_in *lemin)
 {
-	t_path		**paths;
 	t_path		*path;
 	t_path		*tmp;
 	int			n;
@@ -113,8 +112,14 @@ void		free_all(t_lem_in *lemin)
 
 void		close_program(t_lem_in *lemin, char *error_msg)
 {
+	
 	if (!errno)
+	{
+		ft_putstr_fd("Error (line ", 2);
+		ft_putnbr_fd(lemin->line_num, 2);
+		ft_putstr_fd("): ", 2);
 		ft_putendl_fd(error_msg, 2);
+	}
 	else
 		perror("Error");
 	exit(1);

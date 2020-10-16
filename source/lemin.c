@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lemin.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dphyliss <dphyliss@student.42.fr>          +#+  +:+       +#+        */
+/*   By: Alkor <Alkor@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/15 14:28:21 by dphyliss          #+#    #+#             */
-/*   Updated: 2020/10/15 17:35:29 by dphyliss         ###   ########.fr       */
+/*   Updated: 2020/10/16 10:23:39 by Alkor            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -339,16 +339,6 @@ void	dijkstra_setup(t_lem_in *lemin)
 // recur_route(route_copy(route), start, dublicate_map(nodes, node_len), node_len, &best_route, &counter, status, routes);
 		
 
-void print_route(t_route *route)
-{
-	int i;
-
-	i = -1;
-	while (++i < route->size)
-		printf("%s ", route->elem[i]->name);
-	printf(" size - %d, weight - %d, unique - %d;\n", route->size, route->weight, route->unique);
-}
-
 int *dublicate_map(t_lem_in *lemin)
 {
 	int	*map;
@@ -491,18 +481,6 @@ void	routes_search(t_lem_in *lemin)
 	// }
 }
 
-void	lemin_check(t_lem_in *lemin)
-{
-	if (!lemin->start_flag || !lemin->end_flag)
-	 	close_program(lemin, "no start or end room");		
-	if (!(lemin->adjacency_matrix = init_adjacency_matrix(lemin->num_of_rooms)))
-	 	close_program(lemin, "init_adjacency_matrix error");
-	lemin->array_of_rooms = init_array_of_rooms(lemin);
-	get_links(lemin);
-	if (!check_start_end_links(lemin))
-		close_program(lemin, "start or/and end room is/are without links");
-}
-
 int unique_search(t_route **routes, t_lem_in *lemin)
 {
 	int i;
@@ -642,37 +620,44 @@ void recur_search(t_lem_in *lemin)
 	
 	// lemin.route_count = duplicate_exclusion(lemin.routes);
 }
+
+
+void	data_parsing(t_lem_in *lemin)
+{
+	get_num_of_ants(lemin);
+	get_rooms(lemin);
+	if (!lemin->start_flag || !lemin->end_flag)
+	 	close_program(lemin, "no start or end room");		
+	if (!(lemin->adjacency_matrix = init_adjacency_matrix(lemin->num_of_rooms)))
+	 	close_program(lemin, "init_adjacency_matrix error");
+	lemin->array_of_rooms = init_array_of_rooms(lemin);
+	get_links(lemin);
+	if (!check_start_end_links(lemin))
+		close_program(lemin, "start or/and end room is/are without links");
+}
+
 int main(int argc, char **argv)
 {
 	t_lem_in	lemin;
 
 	ft_bzero(&lemin, sizeof(lemin));
-	get_num_of_ants(&lemin);
-	get_rooms(&lemin);
-	lemin_check(&lemin);
+	data_parsing(&lemin);
 	if (lemin.adjacency_matrix[lemin.start_index][lemin.end_index])
-	{
 		start_end_solution(&lemin);
-		free_all(&lemin);
-		return (0);
-	}
-	lemin_init(&lemin);
-	if (lemin.num_of_rooms < BIG) //  || lemin.num_of_rooms > 3000)
-		recur_search(&lemin);
 	else
-		bhandari_search(&lemin);
-	
-	// int i;
-	// i = -1;
-	// while (++i < lemin.route_count)
-	// 	print_route(lemin.routes[i]);
-
-	init_path_array(&lemin);
-	init_array_of_ants(&lemin);
-	flow_distribution(&lemin);	//функция распределения потоков
+	{
+		lemin_init(&lemin);
+		if (lemin.num_of_rooms < BIG) //  || lemin.num_of_rooms > 3000)
+			recur_search(&lemin);
+		else
+			bhandari_search(&lemin);
+		// print_routes(&lemin);
+		init_path_array(&lemin);
+		init_array_of_ants(&lemin);
+		flow_distribution(&lemin);	//функция распределения потоков
+	}
 	print_ant_farm(&lemin);		//вывод фермы
 	print_solution(&lemin);		//вывод решения
-
 	// printf("\n %p \n %p", lemin.routes, lemin.routes[0]);
 	// printf(" routes - %d, steps - %d\n", lemin.route_count, route_flow(&lemin, lemin.route_count));
 	free_all(&lemin);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   print_solution.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bsausage <bsausage@student.42.fr>          +#+  +:+       +#+        */
+/*   By: Alkor <Alkor@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/10 10:47:12 by bsausage          #+#    #+#             */
-/*   Updated: 2020/10/10 15:59:50 by bsausage         ###   ########.fr       */
+/*   Updated: 2020/10/16 10:21:52 by Alkor            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,4 @@ void			start_end_solution(t_lem_in *lemin)
 	init_array_of_ants(lemin);
 	while (i < lemin->num_of_ants)
 		lemin->array_of_ants[i++] = lemin->paths[0];
-	print_ant_farm(lemin);
-	print_solution(lemin);
 }
