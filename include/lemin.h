@@ -139,7 +139,6 @@ void				connect_del(t_room *const node1, t_room *const node2);
 void				connect_node(t_room *const room1, t_room *const room2);
 void				lemin_routes_destroy(t_lem_in *const lemin);
 void				routes_destroy(t_route **routes);
-void				ft_exit_lemin(char *const message);
 
 /*
 **	recursive search
@@ -166,10 +165,6 @@ void				dijkstra_search(t_room **const fifo, int i, int n);
 void				bhandari_search(t_lem_in *const lemin);
 int					route_flow(t_lem_in *const lemin, const int route_count);
 int					route_steps(t_lem_in *const lemin);
-void				route_inverse(t_route *const route);
-int					connection_include(t_room *const node1, t_room *const node2);
-void				connection_restore(t_room *const node1, t_room *const node2);
-void				route_recovery(t_lem_in *const lemin);
 
 /*
 **	init/malloc
