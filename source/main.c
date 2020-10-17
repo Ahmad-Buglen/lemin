@@ -6,7 +6,7 @@
 /*   By: bsausage <bsausage@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/13 00:41:56 by bsausage          #+#    #+#             */
-/*   Updated: 2020/10/17 17:10:14 by bsausage         ###   ########.fr       */
+/*   Updated: 2020/10/17 17:54:43 by bsausage         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,8 @@ int				main(void)
 	t_lem_in	lemin;
 
 	ft_bzero(&lemin, sizeof(lemin));
+	lemin.start_index = -1;
+	lemin.end_index = -1;
 	data_parsing(&lemin);
 	if (lemin.adjacency_matrix[lemin.start_index][lemin.end_index])
 		start_end_solution(&lemin);

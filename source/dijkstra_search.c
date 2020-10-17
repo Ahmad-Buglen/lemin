@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   dijkstra_search.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dphyliss <dphyliss@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bsausage <bsausage@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/17 16:13:39 by dphyliss          #+#    #+#             */
-/*   Updated: 2020/10/17 16:51:50 by dphyliss         ###   ########.fr       */
+/*   Updated: 2020/10/17 17:37:14 by bsausage         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lemin.h"
+#include "libft.h"
 
 int				fifo_include(t_room *const *const fifo, t_room *const node)
 {

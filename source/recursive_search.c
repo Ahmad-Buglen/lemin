@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   recursive_search.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dphyliss <dphyliss@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bsausage <bsausage@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/17 16:11:14 by dphyliss          #+#    #+#             */
-/*   Updated: 2020/10/17 16:20:10 by dphyliss         ###   ########.fr       */
+/*   Updated: 2020/10/17 17:37:00 by bsausage         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lemin.h"
+#include "libft.h"
 
 int				node_include(t_route *const route, const int index)
 {

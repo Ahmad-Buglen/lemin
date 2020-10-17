@@ -43,44 +43,38 @@ OBJECTS_DIRECTORY = objects/
 OBJECTS_LIST = $(patsubst %.c, %.o, $(SOURCES_LIST))
 OBJECTS	= $(addprefix $(OBJECTS_DIRECTORY), $(OBJECTS_LIST))
 
-# COLORS
-GREEN = \033[0;32m
-RED = \033[0;31m
-RESET = \033[0m
-
 .PHONY: all clean fclean re
 
 all: $(NAME)
 
 $(NAME): $(OBJECTS_DIRECTORY) $(OBJECTS) $(LIBFT)
-	@$(CC) $(FLAGS) $(INCLUDES) $(OBJECTS) $(LIBRARIES) -o $(NAME)
-	@echo "\n$(NAME): $(GREEN)object files were created$(RESET)"
-	@echo "$(NAME): $(GREEN)$(NAME) was created$(RESET)"
+	$(CC) $(FLAGS) $(INCLUDES) $(OBJECTS) $(LIBRARIES) -o $(NAME)
+	echo "\n$(NAME): $(GREEN)object files were created$(RESET)"
+	echo "$(NAME): $(NAME) was created"
 
 $(OBJECTS_DIRECTORY):
-	@mkdir -p $(OBJECTS_DIRECTORY)
-	@echo "$(NAME): $(GREEN)$(OBJECTS_DIRECTORY) was created$(RESET)"
+	mkdir -p $(OBJECTS_DIRECTORY)
+	echo "$(NAME): $(OBJECTS_DIRECTORY) was created"
 
 $(OBJECTS_DIRECTORY)%.o : $(SOURCES_DIRECTORY)%.c $(HEADERS)
-	@$(CC) $(FLAGS) -c $(INCLUDES) $< -o $@
-	@echo "$(GREEN).$(RESET)\c"
+	$(CC) $(FLAGS) -c $(INCLUDES) $< -o $@
 
 $(LIBFT):
-	@echo "$(NAME): $(GREEN)Creating $(LIBFT)...$(RESET)"
-	@$(MAKE) -sC $(LIBFT_DIRECTORY)
+	echo "$(NAME): $(GREEN)Creating $(LIBFT)"
+	$(MAKE) -sC $(LIBFT_DIRECTORY)
 
 clean:
-	@$(MAKE) -sC $(LIBFT_DIRECTORY) clean
-	@rm -rf $(OBJECTS_DIRECTORY)
-	@echo "$(NAME): $(RED)$(OBJECTS_DIRECTORY) was deleted$(RESET)"
-	@echo "$(NAME): $(RED)object files were deleted$(RESET)"
+	$(MAKE) -sC $(LIBFT_DIRECTORY) clean
+	rm -rf $(OBJECTS_DIRECTORY)
+	echo "$(NAME): $(OBJECTS_DIRECTORY) was deleted"
+	@echo "$(NAME): object files were deleted"
 
 fclean: clean
-	@rm -f $(LIBFT)
-	@echo "$(NAME): $(RED)$(LIBFT) was deleted$(RESET)"
-	@rm -f $(NAME)
-	@echo "$(NAME): $(RED)$(NAME) was deleted$(RESET)"
+	rm -f $(LIBFT)
+	echo "$(NAME): $(LIBFT) was deleted"
+	rm -f $(NAME)
+	echo "$(NAME): $(NAME) was deleted"
 
 re:
-	@$(MAKE) fclean
-	@$(MAKE) all
+	$(MAKE) fclean
+	$(MAKE) all

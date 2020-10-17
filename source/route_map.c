@@ -6,11 +6,12 @@
 /*   By: bsausage <bsausage@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/17 16:03:52 by dphyliss          #+#    #+#             */
-/*   Updated: 2020/10/17 17:12:44 by bsausage         ###   ########.fr       */
+/*   Updated: 2020/10/17 17:59:19 by bsausage         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lemin.h"
+#include "libft.h"
 
 t_route		*route_copy(t_route *const route)
 {
@@ -22,7 +23,7 @@ t_route		*route_copy(t_route *const route)
 	return (copy);
 }
 
-void	route_put(t_lem_in *const lemin, t_route *const route)
+void		route_put(t_lem_in *const lemin, t_route *const route)
 {
 	route_mark(lemin, route);
 	route->weight += route->size;
