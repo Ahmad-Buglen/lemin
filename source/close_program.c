@@ -6,12 +6,13 @@
 /*   By: bsausage <bsausage@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/17 17:09:47 by bsausage          #+#    #+#             */
-/*   Updated: 2020/10/17 17:13:19 by bsausage         ###   ########.fr       */
+/*   Updated: 2020/10/17 18:51:50 by bsausage         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include "lemin.h"
+# include <stdio.h>
 #include <errno.h>
 
 void		ft_exit_lemin(char *const message)

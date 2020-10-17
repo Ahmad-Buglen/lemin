@@ -6,14 +6,12 @@
 /*   By: bsausage <bsausage@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/17 18:27:37 by bsausage          #+#    #+#             */
-/*   Updated: 2020/10/17 18:32:18 by bsausage         ###   ########.fr       */
+/*   Updated: 2020/10/17 18:51:40 by bsausage         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LEMIN_H
 # define LEMIN_H
-
-# include <stdio.h>
 
 # define VISIT		7
 # define NO_VISIT	0
