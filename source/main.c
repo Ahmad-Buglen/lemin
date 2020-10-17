@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bsausage <bsausage@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dphyliss <dphyliss@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/13 00:41:56 by bsausage          #+#    #+#             */
-/*   Updated: 2020/10/17 17:54:43 by bsausage         ###   ########.fr       */
+/*   Updated: 2020/10/17 19:51:46 by dphyliss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,8 @@ void			lemin_init(t_lem_in *const lemin)
 	if (!(lemin->fifo = (t_room **)ft_memalloc(sizeof(t_room *) *\
 						lemin->num_of_rooms)))
 		ft_exit_lemin("The system did not allocate memory");
-	if (!(lemin->routes = (t_route **)ft_memalloc(sizeof(t_route *) *\
-						(lemin->num_of_rooms * 5))))
+	if (!(lemin->routes = (t_route **)ft_memalloc(sizeof(t_route *) *
+																ROUTE_SIZE)))
 		ft_exit_lemin("The system did not allocate memory");
 	if (!(lemin->route = (t_bool *)ft_memalloc(sizeof(t_bool) *\
 						(lemin->num_of_rooms + 1))))

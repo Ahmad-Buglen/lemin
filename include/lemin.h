@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lemin.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bsausage <bsausage@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dphyliss <dphyliss@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/10/17 17:17:25 by bsausage          #+#    #+#             */
-/*   Updated: 2020/10/17 17:17:25 by bsausage         ###   ########.fr       */
+/*   Created: 2020/10/17 18:14:54 by dphyliss          #+#    #+#             */
+/*   Updated: 2020/10/17 18:14:54 by dphyliss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,6 +128,7 @@ void				connect_del(t_room *const node1, t_room *const node2);
 void				connect_node(t_room *const room1, t_room *const room2);
 void				lemin_routes_destroy(t_lem_in *const lemin);
 void				routes_destroy(t_route **routes);
+void				ft_exit_lemin(char *const message);
 
 /*
 **	recursive search
