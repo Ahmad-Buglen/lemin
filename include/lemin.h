@@ -3,40 +3,36 @@
 /*                                                        :::      ::::::::   */
 /*   lemin.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dphyliss <dphyliss@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bsausage <bsausage@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/09/07 17:12:23 by dphyliss          #+#    #+#             */
-/*   Updated: 2020/09/07 17:12:23 by dphyliss         ###   ########.fr       */
+/*   Created: 2020/10/17 17:17:25 by bsausage          #+#    #+#             */
+/*   Updated: 2020/10/17 17:17:25 by bsausage         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#ifndef LEMIN_H
+# define LEMIN_H
 
-#ifndef LEM_IN_H
-# define LEM_IN_H
-
-# include "../libft/libft.h"
 # include <stdio.h>
 
-# define VISIT 7
-# define NO_VISIT 0
-# define BIG_INT 1111111111
-
+# define VISIT		7
+# define NO_VISIT	0
+# define BIG_INT 	1111111111
 # define ROUTE_SIZE 2048
-#define HASH_SIZE	10000
-#define BIG			1500
+# define HASH_SIZE	10000
+# define BIG		1500
 
-
-typedef enum			e_bool
+typedef enum		e_bool
 {
-	false = 0,
-	true = 1
-}						t_bool;
+	false,
+	true
+}					t_bool;
 
-typedef struct  s_coords
+typedef struct		s_coords
 {
-	int         x;
-	int         y;
-}               t_coords;
+	int				x;
+	int				y;
+}					t_coords;
 
 typedef enum
 {
@@ -60,11 +56,10 @@ typedef enum
 	END
 }	t_position;
 
-
 typedef struct		s_room
 {
-    char			*name;
-    t_coords		coords;
+	char			*name;
+	t_coords		coords;
 	t_position		position;
 	int				index;
 	int				pass;
@@ -75,25 +70,23 @@ typedef struct		s_room
 	struct s_room	*next;
 	struct s_room	*hash_next;
 	struct s_room	**connections;
-	//struct s_room	*next_a;
-	
 }					t_room;
 
-typedef struct			s_path
+typedef struct		s_path
 {
-    char				*name;
-	t_status			status;
-	int					index;
-	struct s_path		*next;
-}						t_path;
+	char			*name;
+	t_status		status;
+	int				index;
+	struct s_path	*next;
+}					t_path;
 
-typedef struct			s_farm
+typedef struct		s_farm
 {
-    char				*line;
-	struct s_farm		*next;
-}						t_farm;
+	char			*line;
+	struct s_farm	*next;
+}					t_farm;
 
-typedef struct      s_lem_in
+typedef struct		s_lem_in
 {
 	char			*line;
 	t_farm			*farm_list;
@@ -119,10 +112,6 @@ typedef struct      s_lem_in
 	int				route_count;
 	t_bool			*route;
 }					t_lem_in;
-
-/*
-**	route  manipulations
-*/
 
 t_route				*route_copy(t_route *const route);
 void				route_put(t_lem_in *const lemin, t_route *const route);
@@ -153,18 +142,26 @@ void				recur_search(t_lem_in *const lemin);
 void				route_sort(t_lem_in *const lemin);
 void				routes_complete(t_route **const routes,
 								t_lem_in *const lemin, const int number);
-int					unique_search(t_route *const *const routes, t_lem_in *const lemin);
+int					unique_search(t_route *const *const routes,
+								t_lem_in *const lemin);
 
 /*
 **	bhandari search
 */
 
-int					fifo_include(t_room *const *const fifo, t_room *const node);
+int					fifo_include(t_room *const *const fifo,
+								t_room *const node);
 void				dijkstra_setup(t_lem_in *const lemin);
 void				dijkstra_search(t_room **const fifo, int i, int n);
 void				bhandari_search(t_lem_in *const lemin);
 int					route_flow(t_lem_in *const lemin, const int route_count);
 int					route_steps(t_lem_in *const lemin);
+void				route_inverse(t_route *const route);
+int					connection_include(t_room *const node1,
+										t_room *const node2);
+void				connection_restore(t_room *const node1,
+										t_room *const node2);
+void				route_recovery(t_lem_in *const lemin);
 
 /*
 **	init/malloc
@@ -174,10 +171,14 @@ int					**init_adjacency_matrix(int n);
 t_room				**init_array_of_rooms(t_lem_in *lemin);
 void				init_array_of_ants(t_lem_in *lemin);
 void				init_path_array(t_lem_in *lemin);
-t_room				*room_create_elem(char *name, t_coords coords, t_lem_in *lemin);
-t_room				*room_push_back(t_room **begin, char *name, t_coords coords, t_lem_in *lemin);
-void				create_path(t_lem_in *lemin, t_path **path, t_route *route);
-void				add_elem_to_path(t_lem_in *lemin, t_path **path, char *name, int index);
+t_room				*room_create_elem(char *name, t_coords coords,
+												t_lem_in *lemin);
+t_room				*room_push_back(t_room **begin, char *name,
+									t_coords coords, t_lem_in *lemin);
+void				create_path(t_lem_in *lemin, t_path **path,
+											t_route *route);
+void				add_elem_to_path(t_lem_in *lemin, t_path **path,
+									char *name, int index);
 void				add_to_hash_map(t_room **begin, t_room *room);
 
 /*

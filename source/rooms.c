@@ -6,7 +6,7 @@
 /*   By: bsausage <bsausage@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/19 11:45:58 by bsausage          #+#    #+#             */
-/*   Updated: 2020/10/17 11:55:44 by bsausage         ###   ########.fr       */
+/*   Updated: 2020/10/17 17:59:08 by bsausage         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,7 +119,12 @@ void		get_rooms(t_lem_in *lemin)
 		lemin->line_num++;
 		add_line_to_farm_list(lemin);
 		if (!cycle_body(lemin))
+		{
+			if (lemin->start_index == (unsigned int)-1 ||\
+				lemin->end_index == (unsigned int)-1)
+				close_program(lemin, "no start or end room");
 			return ;
+		}
 	}
 	if (gnl <= 0)
 		close_program(lemin, "no link part in the file");
