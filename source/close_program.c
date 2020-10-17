@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   close_program.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bsausage <bsausage@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dphyliss <dphyliss@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/17 17:09:47 by bsausage          #+#    #+#             */
-/*   Updated: 2020/10/17 18:51:50 by bsausage         ###   ########.fr       */
+/*   Updated: 2020/10/17 20:05:39 by dphyliss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include "lemin.h"
-# include <stdio.h>
+#include <stdio.h>
 #include <errno.h>
 
 void		ft_exit_lemin(char *const message)

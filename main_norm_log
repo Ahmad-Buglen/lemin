@@ -1,4 +1,0 @@
-Norme: source/main.c
-Error: 34 functions in the file
-Error (line 422): function unique_search has 28 lines
-Error (line 481): function duplicate_exclusion has 31 lines
