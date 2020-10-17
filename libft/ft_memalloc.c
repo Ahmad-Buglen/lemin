@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_memalloc.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dphyliss <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: bsausage <bsausage@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/20 16:47:11 by dphyliss          #+#    #+#             */
-/*   Updated: 2019/10/29 18:29:43 by dphyliss         ###   ########.fr       */
+/*   Updated: 2020/10/17 14:47:10 by bsausage         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,6 @@ void		*ft_memalloc(size_t size)
 	if ((0 == size) ||
 			(!(point = (void *)malloc(size))))
 		return (NULL);
-	ft_bzero(point, size);
+	ft_memset(point, 0, size);
 	return ((void *)point);
 }
