@@ -49,32 +49,24 @@ all: $(NAME)
 
 $(NAME): $(OBJECTS_DIRECTORY) $(OBJECTS) $(LIBFT)
 	$(CC) $(FLAGS) $(INCLUDES) $(OBJECTS) $(LIBRARIES) -o $(NAME)
-	echo "\n$(NAME): $(GREEN)object files were created$(RESET)"
-	echo "$(NAME): $(NAME) was created"
 
 $(OBJECTS_DIRECTORY):
 	mkdir -p $(OBJECTS_DIRECTORY)
-	echo "$(NAME): $(OBJECTS_DIRECTORY) was created"
 
 $(OBJECTS_DIRECTORY)%.o : $(SOURCES_DIRECTORY)%.c $(HEADERS)
 	$(CC) $(FLAGS) -c $(INCLUDES) $< -o $@
 
 $(LIBFT):
-	echo "$(NAME): $(GREEN)Creating $(LIBFT)"
-	$(MAKE) -sC $(LIBFT_DIRECTORY)
+	make -sC $(LIBFT_DIRECTORY)
 
 clean:
-	$(MAKE) -sC $(LIBFT_DIRECTORY) clean
+	make -sC $(LIBFT_DIRECTORY) clean
 	rm -rf $(OBJECTS_DIRECTORY)
-	echo "$(NAME): $(OBJECTS_DIRECTORY) was deleted"
-	@echo "$(NAME): object files were deleted"
 
 fclean: clean
 	rm -f $(LIBFT)
-	echo "$(NAME): $(LIBFT) was deleted"
 	rm -f $(NAME)
-	echo "$(NAME): $(NAME) was deleted"
 
 re:
-	$(MAKE) fclean
-	$(MAKE) all
+	make fclean
+	make all
