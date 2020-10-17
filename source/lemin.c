@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lemin.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: Alkor <Alkor@student.42.fr>                +#+  +:+       +#+        */
+/*   By: bsausage <bsausage@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/15 14:28:21 by dphyliss          #+#    #+#             */
-/*   Updated: 2020/10/16 18:21:53 by Alkor            ###   ########.fr       */
+/*   Updated: 2020/10/17 11:51:03 by bsausage         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ void connect_del(t_room *node1, t_room *node2)
 	// node1->connections[node1->con_size] = NULL;
 }
 
-void connect_node(t_lem_in *lemin, t_room *room1, t_room *room2)
+void connect_node(t_room *room1, t_room *room2)		//lemin arg deleted
 {
 	if (!room1 || !room2)
 		ft_exit_fail("Error 3");
@@ -248,7 +248,9 @@ void route_mark(t_lem_in *lemin, t_route *route)
 {
 	int	i;
 
-	i = 0;
+	i = 0;//
+	if (!route)//
+		return ;
 	while (++i < route->size - 1)
 		lemin->route[route->elem[i]->index] = true;
 }
@@ -404,7 +406,7 @@ void recur_route(t_route *route, t_room *room, int *map, t_lem_in *lemin)
 	return ;
 }
 
-void	dijkstra_search( t_room **fifo, t_lem_in *lemin, int i, int n)
+void	dijkstra_search( t_room **fifo, int i, int n)	//lemin arg deleted
 {
 	int		j;
 	t_route	*temp;
@@ -437,7 +439,7 @@ void bhandari_search(t_lem_in *lemin)
 	while (lemin->route_count < lemin->max_route_count) // max_route_count ? 
 	{
 		dijkstra_setup(lemin);
-		dijkstra_search(lemin->fifo, lemin, -1, 1);
+		dijkstra_search(lemin->fifo, -1, 1);	//lemin arg deleted
 		if (BIG_INT == lemin->end->weight)
 			break;
 		route_inverse(lemin->end->route);
@@ -517,7 +519,7 @@ void routes_complete(t_route **routes, t_lem_in *lemin, int number)
 {
 	int i;
 	int temp;
-	t_route *buff;
+	// t_route *buff;
 
 	temp = lemin->route_count;
 	lemin->route_count = 0;
@@ -633,10 +635,13 @@ void	data_parsing(t_lem_in *lemin)
 	lemin->array_of_rooms = init_array_of_rooms(lemin);
 	get_links(lemin);
 	if (!check_start_end_links(lemin))
+	{
+		lemin->line = 0;
 		close_program(lemin, "start or/and end room is/are without links");
+	}
 }
 
-int main(int argc, char **argv)
+int main()
 {
 	t_lem_in	lemin;
 
@@ -647,19 +652,15 @@ int main(int argc, char **argv)
 	else
 	{
 		lemin_init(&lemin);
-		if (lemin.num_of_rooms < BIG) //  || lemin.num_of_rooms > 3000)
+		if (lemin.num_of_rooms < BIG)
 			recur_search(&lemin);
 		else
 			bhandari_search(&lemin);
-		// print_routes(&lemin);
 		init_path_array(&lemin);
-		init_array_of_ants(&lemin);
-		flow_distribution(&lemin);	//функция распределения потоков
+		flow_distribution(&lemin);
 	}
-	print_ant_farm(&lemin);		//вывод фермы
-	print_solution(&lemin);		//вывод решения
-	// printf("\n %p \n %p", lemin.routes, lemin.routes[0]);
-	// printf(" routes - %d, steps - %d\n", lemin.route_count, route_flow(&lemin, lemin.route_count));
+	print_ant_farm(&lemin);
+	print_solution(&lemin);
 	free_all(&lemin);
 	return (1);
 }

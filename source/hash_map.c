@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   hash_map.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: Alkor <Alkor@student.42.fr>                +#+  +:+       +#+        */
+/*   By: bsausage <bsausage@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/15 13:56:21 by bsausage          #+#    #+#             */
-/*   Updated: 2020/10/16 14:55:29 by Alkor            ###   ########.fr       */
+/*   Updated: 2020/10/17 11:56:07 by bsausage         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include "get_next_line.h"
 #include "lemin.h"
 
-unsigned int		calc_hash_index(char *str)
+unsigned int	calc_hash_index(char *str)
 {
 	int				i;
 	int				tmp;
@@ -37,3 +37,18 @@ unsigned int		calc_hash_index(char *str)
 	return (hash_index % HASH_SIZE);
 }
 
+int				find_room_index(t_lem_in *lemin, char *room_name)
+{
+	t_room				*room_list;
+	unsigned int		hash_index;
+
+	hash_index = calc_hash_index(room_name);
+	room_list = lemin->hash_map[hash_index];
+	while (room_list)
+	{
+		if (ft_strequ(room_list->name, room_name))
+			return (room_list->index);
+		room_list = room_list->hash_next;
+	}
+	return (-1);
+}

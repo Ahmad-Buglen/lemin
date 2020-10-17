@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   print_functions.c                                  :+:      :+:    :+:   */
+/*   helper_functions.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: Alkor <Alkor@student.42.fr>                +#+  +:+       +#+        */
+/*   By: bsausage <bsausage@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/17 11:36:51 by bsausage          #+#    #+#             */
-/*   Updated: 2020/10/16 15:30:09 by Alkor            ###   ########.fr       */
+/*   Updated: 2020/10/17 12:00:56 by bsausage         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,4 +101,30 @@ void	print_routes(t_lem_in *lemin)
 	i = -1;
 	while (++i < lemin->route_count)
 		print_route(lemin->routes[i]);
+}
+
+void		check_route(t_lem_in *lemin, t_route *route)
+{
+	int		i;
+	
+	i = 0;
+	while (i < route->size - 1)
+	{
+		if (!lemin->adjacency_matrix[route->elem[i]->index][route->elem[i + 1]->index])
+			close_program(lemin, "algorythm mistake");
+		i++;
+	}
+}
+
+void		check_routes(t_lem_in *lemin)
+{
+	int		i;
+
+	i = 0;
+	while (i < lemin->route_count)
+	{
+		check_route(lemin, lemin->routes[i]);
+		i++;
+	}
+	write(1, "sucsess\n", 9);
 }

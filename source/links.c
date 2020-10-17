@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   links.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: Alkor <Alkor@student.42.fr>                +#+  +:+       +#+        */
+/*   By: bsausage <bsausage@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/19 11:48:50 by bsausage          #+#    #+#             */
-/*   Updated: 2020/10/16 19:10:16 by Alkor            ###   ########.fr       */
+/*   Updated: 2020/10/17 11:29:36 by bsausage         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,8 +51,7 @@ int		parse_links_line(t_lem_in *lemin)
 	lemin->adjacency_matrix[room_1][room_2] = 1;
 	lemin->adjacency_matrix[room_2][room_1] = 1;
 	ft_memdel((void**)&lemin->line);
-	connect_node(lemin, lemin->array_of_rooms[room_1],\
-				lemin->array_of_rooms[room_2]);
+	connect_node(lemin->array_of_rooms[room_1], lemin->array_of_rooms[room_2]);
 	return (room_1 < 0 || room_1 < 0 ? 0 : 1);
 }
 

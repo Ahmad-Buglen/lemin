@@ -1,0 +1,202 @@
+Norme: source/lemin.c
+Error: global scope bad aligned
+Error: 36 functions in the file
+Error (line 13): multiple empty lines
+Error (line 44): Space before function name
+Error (line 44): declarations in connect_add are bad aligned
+Error (line 51): line has 82 characters
+Error (line 58): line has 88 characters
+Error (line 60): bad indentation
+Error (line 60): C++ comment
+Error (line 63): C++ comment
+Error (line 72): declarations must be followed by one empty line in connect_del
+Error (line 72): Space before function name
+Error (line 75): bad indentation
+Error (line 75): must begin only by tabulations
+Error (line 75): spaces at the end of line
+Error (line 79, col 3): missing space after break
+Error (line 90): comment not well placed
+Error (line 90): comment not well formatted
+Error (line 92): C++ comment
+Error (line 95): Space before function name
+Error (line 95): C++ comment
+Error (line 103): Space before function name
+Error (line 108): bad indentation
+Error (line 109, col 18): space after cast
+Error (line 109, col 33): space after cast
+Error (line 113): declarations in routes_copy are bad aligned
+Error (line 113): Space before function name
+Error (line 119): bad indentation
+Error (line 146): Space before function name
+Error (line 152): C++ comment
+Error (line 152): bad indentation
+Error (line 153): bad indentation
+Error (line 153): C++ comment
+Error (line 154): C++ comment
+Error (line 165): Space before function name
+Error (line 174): bad indentation
+Error (line 174): C++ comment
+Error (line 184): Space before function name
+Error (line 206): spaces at the end of line
+Error (line 211): spaces at the end of line
+Error (line 224): line has 105 characters
+Error (line 225): line has 104 characters
+Error (line 238): Space before function name
+Error (line 247): Space before function name
+Error (line 251): C++ comment
+Error (line 252): C++ comment
+Error (line 258): Space before function name
+Error (line 269): Space before function name
+Error (line 269): bad spacing after fifo_include
+Error (line 279): bad indentation
+Error (line 279): spaces at the end of line
+Error (line 280): bad spacing before lemin_init
+Error (line 280): Space before function name
+Error (line 286): C++ comment
+Error (line 286): line has 113 characters
+Error (line 286): missing newline after if
+Error (line 288): C++ comment
+Error (line 288): missing newline after if
+Error (line 288): line has 131 characters
+Error (line 289): bad indentation
+Error (line 290): line has 93 characters
+Error (line 291): bad indentation
+Error (line 341): line has 123 characters
+Error (line 341): C++ comment
+Error (line 342): spaces at the end of line
+Error (line 342): bad indentation
+Error (line 344): Space before function name
+Error (line 349): line has 82 characters
+Error (line 349): bad indentation
+Error (line 350): bad indentation
+Error (line 351): bad indentation
+Error (line 352): bad indentation
+Error (line 353): bad indentation
+Error (line 354): line has 83 characters
+Error (line 354): bad indentation
+Error (line 355): bad indentation
+Error (line 356): bad indentation
+Error (line 357): bad indentation
+Error (line 360): Space before function name
+Error (line 360): declarations in dublicate_map2 are bad aligned
+Error (line 363, col 4): bad spacing
+Error (line 370): Empty line
+Error (line 371, col 19): space after cast
+Error (line 371, col 38): space after cast
+Error (line 372): C++ comment
+Error (line 373): C++ comment
+Error (line 379): Space before function name
+Error (line 379): declarations must be followed by one empty line in recur_route
+Error (line 379): function recur_route has 26 lines
+Error (line 382): spaces at the end of line
+Error (line 384): Empty line
+Error (line 385): C++ comment
+Error (line 388): C++ comment
+Error (line 388): bad indentation
+Error (line 390): C++ comment
+Error (line 391): Empty line
+Error (line 398): line has 111 characters
+Error (line 401): line has 115 characters
+Error (line 403): bad indentation
+Error (line 403): spaces at the end of line
+Error (line 409): C++ comment
+Error (line 409): bad spacing after dijkstra_search
+Error (line 409, col 20): space after (
+Error (line 419): bad indentation
+Error (line 421): bad indentation
+Error (line 422): bad indentation
+Error (line 423): bad indentation
+Error (line 424): bad indentation
+Error (line 425): bad indentation
+Error (line 426): bad indentation
+Error (line 427): bad indentation
+Error (line 428): bad indentation
+Error (line 429): bad indentation
+Error (line 430): bad indentation
+Error (line 436): multiple empty lines
+Error (line 437): Space before function name
+Error (line 437): bad spacing before bhandari_search
+Error (line 437): bad spacing after bhandari_search
+Error (line 439): missing newline after while
+Error (line 439): C++ comment
+Error (line 439): spaces at the end of line
+Error (line 442): C++ comment
+Error (line 442, col 37): bad character after ;
+Error (line 444, col 3): missing space after break
+Error (line 446): C++ comment
+Error (line 453, col 4): missing space after break
+Error (line 460): C++ comment
+Error (line 461): bad spacing before routes_search
+Error (line 463): C++ comment
+Error (line 463): bad indentation
+Error (line 464): C++ comment
+Error (line 464): bad indentation
+Error (line 465): Empty line
+Error (line 467): C++ comment
+Error (line 468): C++ comment
+Error (line 469): C++ comment
+Error (line 470): C++ comment
+Error (line 471): C++ comment
+Error (line 472): C++ comment
+Error (line 473): C++ comment
+Error (line 474): C++ comment
+Error (line 475): C++ comment
+Error (line 476): C++ comment
+Error (line 477): C++ comment
+Error (line 478): C++ comment
+Error (line 479): C++ comment
+Error (line 480): C++ comment
+Error (line 481): C++ comment
+Error (line 482): C++ comment
+Error (line 483): C++ comment
+Error (line 486): function unique_search has 28 lines
+Error (line 486): Space before function name
+Error (line 518): function routes_complete has 33 lines
+Error (line 518): declarations must be followed by one empty line in routes_complete
+Error (line 518): bad spacing after routes_complete
+Error (line 518): Space before function name
+Error (line 522): C++ comment
+Error (line 523): Empty line
+Error (line 534): bad indentation
+Error (line 534): C++ comment
+Error (line 535): C++ comment
+Error (line 535): bad indentation
+Error (line 536): C++ comment
+Error (line 536): bad indentation
+Error (line 537): C++ comment
+Error (line 537): bad indentation
+Error (line 538): bad indentation
+Error (line 538): C++ comment
+Error (line 541): C++ comment
+Error (line 541): bad indentation
+Error (line 542): C++ comment
+Error (line 542): bad indentation
+Error (line 549): C++ comment
+Error (line 550): Empty line
+Error (line 554): Space before function name
+Error (line 554): bad spacing before duplicate_exclusion
+Error (line 554): function duplicate_exclusion has 31 lines
+Error (line 580): spaces at the end of line
+Error (line 580): missing newline after if
+Error (line 582, col 5): missing space after break
+Error (line 589): declarations in route_sort are bad aligned
+Error (line 589): bad spacing after route_sort
+Error (line 612): declarations must be followed by one empty line in recur_search
+Error (line 612): bad spacing before recur_search
+Error (line 612): bad spacing after recur_search
+Error (line 612): Space before function name
+Error (line 618): C++ comment
+Error (line 619): spaces at the end of line
+Error (line 620): C++ comment
+Error (line 622): spaces at the end of line
+Error (line 623): C++ comment
+Error (line 626): multiple empty lines
+Error (line 627): bad spacing before data_parsing
+Error (line 632): must begin only by tabulations
+Error (line 632): bad indentation
+Error (line 632): spaces at the end of line
+Error (line 632, col 47): bad character after ;
+Error (line 634): bad indentation
+Error (line 634): must begin only by tabulations
+Error (line 644): Space before function name
+Error (line 644): missing void in function main

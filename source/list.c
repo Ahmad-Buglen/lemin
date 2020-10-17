@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   list.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: Alkor <Alkor@student.42.fr>                +#+  +:+       +#+        */
+/*   By: bsausage <bsausage@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/13 00:49:42 by bsausage          #+#    #+#             */
-/*   Updated: 2020/10/16 19:26:18 by Alkor            ###   ########.fr       */
+/*   Updated: 2020/10/17 11:54:04 by bsausage         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ t_room		*room_push_back(t_room **begin, char *name,\
 	{
 		if (ft_strequ(room->name, name) ||
 			(room->coords.x == coords.x && room->coords.y == coords.y))
-		close_program(lemin, "duplacate of name or coords");
+			close_program(lemin, "duplacate of name or coords");
 		room = room->next;
 	}
 	if (ft_strequ(room->name, name) ||

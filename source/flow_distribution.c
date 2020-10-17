@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   flow_distribution.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: Alkor <Alkor@student.42.fr>                +#+  +:+       +#+        */
+/*   By: bsausage <bsausage@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/10 16:12:17 by bsausage          #+#    #+#             */
-/*   Updated: 2020/10/16 10:32:04 by Alkor            ###   ########.fr       */
+/*   Updated: 2020/10/17 11:50:59 by bsausage         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,24 +27,23 @@ void			create_path(t_lem_in *lemin, t_path **path, t_route *route)
 	}
 }
 
-void			init_array_of_ants(t_lem_in *lemin)
-{
-	lemin->array_of_ants = (t_path**)ft_memalloc(sizeof(t_path*) *\
-							lemin->num_of_ants);
-}
-
 void			init_path_array(t_lem_in *lemin)
 {
 	int i;
 
 	i = 0;
-	if (!lemin->route_count)
+	if (!lemin->route_count || (lemin->routes && !lemin->routes[0]))
+	{
+		lemin->line_num = 0;
 		close_program(lemin, "no ways for ants");
+	}
 	if (!(lemin->paths = (t_path**)ft_memalloc(sizeof(t_path*) *\
 							(lemin->route_count + 1))))
 		close_program(lemin, "malloc error");
 	while (i <= lemin->route_count)
 		lemin->paths[i++] = NULL;
+	lemin->array_of_ants = (t_path**)ft_memalloc(sizeof(t_path*) *\
+							lemin->num_of_ants);
 }
 
 static void		cycle_body_1(t_lem_in *lemin, int p, int *i, int *diff)
@@ -65,9 +64,7 @@ static void		cycle_body_2(t_lem_in *lemin, int p, int *i)
 
 	k = 0;
 	while (k <= p && *i < lemin->num_of_ants)
-	{
 		lemin->array_of_ants[(*i)++] = lemin->paths[k++];
-	}
 }
 
 void			flow_distribution(t_lem_in *lemin)
@@ -75,7 +72,6 @@ void			flow_distribution(t_lem_in *lemin)
 	int		i;
 	int		p;
 	int		diff;
-	int		k;
 
 	i = 0;
 	create_path(lemin, &lemin->paths[0], lemin->routes[0]);

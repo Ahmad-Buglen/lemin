@@ -132,7 +132,7 @@ void				lemin_routes_destroy(t_lem_in *lemin);
 void				routes_destroy(t_route **routes);
 void				init_min(t_lem_in *lemin);
 void 				init_middle(t_lem_in *lemin);
-void 				connect_node(t_lem_in *lemin, t_room *room1, t_room *room2);
+void 				connect_node(t_room *room1, t_room *room2);		//lemin arg deleted
 void 				node_add(t_lem_in *lemin, char *name, t_coords coordinates, int type);
 
 int					**init_adjacency_matrix(int n);

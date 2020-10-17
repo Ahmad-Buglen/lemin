@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free_functions.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: Alkor <Alkor@student.42.fr>                +#+  +:+       +#+        */
+/*   By: bsausage <bsausage@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/17 12:28:40 by bsausage          #+#    #+#             */
-/*   Updated: 2020/10/16 19:32:36 by Alkor            ###   ########.fr       */
+/*   Updated: 2020/10/17 11:52:05 by bsausage         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,14 +103,16 @@ void		free_all(t_lem_in *lemin)
 
 void		close_program(t_lem_in *lemin, char *error_msg)
 {
-	
-	if (!errno)
+
+	if (!errno && lemin->line_num)
 	{
 		ft_putstr_fd("Error (line ", 1);
 		ft_putnbr_fd(lemin->line_num, 1);
 		ft_putstr_fd("): ", 1);
 		ft_putendl_fd(error_msg, 1);
 	}
+	else if (!errno)
+		ft_putendl_fd(error_msg, 1);
 	else
 		perror("Error");
 	exit(1);

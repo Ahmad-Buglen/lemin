@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   print_solution.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: Alkor <Alkor@student.42.fr>                +#+  +:+       +#+        */
+/*   By: bsausage <bsausage@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/10 10:47:12 by bsausage          #+#    #+#             */
-/*   Updated: 2020/10/16 10:21:52 by Alkor            ###   ########.fr       */
+/*   Updated: 2020/10/17 11:51:28 by bsausage         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,8 @@ void			start_end_solution(t_lem_in *lemin)
 					lemin->end->name, lemin->end_index);
 	add_elem_to_path(lemin, &lemin->paths[0],\
 					lemin->start->name, lemin->start_index);
-	init_array_of_ants(lemin);
+	lemin->array_of_ants = (t_path**)ft_memalloc(sizeof(t_path*) *\
+							lemin->num_of_ants);
 	while (i < lemin->num_of_ants)
 		lemin->array_of_ants[i++] = lemin->paths[0];
 }

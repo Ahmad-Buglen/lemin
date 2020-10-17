@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rooms.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: Alkor <Alkor@student.42.fr>                +#+  +:+       +#+        */
+/*   By: bsausage <bsausage@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/19 11:45:58 by bsausage          #+#    #+#             */
-/*   Updated: 2020/10/16 19:09:46 by Alkor            ###   ########.fr       */
+/*   Updated: 2020/10/17 11:55:44 by bsausage         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,6 @@ static int	check_ptr(char *end)
 		return (1);
 	return (0);
 }
-
 
 void		check_room_name_coords_line(char **name, t_coords *coords,\
 									t_lem_in *lemin)
@@ -124,20 +123,4 @@ void		get_rooms(t_lem_in *lemin)
 	}
 	if (gnl <= 0)
 		close_program(lemin, "no link part in the file");
-}
-
-int			find_room_index(t_lem_in *lemin, char *room_name)
-{
-	t_room				*room_list;
-	unsigned int		hash_index;
-
-	hash_index = calc_hash_index(room_name);
-	room_list = lemin->hash_map[hash_index];
-	while (room_list)
-	{
-		if (ft_strequ(room_list->name, room_name))
-			return (room_list->index);
-		room_list = room_list->hash_next;
-	}
-	return (-1);
 }
