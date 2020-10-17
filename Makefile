@@ -33,6 +33,8 @@ SOURCES_LIST = list.c hash_map.c init_values.c \
 free_functions.c rooms.c links.c other_parsing_funcs.c \
 get_next_line.c init_test.c print_ant_farm.c print_solution.c \
 flow_distribution.c helper_functions.c ft_strtol.c \
+route_map.c connect_room.c recursive_search.c bhandari_search.c \
+dijkstra_search.c routes_sift.c route_flow.c \
 main.c
 
 SOURCES = $(addprefix $(SOURCES_DIRECTORY), $(SOURCES_LIST))

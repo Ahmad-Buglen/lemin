@@ -17,9 +17,6 @@
 # include "../libft/libft.h"
 # include <stdio.h>
 
-// # define START_A 1
-// # define STANDART 2
-// # define END_A 3
 # define VISIT 7
 # define NO_VISIT 0
 # define BIG_INT 1111111111
@@ -121,19 +118,62 @@ typedef struct      s_lem_in
 	t_route			**routes;
 	int				route_count;
 	t_bool			*route;
-	t_route			*buff;
 }					t_lem_in;
 
 /*
-**	init/malloc functions
+**	route  manipulations
 */
 
-void				lemin_routes_destroy(t_lem_in *lemin);
+t_route				*route_copy(t_route *const route);
+void				route_put(t_lem_in *const lemin, t_route *const route);
+void				route_clean(t_lem_in *const lemin);
+void				route_mark(t_lem_in *const lemin, t_route *const route);
+t_bool				route_check(t_lem_in *const lemin, t_route *const route);
+
+/*
+**	init and destroy 
+*/
+
+void				connect_add(t_room *const node1, t_room *const node2);
+void				connect_del(t_room *const node1, t_room *const node2);
+void				connect_node(t_room *const room1, t_room *const room2);
+void				lemin_routes_destroy(t_lem_in *const lemin);
 void				routes_destroy(t_route **routes);
-void				init_min(t_lem_in *lemin);
-void 				init_middle(t_lem_in *lemin);
-void 				connect_node(t_room *room1, t_room *room2);		//lemin arg deleted
-void 				node_add(t_lem_in *lemin, char *name, t_coords coordinates, int type);
+void				ft_exit_lemin(char *const message);
+
+/*
+**	recursive search
+*/
+
+int					node_include(t_route *const route, const int index);
+int					*dublicate_map(t_lem_in *const lemin);
+int					*copy_map(int *const map_src, const int node_len);
+void				recur_route(t_route *const route, t_room *const room,
+								int *const map, t_lem_in *const lemin);
+void				recur_search(t_lem_in *const lemin);
+void				route_sort(t_lem_in *const lemin);
+void				routes_complete(t_route **const routes,
+								t_lem_in *const lemin, const int number);
+int					unique_search(t_route *const *const routes, t_lem_in *const lemin);
+
+/*
+**	bhandari search
+*/
+
+int					fifo_include(t_room *const *const fifo, t_room *const node);
+void				dijkstra_setup(t_lem_in *const lemin);
+void				dijkstra_search(t_room **const fifo, int i, int n);
+void				bhandari_search(t_lem_in *const lemin);
+int					route_flow(t_lem_in *const lemin, const int route_count);
+int					route_steps(t_lem_in *const lemin);
+void				route_inverse(t_route *const route);
+int					connection_include(t_room *const node1, t_room *const node2);
+void				connection_restore(t_room *const node1, t_room *const node2);
+void				route_recovery(t_lem_in *const lemin);
+
+/*
+**	init/malloc
+*/
 
 int					**init_adjacency_matrix(int n);
 t_room				**init_array_of_rooms(t_lem_in *lemin);
