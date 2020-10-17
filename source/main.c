@@ -3,21 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dphyliss <dphyliss@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bsausage <bsausage@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/13 00:41:56 by bsausage          #+#    #+#             */
-/*   Updated: 2020/10/17 16:54:25 by dphyliss         ###   ########.fr       */
+/*   Updated: 2020/10/17 17:10:14 by bsausage         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include "lemin.h"
-
-void			ft_exit_lemin(char *const message)
-{
-	ft_putendl(message);
-	exit(1);
-}
 
 void			lemin_init(t_lem_in *const lemin)
 {

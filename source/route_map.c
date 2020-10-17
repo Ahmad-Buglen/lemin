@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   route_map.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dphyliss <dphyliss@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bsausage <bsausage@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/17 16:03:52 by dphyliss          #+#    #+#             */
-/*   Updated: 2020/10/17 16:20:59 by dphyliss         ###   ########.fr       */
+/*   Updated: 2020/10/17 17:12:44 by bsausage         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lemin.h"
 
-t_route			*route_copy(t_route *const route)
+t_route		*route_copy(t_route *const route)
 {
 	t_route *copy;
 
@@ -29,7 +29,7 @@ void	route_put(t_lem_in *const lemin, t_route *const route)
 	route->unique += 1;
 }
 
-void	route_clean(t_lem_in *const lemin)
+void		route_clean(t_lem_in *const lemin)
 {
 	int	i;
 
@@ -38,7 +38,7 @@ void	route_clean(t_lem_in *const lemin)
 		lemin->route[i] = false;
 }
 
-void	route_mark(t_lem_in *const lemin, t_route *const route)
+void		route_mark(t_lem_in *const lemin, t_route *const route)
 {
 	int	i;
 
@@ -47,7 +47,7 @@ void	route_mark(t_lem_in *const lemin, t_route *const route)
 		lemin->route[route->elem[i]->index] = true;
 }
 
-t_bool	route_check(t_lem_in *const lemin, t_route *const route)
+t_bool		route_check(t_lem_in *const lemin, t_route *const route)
 {
 	int	i;
 

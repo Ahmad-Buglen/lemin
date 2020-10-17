@@ -6,13 +6,12 @@
 /*   By: bsausage <bsausage@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/17 12:28:40 by bsausage          #+#    #+#             */
-/*   Updated: 2020/10/17 11:52:05 by bsausage         ###   ########.fr       */
+/*   Updated: 2020/10/17 17:11:55 by bsausage         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include "lemin.h"
-#include <errno.h>
 
 void		free_adjacency_matrix(t_lem_in *lemin)
 {
@@ -99,21 +98,4 @@ void		free_all(t_lem_in *lemin)
 	lemin_routes_destroy(lemin);
 	ft_memdel((void**)&lemin->routes);
 	ft_memdel((void**)&lemin->route);
-}
-
-void		close_program(t_lem_in *lemin, char *error_msg)
-{
-
-	if (!errno && lemin->line_num)
-	{
-		ft_putstr_fd("Error (line ", 1);
-		ft_putnbr_fd(lemin->line_num, 1);
-		ft_putstr_fd("): ", 1);
-		ft_putendl_fd(error_msg, 1);
-	}
-	else if (!errno)
-		ft_putendl_fd(error_msg, 1);
-	else
-		perror("Error");
-	exit(1);
 }

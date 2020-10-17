@@ -31,8 +31,8 @@ HEADERS = $(addprefix $(HEADERS_DIRECTORY), $(HEADERS_LIST))
 SOURCES_DIRECTORY = source/
 SOURCES_LIST = list.c hash_map.c init_values.c \
 free_functions.c rooms.c links.c other_parsing_funcs.c \
-get_next_line.c init_test.c print_ant_farm.c print_solution.c \
-flow_distribution.c helper_functions.c ft_strtol.c \
+get_next_line.c print_ant_farm.c print_solution.c \
+flow_distribution.c ft_strtol.c close_program.c\
 route_map.c connect_room.c recursive_search.c bhandari_search.c \
 dijkstra_search.c routes_sift.c route_flow.c \
 main.c
