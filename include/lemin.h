@@ -5,15 +5,13 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: dphyliss <dphyliss@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/10/17 18:14:54 by dphyliss          #+#    #+#             */
-/*   Updated: 2020/10/17 18:14:54 by dphyliss         ###   ########.fr       */
+/*   Created: 2020/10/17 18:27:37 by bsausage          #+#    #+#             */
+/*   Updated: 2020/10/17 20:01:42 by dphyliss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LEMIN_H
 # define LEMIN_H
-
-# include <stdio.h>
 
 # define VISIT		7
 # define NO_VISIT	0
@@ -120,7 +118,7 @@ void				route_mark(t_lem_in *const lemin, t_route *const route);
 t_bool				route_check(t_lem_in *const lemin, t_route *const route);
 
 /*
-**	init and destroy 
+**	init and destroy
 */
 
 void				connect_add(t_room *const node1, t_room *const node2);
