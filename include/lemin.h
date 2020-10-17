@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: bsausage <bsausage@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/10/17 17:17:25 by bsausage          #+#    #+#             */
-/*   Updated: 2020/10/17 17:17:25 by bsausage         ###   ########.fr       */
+/*   Created: 2020/10/17 18:27:37 by bsausage          #+#    #+#             */
+/*   Updated: 2020/10/17 18:28:36 by bsausage         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,7 +120,7 @@ void				route_mark(t_lem_in *const lemin, t_route *const route);
 t_bool				route_check(t_lem_in *const lemin, t_route *const route);
 
 /*
-**	init and destroy 
+**	init and destroy
 */
 
 void				connect_add(t_room *const node1, t_room *const node2);
