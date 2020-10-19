@@ -6,11 +6,12 @@
 /*   By: dphyliss <dphyliss@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/17 16:14:34 by dphyliss          #+#    #+#             */
-/*   Updated: 2020/10/17 16:25:21 by dphyliss         ###   ########.fr       */
+/*   Updated: 2020/10/19 15:43:11 by dphyliss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lemin.h"
+#include "libft.h"
 
 void			route_inverse(t_route *const route)
 {
@@ -68,7 +69,7 @@ void			bhandari_search(t_lem_in *const lemin)
 			lemin->routes[lemin->route_count++] = route_copy(lemin->end->route);
 			if (!route_steps(lemin))
 			{
-				lemin->route_count--;
+				ft_memdel((void **)&lemin->routes[--lemin->route_count]);
 				break ;
 			}
 			route_mark(lemin, lemin->end->route);

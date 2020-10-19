@@ -6,7 +6,7 @@
 /*   By: dphyliss <dphyliss@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/13 00:41:56 by bsausage          #+#    #+#             */
-/*   Updated: 2020/10/17 19:51:46 by dphyliss         ###   ########.fr       */
+/*   Updated: 2020/10/19 15:28:19 by dphyliss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void			lemin_init(t_lem_in *const lemin)
 	lemin->fifo[0] = lemin->start;
 	ft_bzero(&route, sizeof(t_route));
 	route.elem[route.size++] = lemin->fifo[0];
-	lemin->fifo[0]->route = route_copy(&route);
+	lemin->start->route = route_copy(&route);
 }
 
 void			data_parsing(t_lem_in *const lemin)
