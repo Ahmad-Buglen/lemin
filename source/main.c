@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dphyliss <dphyliss@student.42.fr>          +#+  +:+       +#+        */
+/*   By: Alkor <Alkor@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/13 00:41:56 by bsausage          #+#    #+#             */
-/*   Updated: 2020/10/19 15:28:19 by dphyliss         ###   ########.fr       */
+/*   Updated: 2020/10/20 09:45:02 by Alkor            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ int				main(void)
 	lemin.end_index = -1;
 	data_parsing(&lemin);
 	if (lemin.adjacency_matrix[lemin.start_index][lemin.end_index])
-		start_end_solution(&lemin);
+		print_start_end_solution(&lemin);
 	else
 	{
 		lemin_init(&lemin);
@@ -71,9 +71,9 @@ int				main(void)
 			bhandari_search(&lemin);
 		init_path_array(&lemin);
 		flow_distribution(&lemin);
+		print_ant_farm(&lemin);
+		print_solution(&lemin);
 	}
-	print_ant_farm(&lemin);
-	print_solution(&lemin);
 	free_all(&lemin);
 	return (1);
 }

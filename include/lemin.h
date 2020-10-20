@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lemin.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dphyliss <dphyliss@student.42.fr>          +#+  +:+       +#+        */
+/*   By: Alkor <Alkor@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/17 18:27:37 by bsausage          #+#    #+#             */
-/*   Updated: 2020/10/17 20:08:51 by dphyliss         ###   ########.fr       */
+/*   Updated: 2020/10/20 09:46:03 by Alkor            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -219,7 +219,7 @@ void				close_program(t_lem_in *lemin, char *error_msg);
 void				print_ant_farm(t_lem_in *lemin);
 void				print_solution(t_lem_in *lemin);
 void				flow_distribution(t_lem_in *lemin);
-void				start_end_solution(t_lem_in *lemin);
+void				print_start_end_solution(t_lem_in *lemin);
 
 /*
 **	helper functions

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   flow_distribution.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bsausage <bsausage@student.42.fr>          +#+  +:+       +#+        */
+/*   By: Alkor <Alkor@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/10 16:12:17 by bsausage          #+#    #+#             */
-/*   Updated: 2020/10/17 11:50:59 by bsausage         ###   ########.fr       */
+/*   Updated: 2020/10/20 09:30:12 by Alkor            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,10 +40,9 @@ void			init_path_array(t_lem_in *lemin)
 	if (!(lemin->paths = (t_path**)ft_memalloc(sizeof(t_path*) *\
 							(lemin->route_count + 1))))
 		close_program(lemin, "malloc error");
-	while (i <= lemin->route_count)
-		lemin->paths[i++] = NULL;
-	lemin->array_of_ants = (t_path**)ft_memalloc(sizeof(t_path*) *\
-							lemin->num_of_ants);
+	if (!(lemin->array_of_ants = (t_path**)ft_memalloc(sizeof(t_path*) *\
+							lemin->num_of_ants)))
+		close_program(lemin, "malloc error");
 }
 
 static void		cycle_body_1(t_lem_in *lemin, int p, int *i, int *diff)

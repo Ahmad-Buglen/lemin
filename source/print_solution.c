@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   print_solution.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bsausage <bsausage@student.42.fr>          +#+  +:+       +#+        */
+/*   By: Alkor <Alkor@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/10 10:47:12 by bsausage          #+#    #+#             */
-/*   Updated: 2020/10/17 11:51:28 by bsausage         ###   ########.fr       */
+/*   Updated: 2020/10/20 09:45:20 by Alkor            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,19 +53,22 @@ void			print_solution(t_lem_in *lemin)
 	}
 }
 
-void			start_end_solution(t_lem_in *lemin)
+void			print_start_end_solution(t_lem_in *lemin)
 {
 	int		i;
 
-	i = 0;
-	lemin->route_count = 1;
-	init_path_array(lemin);
-	add_elem_to_path(lemin, &lemin->paths[0],\
-					lemin->end->name, lemin->end_index);
-	add_elem_to_path(lemin, &lemin->paths[0],\
-					lemin->start->name, lemin->start_index);
-	lemin->array_of_ants = (t_path**)ft_memalloc(sizeof(t_path*) *\
-							lemin->num_of_ants);
+	i = 1;
 	while (i < lemin->num_of_ants)
-		lemin->array_of_ants[i++] = lemin->paths[0];
+	{
+		write(1, "L", 1);
+		ft_putnbr(i++);
+		write(1, "-", 1);
+		ft_putstr(lemin->end->name);
+		write(1, " ", 1);
+	}
+	write(1, "L", 1);
+	ft_putnbr(i);
+	write(1, "-", 1);
+	ft_putstr(lemin->end->name);
+	write(1, "\n", 1);
 }
