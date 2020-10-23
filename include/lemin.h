@@ -6,7 +6,7 @@
 /*   By: Alkor <Alkor@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/17 18:27:37 by bsausage          #+#    #+#             */
-/*   Updated: 2020/10/20 09:46:03 by Alkor            ###   ########.fr       */
+/*   Updated: 2020/10/23 11:01:34 by Alkor            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ typedef struct		s_route
 	struct s_room	*elem[ROUTE_SIZE];
 	int				weight;
 	int				unique;
+	int				ants;
 }					t_route;
 
 typedef enum
@@ -64,6 +65,7 @@ typedef struct		s_room
 	int				type;
 	int				con_size;
 	int				weight;
+	int				ant;
 	t_route			*route;
 	struct s_room	*next;
 	struct s_room	*hash_next;
@@ -109,6 +111,7 @@ typedef struct		s_lem_in
 	t_route			**routes;
 	int				route_count;
 	t_bool			*route;
+	int				p;
 }					t_lem_in;
 
 t_route				*route_copy(t_route *const route);
@@ -219,6 +222,8 @@ void				close_program(t_lem_in *lemin, char *error_msg);
 void				print_ant_farm(t_lem_in *lemin);
 void				print_solution(t_lem_in *lemin);
 void				flow_distribution(t_lem_in *lemin);
+void				get_num_of_paths(t_lem_in *lemin);
+void				ants_distribution(t_lem_in *lemin);
 void				print_start_end_solution(t_lem_in *lemin);
 
 /*

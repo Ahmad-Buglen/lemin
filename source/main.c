@@ -6,7 +6,7 @@
 /*   By: Alkor <Alkor@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/13 00:41:56 by bsausage          #+#    #+#             */
-/*   Updated: 2020/10/20 09:45:02 by Alkor            ###   ########.fr       */
+/*   Updated: 2020/10/23 11:02:45 by Alkor            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,8 +69,8 @@ int				main(void)
 			recur_search(&lemin);
 		else
 			bhandari_search(&lemin);
-		init_path_array(&lemin);
-		flow_distribution(&lemin);
+		get_num_of_paths(&lemin);
+		ants_distribution(&lemin);
 		print_ant_farm(&lemin);
 		print_solution(&lemin);
 	}
