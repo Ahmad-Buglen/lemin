@@ -6,7 +6,7 @@
 /*   By: bsausage <bsausage@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/10 10:47:12 by bsausage          #+#    #+#             */
-/*   Updated: 2020/10/24 13:44:25 by bsausage         ###   ########.fr       */
+/*   Updated: 2020/10/24 14:39:40 by bsausage         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,14 @@ void			print_start_end_solution(t_lem_in *lemin)
 	int		i;
 
 	i = 1;
+	if (lemin->p_flag)
+	{
+		write(1, "\nPATHS\n", 8);
+		ft_putstr(lemin->start->name);
+		write(1, " -> ", 4);
+		ft_putstr(lemin->end->name);
+		write(1, "\n\n", 2);
+	}
 	while (i <= lemin->num_of_ants)
 	{
 		write(1, "L", 1);
@@ -93,6 +101,8 @@ void			print_solution(t_lem_in *lemin)
 
 	ant = 1;
 	n = 0;
+	if (lemin->p_flag)
+		print_routes(lemin);
 	max_n = lemin->routes[lemin->p - 1]->size - 1;
 	write(1, "\n", 1);
 	while (lemin->end->ant < lemin->num_of_ants)

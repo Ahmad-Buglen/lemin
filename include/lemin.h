@@ -6,7 +6,7 @@
 /*   By: bsausage <bsausage@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/17 18:27:37 by bsausage          #+#    #+#             */
-/*   Updated: 2020/10/24 10:47:17 by bsausage         ###   ########.fr       */
+/*   Updated: 2020/10/24 14:14:43 by bsausage         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,6 +110,7 @@ typedef struct		s_lem_in
 	int				route_count;
 	t_bool			*route;
 	int				p;
+	int				p_flag;
 }					t_lem_in;
 
 t_route				*route_copy(t_route *const route);

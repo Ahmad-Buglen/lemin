@@ -6,7 +6,7 @@
 /*   By: bsausage <bsausage@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/17 11:36:51 by bsausage          #+#    #+#             */
-/*   Updated: 2020/10/24 13:34:30 by bsausage         ###   ########.fr       */
+/*   Updated: 2020/10/24 14:41:29 by bsausage         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,31 +82,6 @@ void	print_array_of_rooms(t_lem_in *lemin)
 				n, lemin->array_of_rooms[n]->name, lemin->array_of_rooms[n]->index);
 		n++;
 	}		
-}
-
-void	print_route(t_route *route)
-{
-	int i;
-
-	i = -1;
-	while (++i < route->size)
-	{
-		ft_putstr(route->elem[i]->name);
-		if (i == route->size - 1)
-			write(1, "\n", 1);
-		else
-			write(1, " -> ", 4);
-	}
-}
-
-void	print_routes(t_lem_in *lemin)
-{
-	int i;
-	
-	i = -1;
-	write(1, "\nPATHS\n", 8);
-	while (++i < lemin->route_count)
-		print_route(lemin->routes[i]);
 }
 
 void		check_route(t_lem_in *lemin, t_route *route)

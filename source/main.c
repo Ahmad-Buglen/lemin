@@ -6,7 +6,7 @@
 /*   By: bsausage <bsausage@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/13 00:41:56 by bsausage          #+#    #+#             */
-/*   Updated: 2020/10/24 13:51:35 by bsausage         ###   ########.fr       */
+/*   Updated: 2020/10/24 14:34:55 by bsausage         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,11 +51,25 @@ void			data_parsing(t_lem_in *const lemin)
 		ft_exit_lemin("start or/and end room is/are without links");
 }
 
-int				main(void)
+void			parse_flags(t_lem_in *lemin, int argc, char **argv)
+{
+	if (argc == 2 && ft_strequ("-p", argv[1]))
+		lemin->p_flag = 1;
+	else
+	{
+		write(2, "Usage:\n", 8);
+		write(2, "\t./lem-in [-p] < map\n", 22);
+		exit(1);
+	}
+}
+
+int				main(int argc, char **argv)
 {
 	t_lem_in	lemin;
 
 	ft_bzero(&lemin, sizeof(lemin));
+	if (argc > 1)
+		parse_flags(&lemin, argc, argv);
 	data_parsing(&lemin);
 	if (lemin.adjacency_matrix[lemin.start_index][lemin.end_index])
 	{

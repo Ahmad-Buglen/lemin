@@ -9,7 +9,7 @@
             "request": "launch",
             "name": "Debug",
             "program": "${workspaceFolder}/lem-in",
-            "args": ["< flow-one"],
+            "args": ["-p"],
             "cwd": "${workspaceFolder}"
         }
     ]
