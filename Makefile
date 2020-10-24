@@ -35,7 +35,7 @@ get_next_line.c print_ant_farm.c print_solution.c \
 flow_distribution.c ft_strtol.c close_program.c\
 route_map.c connect_room.c recursive_search.c bhandari_search.c \
 dijkstra_search.c routes_sift.c route_flow.c \
-main.c helper_functions.c
+main.c
 
 SOURCES = $(addprefix $(SOURCES_DIRECTORY), $(SOURCES_LIST))
 
