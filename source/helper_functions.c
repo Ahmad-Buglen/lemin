@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   helper_functions.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dphyliss <dphyliss@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bsausage <bsausage@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/17 11:36:51 by bsausage          #+#    #+#             */
-/*   Updated: 2020/10/17 20:08:02 by dphyliss         ###   ########.fr       */
+/*   Updated: 2020/10/24 13:34:30 by bsausage         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,8 +90,13 @@ void	print_route(t_route *route)
 
 	i = -1;
 	while (++i < route->size)
-		printf("%s ", route->elem[i]->name);
-	printf(" size - %d, weight - %d, unique - %d;\n", route->size, route->weight, route->unique);
+	{
+		ft_putstr(route->elem[i]->name);
+		if (i == route->size - 1)
+			write(1, "\n", 1);
+		else
+			write(1, " -> ", 4);
+	}
 }
 
 void	print_routes(t_lem_in *lemin)
@@ -99,6 +104,7 @@ void	print_routes(t_lem_in *lemin)
 	int i;
 	
 	i = -1;
+	write(1, "\nPATHS\n", 8);
 	while (++i < lemin->route_count)
 		print_route(lemin->routes[i]);
 }
