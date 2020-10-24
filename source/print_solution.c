@@ -6,66 +6,110 @@
 /*   By: bsausage <bsausage@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/10 10:47:12 by bsausage          #+#    #+#             */
-/*   Updated: 2020/10/17 11:51:28 by bsausage         ###   ########.fr       */
+/*   Updated: 2020/10/24 11:08:55 by bsausage         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lemin.h"
 #include "libft.h"
 
-static void		print_step(t_lem_in *lemin, int i, int *new_line)
+void			print_start_end_solution(t_lem_in *lemin)
 {
-	if (*new_line)
+	int		i;
+
+	i = 1;
+	while (i < lemin->num_of_ants)
+	{
+		write(1, "L", 1);
+		ft_putnbr(i++);
+		write(1, "-", 1);
+		ft_putstr(lemin->end->name);
 		write(1, " ", 1);
-	else
-		*new_line = 1;
+	}
 	write(1, "L", 1);
-	ft_putnbr(i + 1);
+	ft_putnbr(i);
 	write(1, "-", 1);
-	ft_putstr(lemin->array_of_ants[i]->name);
+	ft_putstr(lemin->end->name);
+	write(1, "\n", 1);
+}
+
+void			print_step(t_lem_in *lemin, char *name, int ant)
+{
+	if (lemin->start_flag)
+		lemin->start_flag = 0;
+	else
+		write(1, " ", 1);
+	write(1, "L", 1);
+	ft_putnbr(ant);
+	write(1, "-", 1);
+	ft_putstr(name);
+}
+
+void			check_ant_position(t_lem_in *lemin, t_route *route, int i)
+{
+	if (i < route->size)
+	{
+		if (route->elem[i] == lemin->end && route->elem[i - 1]->ant)
+		{
+			print_step(lemin, lemin->end->name, route->elem[i - 1]->ant);
+			route->elem[i - 1]->ant = 0;
+			lemin->end->ant++;
+		}
+		else if (i == route->size - 2 && route->elem[i]->ant)
+		{
+			print_step(lemin, lemin->end->name, route->elem[i]->ant);
+			route->elem[i]->ant = 0;
+			lemin->end->ant++;
+		}
+		else if (route->elem[i]->ant)
+		{
+			print_step(lemin, route->elem[i + 1]->name, route->elem[i]->ant);
+			route->elem[i + 1]->ant = route->elem[i]->ant;
+			route->elem[i]->ant = 0;
+		}
+	}
+}
+
+void			move_ant(t_route *route, t_lem_in *lemin, int *ant, int n)
+{
+	int		i;
+
+	i = n;
+	while (i > 0)
+	{
+		check_ant_position(lemin, route, i);
+		i--;
+	}
+	if (!i && route->ants && *ant <= lemin->num_of_ants)
+	{
+		print_step(lemin, route->elem[i + 1]->name, *ant);
+		route->elem[i + 1]->ant = *ant;
+		route->ants--;
+		(*ant)++;
+	}
 }
 
 void			print_solution(t_lem_in *lemin)
 {
-	int		i;
-	int		new_line;
+	int		ant;
+	int		p;
+	int		n;
+	int		max_n;
 
+	ant = 1;
+	n = 0;
+	max_n = lemin->routes[lemin->p - 1]->size - 1;
 	write(1, "\n", 1);
-	while (lemin->array_of_ants[lemin->num_of_ants - 1]->next)
+	while (lemin->end->ant < lemin->num_of_ants)
 	{
-		i = 0;
-		new_line = 0;
-		while (i < lemin->num_of_ants)
+		p = 0;
+		lemin->start_flag = 1;
+		while (p < lemin->p && lemin->end->ant < lemin->num_of_ants)
 		{
-			if (lemin->array_of_ants[i] && \
-				lemin->array_of_ants[i]->index != (int)lemin->end_index && \
-				lemin->array_of_ants[i]->next->status == EMPTY)
-			{
-				lemin->array_of_ants[i]->status = EMPTY;
-				lemin->array_of_ants[i] = lemin->array_of_ants[i]->next;
-				if (lemin->array_of_ants[i]->index != (int)lemin->end_index)
-					lemin->array_of_ants[i]->status = NOT_EMPTY;
-				print_step(lemin, i, &new_line);
-			}
-			i++;
+			move_ant(lemin->routes[p], lemin, &ant, n);
+			p++;
 		}
 		write(1, "\n", 1);
+		n += n == max_n ? 0 : 1;
 	}
-}
-
-void			start_end_solution(t_lem_in *lemin)
-{
-	int		i;
-
-	i = 0;
-	lemin->route_count = 1;
-	init_path_array(lemin);
-	add_elem_to_path(lemin, &lemin->paths[0],\
-					lemin->end->name, lemin->end_index);
-	add_elem_to_path(lemin, &lemin->paths[0],\
-					lemin->start->name, lemin->start_index);
-	lemin->array_of_ants = (t_path**)ft_memalloc(sizeof(t_path*) *\
-							lemin->num_of_ants);
-	while (i < lemin->num_of_ants)
-		lemin->array_of_ants[i++] = lemin->paths[0];
 }
