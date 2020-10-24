@@ -6,7 +6,7 @@
 /*   By: bsausage <bsausage@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/17 18:27:37 by bsausage          #+#    #+#             */
-/*   Updated: 2020/10/24 14:14:43 by bsausage         ###   ########.fr       */
+/*   Updated: 2020/10/24 15:05:48 by bsausage         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,14 +71,6 @@ typedef struct		s_room
 	struct s_room	*hash_next;
 	struct s_room	**connections;
 }					t_room;
-
-typedef struct		s_path
-{
-	char			*name;
-	t_status		status;
-	int				index;
-	struct s_path	*next;
-}					t_path;
 
 typedef struct		s_farm
 {
