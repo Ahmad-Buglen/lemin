@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lemin.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: Alkor <Alkor@student.42.fr>                +#+  +:+       +#+        */
+/*   By: bsausage <bsausage@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/17 18:27:37 by bsausage          #+#    #+#             */
-/*   Updated: 2020/10/23 11:01:34 by Alkor            ###   ########.fr       */
+/*   Updated: 2020/10/24 10:47:17 by bsausage         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,8 +95,6 @@ typedef struct		s_lem_in
 	t_room			*hash_map[HASH_SIZE];
 	int				**adjacency_matrix;
 	t_room			**array_of_rooms;
-	t_path			**array_of_ants;
-	t_path			**paths;
 	t_position		position;
 	int				num_of_ants;
 	int				num_of_rooms;
@@ -171,16 +169,10 @@ void				route_recovery(t_lem_in *const lemin);
 
 int					**init_adjacency_matrix(int n);
 t_room				**init_array_of_rooms(t_lem_in *lemin);
-void				init_array_of_ants(t_lem_in *lemin);
-void				init_path_array(t_lem_in *lemin);
 t_room				*room_create_elem(char *name, t_coords coords,
 												t_lem_in *lemin);
 t_room				*room_push_back(t_room **begin, char *name,
 									t_coords coords, t_lem_in *lemin);
-void				create_path(t_lem_in *lemin, t_path **path,
-											t_route *route);
-void				add_elem_to_path(t_lem_in *lemin, t_path **path,
-									char *name, int index);
 void				add_to_hash_map(t_room **begin, t_room *room);
 
 /*

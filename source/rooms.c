@@ -6,7 +6,7 @@
 /*   By: bsausage <bsausage@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/19 11:45:58 by bsausage          #+#    #+#             */
-/*   Updated: 2020/10/17 17:59:08 by bsausage         ###   ########.fr       */
+/*   Updated: 2020/10/24 12:56:34 by bsausage         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ static int	cycle_body(t_lem_in *lemin)
 	if (lemin->line[0] == 'L')
 		close_program(lemin, "line starts with L character");
 	if (lemin->line[0] == '\0')
-		close_program(lemin, "lempty line");
+		close_program(lemin, "Empty line");
 	if (lemin->line[0] != '#')
 	{
 		if (ft_strchr(lemin->line, ' '))
@@ -104,7 +104,7 @@ static int	cycle_body(t_lem_in *lemin)
 				return (0);
 		}
 	}
-	if (lemin->line[0] == '#' && lemin->line[1] == '#')
+	if (lemin->line[0] == '#')
 		check_command_line(lemin);
 	ft_memdel((void**)&lemin->line);
 	return (1);

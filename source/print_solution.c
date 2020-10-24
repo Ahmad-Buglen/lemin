@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   print_solution.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: Alkor <Alkor@student.42.fr>                +#+  +:+       +#+        */
+/*   By: bsausage <bsausage@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/10 10:47:12 by bsausage          #+#    #+#             */
-/*   Updated: 2020/10/23 11:02:05 by Alkor            ###   ########.fr       */
+/*   Updated: 2020/10/24 11:08:55 by bsausage         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void			print_start_end_solution(t_lem_in *lemin)
 	write(1, "\n", 1);
 }
 
-void		print_step(t_lem_in *lemin, char *name, int ant)
+void			print_step(t_lem_in *lemin, char *name, int ant)
 {
 	if (lemin->start_flag)
 		lemin->start_flag = 0;
@@ -45,7 +45,7 @@ void		print_step(t_lem_in *lemin, char *name, int ant)
 	ft_putstr(name);
 }
 
-void		check_ant_position(t_lem_in *lemin, t_route *route, int i)
+void			check_ant_position(t_lem_in *lemin, t_route *route, int i)
 {
 	if (i < route->size)
 	{
@@ -70,10 +70,10 @@ void		check_ant_position(t_lem_in *lemin, t_route *route, int i)
 	}
 }
 
-void		move_ant(t_route *route, t_lem_in *lemin, int *ant, int n)
+void			move_ant(t_route *route, t_lem_in *lemin, int *ant, int n)
 {
 	int		i;
-	
+
 	i = n;
 	while (i > 0)
 	{
@@ -89,7 +89,7 @@ void		move_ant(t_route *route, t_lem_in *lemin, int *ant, int n)
 	}
 }
 
-void		print_solution(t_lem_in *lemin)
+void			print_solution(t_lem_in *lemin)
 {
 	int		ant;
 	int		p;

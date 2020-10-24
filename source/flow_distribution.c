@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   flow_distribution.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: Alkor <Alkor@student.42.fr>                +#+  +:+       +#+        */
+/*   By: bsausage <bsausage@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/10 16:12:17 by bsausage          #+#    #+#             */
-/*   Updated: 2020/10/23 10:55:41 by Alkor            ###   ########.fr       */
+/*   Updated: 2020/10/24 11:09:30 by bsausage         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void		get_num_of_paths(t_lem_in *lemin)
 {
 	int		i;
 	int		diff;
-	
+
 	if (!lemin->route_count || (lemin->routes && !lemin->routes[0]))
 		ft_exit_lemin("no ways for ants");
 	lemin->p = 1;

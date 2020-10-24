@@ -6,7 +6,7 @@
 /*   By: bsausage <bsausage@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/17 12:28:40 by bsausage          #+#    #+#             */
-/*   Updated: 2020/10/17 17:11:55 by bsausage         ###   ########.fr       */
+/*   Updated: 2020/10/24 10:46:35 by bsausage         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,30 +59,6 @@ void		free_farm_list(t_farm **begin_list)
 	ft_memdel((void**)begin_list);
 }
 
-void		free_paths(t_lem_in *lemin)
-{
-	t_path		*path;
-	t_path		*tmp;
-	int			n;
-
-	n = 0;
-	if (!lemin->paths)
-		return ;
-	while (n <= lemin->route_count)
-	{
-		path = lemin->paths[n];
-		while (path)
-		{
-			tmp = path->next;
-			ft_memdel((void**)&path->name);
-			ft_memdel((void**)&path);
-			path = tmp;
-		}
-		n++;
-	}
-	ft_memdel((void**)&lemin->paths);
-}
-
 void		free_all(t_lem_in *lemin)
 {
 	ft_memdel((void**)&lemin->line);
@@ -91,9 +67,7 @@ void		free_all(t_lem_in *lemin)
 	if (NULL != lemin->start->route)
 		ft_memdel((void**)&lemin->start->route);
 	free_room_list(lemin);
-	free_paths(lemin);
 	ft_memdel((void**)&lemin->array_of_rooms);
-	ft_memdel((void**)&lemin->array_of_ants);
 	ft_memdel((void**)&lemin->fifo);
 	lemin_routes_destroy(lemin);
 	ft_memdel((void**)&lemin->routes);

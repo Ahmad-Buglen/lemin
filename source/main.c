@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: Alkor <Alkor@student.42.fr>                +#+  +:+       +#+        */
+/*   By: bsausage <bsausage@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/13 00:41:56 by bsausage          #+#    #+#             */
-/*   Updated: 2020/10/23 11:02:45 by Alkor            ###   ########.fr       */
+/*   Updated: 2020/10/24 12:56:07 by bsausage         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,10 +46,7 @@ void			data_parsing(t_lem_in *const lemin)
 	lemin->array_of_rooms = init_array_of_rooms(lemin);
 	get_links(lemin);
 	if (!check_start_end_links(lemin))
-	{
-		lemin->line_num = 0;
-		close_program(lemin, "start or/and end room is/are without links");
-	}
+		ft_exit_lemin("start or/and end room is/are without links");
 }
 
 int				main(void)
@@ -61,7 +58,10 @@ int				main(void)
 	lemin.end_index = -1;
 	data_parsing(&lemin);
 	if (lemin.adjacency_matrix[lemin.start_index][lemin.end_index])
+	{
+		print_ant_farm(&lemin);
 		print_start_end_solution(&lemin);
+	}
 	else
 	{
 		lemin_init(&lemin);

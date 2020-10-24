@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   other_parsing_funcs.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: Alkor <Alkor@student.42.fr>                +#+  +:+       +#+        */
+/*   By: bsausage <bsausage@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/19 11:51:50 by bsausage          #+#    #+#             */
-/*   Updated: 2020/10/20 12:58:31 by Alkor            ###   ########.fr       */
+/*   Updated: 2020/10/24 12:57:01 by bsausage         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,13 +56,14 @@ void		get_num_of_ants(t_lem_in *lemin)
 	while ((gnl = get_next_line(0, &lemin->line)))
 	{
 		if (gnl <= 0)
-			close_program(lemin,\
-			"empty file or map doesn't contain rooms and link part");
+			close_program(lemin, "empty file");
 		lemin->line_num++;
 		add_line_to_farm_list(lemin);
 		if (!(check_first_line(lemin)))
 			break ;
 	}
+	if (gnl <= 0)
+		ft_exit_lemin("empty file or wrong data");
 	end = lemin->line;
 	num = ft_strtol(end, &end);
 	if (num <= 0 || num > INT_MAX)
@@ -73,12 +74,16 @@ void		get_num_of_ants(t_lem_in *lemin)
 
 void		check_command_line(t_lem_in *lemin)
 {
-	if (ft_strequ("start", lemin->line + 2))
+	if (lemin->position == START || lemin->position == END)
+		if (!ft_strequ("##start", lemin->line) &&
+			!ft_strequ("##end", lemin->line))
+			close_program(lemin, "no room after ##start or ##end");
+	if (ft_strequ("##start", lemin->line))
 	{
 		lemin->position = START;
 		lemin->start_flag++;
 	}
-	if (ft_strequ("end", lemin->line + 2))
+	if (ft_strequ("##end", lemin->line))
 	{
 		lemin->position = END;
 		lemin->end_flag++;
