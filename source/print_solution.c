@@ -6,7 +6,7 @@
 /*   By: bsausage <bsausage@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/10 10:47:12 by bsausage          #+#    #+#             */
-/*   Updated: 2020/10/24 11:08:55 by bsausage         ###   ########.fr       */
+/*   Updated: 2020/10/24 13:44:25 by bsausage         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,19 +18,14 @@ void			print_start_end_solution(t_lem_in *lemin)
 	int		i;
 
 	i = 1;
-	while (i < lemin->num_of_ants)
+	while (i <= lemin->num_of_ants)
 	{
 		write(1, "L", 1);
 		ft_putnbr(i++);
 		write(1, "-", 1);
 		ft_putstr(lemin->end->name);
-		write(1, " ", 1);
+		write(1, "\n", 1);
 	}
-	write(1, "L", 1);
-	ft_putnbr(i);
-	write(1, "-", 1);
-	ft_putstr(lemin->end->name);
-	write(1, "\n", 1);
 }
 
 void			print_step(t_lem_in *lemin, char *name, int ant)
