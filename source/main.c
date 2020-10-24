@@ -6,7 +6,7 @@
 /*   By: bsausage <bsausage@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/13 00:41:56 by bsausage          #+#    #+#             */
-/*   Updated: 2020/10/24 12:56:07 by bsausage         ###   ########.fr       */
+/*   Updated: 2020/10/24 13:07:39 by bsausage         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,8 @@ void			lemin_init(t_lem_in *const lemin)
 
 void			data_parsing(t_lem_in *const lemin)
 {
+	lemin->start_index = -1;
+	lemin->end_index = -1;
 	get_num_of_ants(lemin);
 	get_rooms(lemin);
 	if (!lemin->start_flag || !lemin->end_flag)
@@ -54,8 +56,6 @@ int				main(void)
 	t_lem_in	lemin;
 
 	ft_bzero(&lemin, sizeof(lemin));
-	lemin.start_index = -1;
-	lemin.end_index = -1;
 	data_parsing(&lemin);
 	if (lemin.adjacency_matrix[lemin.start_index][lemin.end_index])
 	{
