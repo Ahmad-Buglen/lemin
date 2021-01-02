@@ -11,3 +11,9 @@ The purpose of this project is to find paths from start room to end room and to 
 ```
 ./lem-in < MAP_FILE
 ```
+#### Install
+![Example](https://github.com/Ahmad-Buglen/lemin/blob/master/img/clone.png)
+
+#### Examples
+![Example](https://github.com/Ahmad-Buglen/lemin/blob/master/img/example.png)
+![Example](https://github.com/Ahmad-Buglen/lemin/blob/master/img/case.png)
